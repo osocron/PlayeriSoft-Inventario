@@ -20,7 +20,7 @@ public class Gorro extends Producto {
     }
 
     public Gorro(String idProducto, double descuento, String descripcion, int existencias,
-                 double precioMayoreo, double precioMenudeo,Producto producto, double talla, String color) {
+                 double precioMayoreo, double precioMenudeo, double talla, String color) {
         super(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
         this.talla = talla;
         this.color = color;
