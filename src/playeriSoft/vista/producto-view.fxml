@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playeriSoft.controlador.ProductViewController">
    <children>
       <BorderPane layoutX="152.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -31,7 +31,7 @@
                       </Menu>
                     </menus>
                   </MenuBar>
-                  <Label text="Producto " VBox.vgrow="SOMETIMES">
+                  <Label fx:id="productoLabel" text="Producto " VBox.vgrow="SOMETIMES">
                      <VBox.margin>
                         <Insets left="15.0" right="15.0" top="5.0" />
                      </VBox.margin>
@@ -41,22 +41,22 @@
                   </Label>
                   <HBox fillHeight="false">
                      <children>
-                        <CheckBox mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Playera">
+                        <CheckBox fx:id="playeraCheckBox" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Playera">
                            <HBox.margin>
                               <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Sudadera">
+                        <CheckBox fx:id="sudaderaCheckBox" mnemonicParsing="false" text="Sudadera">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Gorra">
+                        <CheckBox fx:id="gorraCheckBox" mnemonicParsing="false" text="Gorra">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </CheckBox>
-                        <CheckBox mnemonicParsing="false" text="Parche">
+                        <CheckBox fx:id="parcheCheckBox" mnemonicParsing="false" text="Parche">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>

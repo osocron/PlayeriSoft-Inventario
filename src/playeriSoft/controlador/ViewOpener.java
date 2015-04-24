@@ -6,6 +6,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import playeriSoft.modelo.Producto;
+
 import java.io.IOException;
 
 /**
@@ -15,23 +17,21 @@ public class ViewOpener {
 
     public ViewOpener(){}
 
-    //Method to controll opening new windows
-    public int openView(ActionEvent event, String pathToFXML, String stageTitle, int sceneWidth, int sceneHeight){
+    public void openProductView(String pathToFXML, String title, Producto resourceObject) {
         try {
-            //Set root and Stage
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(pathToFXML));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
+            Parent root = (Parent) loader.load();
             Stage stage = new Stage();
-            stage.setTitle(stageTitle);
-            stage.setScene(new Scene(root, sceneWidth, sceneHeight));
+            stage.setTitle(title);
+            stage.setScene(new Scene(root, 600, 400));
+            ProductViewController controller = loader.<ProductViewController>getController();
+            controller.setResourceObject(resourceObject);
             stage.show();
 
-            //Hide Current Window
-            ((Node)(event.getSource())).getScene().getWindow().hide();
-            return 0;
-
         } catch (IOException e) {
-            return 1;
+            e.printStackTrace();
         }
     }
-
 }
+
