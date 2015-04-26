@@ -6,8 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import playeriSoft.modelo.Playera;
-import playeriSoft.modelo.Producto;
+import playeriSoft.modelo.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -69,7 +68,7 @@ public class ProductViewController implements Initializable{
     private TextField tipoTextField;
 
     @FXML
-    private TextField anchoMayTextField;
+    private TextField anchoTextField;
 
     @FXML
     private Button agregarMaterialesButton;
@@ -89,34 +88,107 @@ public class ProductViewController implements Initializable{
 
     public void setResourceObject(Producto resourceObject){
         this.curProduct = resourceObject;
-        String name = curProduct.getClass().getSimpleName();
-        if(name.equals("Playera")){
-            Playera myPlayera = (Playera) curProduct;
-            setProductLabelTitle(curProduct.getDescripcion().toString());
-            playeraCheckBox.setSelected(true);
-            playeraCheckBox.setDisable(true);
-            gorraCheckBox.setDisable(true);
-            sudaderaCheckBox.setDisable(true);
-            parcheCheckBox.setDisable(true);
-            descripTextField.setText(curProduct.getDescripcion().toString());
-            existenciasTextField.setText(String.valueOf(myPlayera.getExistencias()));
-            descuentoTextField.setText(String.valueOf(myPlayera.getDescuento()));
-            precioMayTextField.setText(String.valueOf(myPlayera.getPrecioMayoreo()));
-            precioMenTextField.setText(String.valueOf(myPlayera.getPrecioMenudeo()));
-            precioMenTextField.setText(String.valueOf(myPlayera.getTalla()));
-            colorTextField.setText(String.valueOf(myPlayera.getColor().toString()));
-            tallaTextField.setText(String.valueOf(myPlayera.getTalla()));
-            tipoTextField.setText(myPlayera.getTipo().toString());
-            bordadoCheckBox.setSelected(true);
-            serigrafiaCheckBox.setDisable(true);
-            largoTextField.setDisable(true);
-            anchoMayTextField.setDisable(true);
+        sortClassName(resourceObject);
+    }
 
+    private void sortClassName(Producto resourceObject){
+        String name = resourceObject.getClass().getSimpleName();
+        if(name.equals("Playera")){
+            setPlayeraLayout();
+        }else if(name.equals("Sudadera")){
+            setSudaderaLayout();
+        }else if(name.equals("Gorro")){
+            setGorroLayout();
+        }else{
+            setParcheLayout();
         }
     }
 
-    public void setProductLabelTitle(String title){
-        productoLabel.setText(title);
+
+    private void setPlayeraLayout(){
+        Playera myPlayera = (Playera) curProduct;
+        productoLabel.setText(myPlayera.getDescripcion().toString());
+        playeraCheckBox.setSelected(true);
+        colorTextField.setText(String.valueOf(myPlayera.getColor().toString()));
+        tallaTextField.setText(String.valueOf(myPlayera.getTalla()));
+        tipoTextField.setText(myPlayera.getTipo().toString());
+        if(myPlayera.isBordado()) {
+            bordadoCheckBox.setSelected(true);
+        }else{
+            serigrafiaCheckBox.setSelected(true);
+        }
+        setGeneralAttributes();
+        disableFields();
+    }
+
+    private void setSudaderaLayout(){
+        Sudadera mySudadera = (Sudadera) curProduct;
+        productoLabel.setText(mySudadera.getDescripcion().toString());
+        sudaderaCheckBox.setSelected(true);
+        colorTextField.setText(String.valueOf(mySudadera.getColor().toString()));
+        tallaTextField.setText(String.valueOf(mySudadera.getTalla()));
+        if(mySudadera.isBordado()) {
+            bordadoCheckBox.setSelected(true);
+        }else{
+            serigrafiaCheckBox.setSelected(true);
+        }
+        setGeneralAttributes();
+        disableFields();
+    }
+
+    private void setGorroLayout(){
+        Gorro myGorro = (Gorro) curProduct;
+        productoLabel.setText(myGorro.getDescripcion().toString());
+        gorraCheckBox.setSelected(true);
+        colorTextField.setText(String.valueOf(myGorro.getColor().toString()));
+        tallaTextField.setText(String.valueOf(myGorro.getTalla()));
+        if(myGorro.isBordado()) {
+            bordadoCheckBox.setSelected(true);
+        }else{
+            serigrafiaCheckBox.setSelected(true);
+        }
+        setGeneralAttributes();
+        disableFields();
+    }
+
+    private void setParcheLayout(){
+        Parche myParche = (Parche) curProduct;
+        productoLabel.setText(myParche.getDescripcion().toString());
+        parcheCheckBox.setSelected(true);
+        largoTextField.setText(String.valueOf(myParche.getLargo()));
+        anchoTextField.setText(String.valueOf(myParche.getAncho()));
+        bordadoCheckBox.setSelected(true);
+        setGeneralAttributes();
+        disableFields();
+    }
+
+    private void setGeneralAttributes(){
+        descripTextField.setText(curProduct.getDescripcion().toString());
+        existenciasTextField.setText(String.valueOf(curProduct.getExistencias()));
+        descuentoTextField.setText(String.valueOf(curProduct.getDescuento()));
+        precioMayTextField.setText(String.valueOf(curProduct.getPrecioMayoreo()));
+        precioMenTextField.setText(String.valueOf(curProduct.getPrecioMenudeo()));
+    }
+
+    private void disableFields(){
+        playeraCheckBox.setDisable(true);
+        gorraCheckBox.setDisable(true);
+        sudaderaCheckBox.setDisable(true);
+        parcheCheckBox.setDisable(true);
+        descripTextField.setDisable(true);
+        existenciasTextField.setDisable(true);
+        descuentoTextField.setDisable(true);
+        precioMayTextField.setDisable(true);
+        precioMenTextField.setDisable(true);
+        colorTextField.setDisable(true);
+        tallaTextField.setDisable(true);
+        tipoTextField.setDisable(true);
+        bordadoCheckBox.setDisable(true);
+        serigrafiaCheckBox.setDisable(true);
+        largoTextField.setDisable(true);
+        anchoTextField.setDisable(true);
+        agregarMaterialesButton.setDisable(true);
+        eliminarButton.setDisable(true);
     }
 
 }

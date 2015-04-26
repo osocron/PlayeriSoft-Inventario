@@ -5,7 +5,7 @@ package playeriSoft.modelo;
  */
 public class Parche extends Producto {
 
-    private double alto;
+    private double largo;
     private double ancho;
 
 
@@ -13,26 +13,26 @@ public class Parche extends Producto {
         super(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
     }
 
-    public  Parche(Producto producto, double alto, double ancho){
+    public  Parche(Producto producto, double largo, double ancho){
         super(producto.getIdProducto(),producto.getDescuento(),producto.getDescripcion(),
                 producto.getExistencias(),producto.getPrecioMayoreo(),producto.getPrecioMenudeo());
-        this.alto = alto;
+        this.largo = largo;
         this.ancho = ancho;
     }
 
     public Parche(String idProducto, double descuento, String descripcion, int existencias,
-                 double precioMayoreo, double precioMenudeo,Producto producto, double alto, double ancho) {
+                 double precioMayoreo, double precioMenudeo,Producto producto, double largo, double ancho) {
         super(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
-        this.alto = alto;
+        this.largo = largo;
         this.ancho = ancho;
     }
 
-    public double getAlto() {
-        return alto;
+    public double getLargo() {
+        return largo;
     }
 
-    public void setAlto(double alto) {
-        this.alto = alto;
+    public void setLargo(double largo) {
+        this.largo = largo;
     }
 
     public double getAncho() {

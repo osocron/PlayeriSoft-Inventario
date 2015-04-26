@@ -1,8 +1,6 @@
 package playeriSoft.controlador;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,7 +15,7 @@ public class ViewOpener {
 
     public ViewOpener(){}
 
-    public void openProductView(String pathToFXML, String title, Producto resourceObject) {
+    public int openProductView(String pathToFXML, String title,Producto resourceObject) {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
@@ -29,8 +27,10 @@ public class ViewOpener {
             controller.setResourceObject(resourceObject);
             stage.show();
 
+            return 0;
+
         } catch (IOException e) {
-            e.printStackTrace();
+            return 1;
         }
     }
 }

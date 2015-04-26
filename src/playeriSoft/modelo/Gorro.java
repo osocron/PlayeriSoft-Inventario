@@ -7,23 +7,31 @@ public class Gorro extends Producto {
 
     private double talla;
     private String color;
+    private boolean isBordado;
+    private boolean isSerigrafia;
 
     public Gorro(String idProducto, double descuento, String descripcion, int existencias, double precioMayoreo, double precioMenudeo) {
         super(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
     }
 
-    public  Gorro(Producto producto, double talla, String color){
-        super(producto.getIdProducto(),producto.getDescuento(),producto.getDescripcion(),
-                producto.getExistencias(),producto.getPrecioMayoreo(),producto.getPrecioMenudeo());
+    public Gorro(Producto producto, double talla, String color, boolean isBordado, boolean isSerigrafia) {
+        super(producto.getIdProducto(), producto.getDescuento(), producto.getDescripcion(),
+                producto.getExistencias(), producto.getPrecioMayoreo(), producto.getPrecioMenudeo());
         this.talla = talla;
         this.color = color;
+        this.isBordado = isBordado;
+        this.isSerigrafia = isSerigrafia;
     }
 
+
     public Gorro(String idProducto, double descuento, String descripcion, int existencias,
-                 double precioMayoreo, double precioMenudeo, double talla, String color) {
+                 double precioMayoreo, double precioMenudeo, double talla, String color, boolean isBordado, boolean isSerigrafia) {
         super(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
         this.talla = talla;
         this.color = color;
+        this.isBordado = isBordado;
+        this.isSerigrafia = isSerigrafia;
+
     }
 
     public double getTalla() {
@@ -41,4 +49,21 @@ public class Gorro extends Producto {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public boolean isBordado() {
+        return isBordado;
+    }
+
+    public void setBordado(boolean isBordado) {
+        this.isBordado = isBordado;
+    }
+
+    public boolean isSerigrafia() {
+        return isSerigrafia;
+    }
+
+    public void setSerigrafia(boolean isSerigrafia) {
+        this.isSerigrafia = isSerigrafia;
+    }
+
 }
