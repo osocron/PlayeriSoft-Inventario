@@ -23,7 +23,7 @@ public class InventarioHandler {
     public ObservableList<String> getAllProducts(ObservableList<String> items){
 
         try {
-            connection = myConnector.connectToMysqlDB("playeriSoft","playeriSoftAdmin","playerisoft1","localhost");
+            connection = myConnector.connectToMysqlDB("playeriSoft","osocron","patumecha1","localhost");
             preparedStatement = connection.prepareStatement("SELECT DescripProd FROM Producto");
             resultSet = preparedStatement.executeQuery();
             int cont = 0;
