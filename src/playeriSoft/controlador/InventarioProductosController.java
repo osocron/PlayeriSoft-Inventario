@@ -39,10 +39,10 @@ public class InventarioProductosController implements Initializable{
 
     public void abrirProductView(ActionEvent event){
         //To eras
-        myProducto = new Playera("PLAY12",0.13,"Playera Pateumecha",2,500,400,15,"Azul","Polo",true,false);
+        //myProducto = new Playera("PLAY12",0.13,"Playera Pateumecha",2,500,400,15,"Azul","Polo",true,false);
         //Open Productos Window
-        ViewOpener myViewOpener = new ViewOpener();
-        myViewOpener.openProductView("playeriSoft/vista/producto-view.fxml","Productos",myProducto);
+        //ViewOpener myViewOpener = new ViewOpener();
+        //myViewOpener.openProductView("playeriSoft/vista/producto-view.fxml","Productos",myProducto);
 
     }
 
@@ -72,8 +72,9 @@ public class InventarioProductosController implements Initializable{
         prodListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                ViewOpener myViewOpener = new ViewOpener();
                 Producto curProd = prodListView.getSelectionModel().getSelectedItem();
-
+                myViewOpener.openProductView("playeriSoft/vista/producto-view.fxml","Productos",curProd);
             }
         });
     }

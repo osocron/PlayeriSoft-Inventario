@@ -12,7 +12,6 @@ import java.sql.ResultSet;
  */
 public class InventarioHandler {
 
-    private MysqlConnector myConnector;
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -24,7 +23,7 @@ public class InventarioHandler {
     public ObservableList<Producto> getAllProducts(ObservableList<Producto> items){
 
         try {
-            connection = myConnector.connectToMysqlDB("playeriSoft","osocron","patumecha1","localhost");
+            connection = MysqlConnector.connectToMysqlDB("playeriSoft","osocron","patumecha1","localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM Producto");
             resultSet = preparedStatement.executeQuery();
             int cont = 0;

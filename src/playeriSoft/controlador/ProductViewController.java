@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 public class ProductViewController implements Initializable{
 
     private Producto curProduct;
-    private ProductViewHandler myHandler;
 
     @FXML
     private Label productoLabel;
@@ -92,14 +91,20 @@ public class ProductViewController implements Initializable{
     }
 
     private void sortClassName(Producto resourceObject){
-        String name = resourceObject.getClass().getSimpleName();
-        if(name.equals("Playera")){
+        ProductViewHandler myHandler = new ProductViewHandler();
+        String idProd = resourceObject.getIdProducto();
+        String prodType = idProd.substring(0, Math.min(idProd.length(), 4));
+        if(prodType.equals("PLAY")){
+            curProduct = myHandler.buildPlayera(resourceObject,idProd);
             setPlayeraLayout();
-        }else if(name.equals("Sudadera")){
+        }else if(prodType.equals("SUDA")){
+            curProduct = myHandler.buildSudadera(resourceObject, idProd);
             setSudaderaLayout();
-        }else if(name.equals("Gorro")){
+        }else if(prodType.equals("GORR")){
+            curProduct = myHandler.buildGorra(resourceObject, idProd);
             setGorroLayout();
         }else{
+            curProduct = myHandler.buildParche(resourceObject,idProd);
             setParcheLayout();
         }
     }

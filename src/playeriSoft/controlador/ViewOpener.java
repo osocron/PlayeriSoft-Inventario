@@ -15,7 +15,7 @@ public class ViewOpener {
 
     public ViewOpener(){}
 
-    public int openProductView(String pathToFXML, String title,Producto resourceObject) {
+    public int openProductView(String pathToFXML, String title, Producto resourceObject) {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
@@ -33,5 +33,7 @@ public class ViewOpener {
             return 1;
         }
     }
+
+
 }
 
