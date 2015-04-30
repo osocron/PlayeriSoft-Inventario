@@ -12,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import playeriSoft.modelo.Playera;
 import playeriSoft.modelo.Producto;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,13 +36,10 @@ public class InventarioProductosController implements Initializable{
         prepareListView();
     }
 
+    @FXML
     public void abrirProductView(ActionEvent event){
-        //To eras
-        //myProducto = new Playera("PLAY12",0.13,"Playera Pateumecha",2,500,400,15,"Azul","Polo",true,false);
-        //Open Productos Window
-        //ViewOpener myViewOpener = new ViewOpener();
-        //myViewOpener.openProductView("playeriSoft/vista/producto-view.fxml","Productos",myProducto);
-
+        ViewOpener myViewOpener = new ViewOpener();
+        myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto");
     }
 
     public void prepareListView(){
@@ -74,7 +70,7 @@ public class InventarioProductosController implements Initializable{
             public void handle(MouseEvent event) {
                 ViewOpener myViewOpener = new ViewOpener();
                 Producto curProd = prodListView.getSelectionModel().getSelectedItem();
-                myViewOpener.openProductView("playeriSoft/vista/producto-view.fxml","Productos",curProd);
+                myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml", "Consulta de Producto", curProd);
             }
         });
     }

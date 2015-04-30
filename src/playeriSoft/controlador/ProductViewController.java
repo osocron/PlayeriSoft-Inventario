@@ -1,11 +1,11 @@
 package playeriSoft.controlador;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import playeriSoft.modelo.*;
 
 import java.net.URL;
@@ -64,7 +64,7 @@ public class ProductViewController implements Initializable{
     private TextField largoTextField;
 
     @FXML
-    private TextField tipoTextField;
+    private ChoiceBox<String> tipoChoiceBox;
 
     @FXML
     private TextField anchoTextField;
@@ -81,12 +81,14 @@ public class ProductViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        ObservableList<String> items = FXCollections.observableArrayList("Normal","Polo");
+        tipoChoiceBox.setItems(items);
     }
 
 
     public void setResourceObject(Producto resourceObject){
         this.curProduct = resourceObject;
+        modificarButton.setText("Modificar");
         sortClassName(resourceObject);
     }
 
@@ -116,7 +118,12 @@ public class ProductViewController implements Initializable{
         playeraCheckBox.setSelected(true);
         colorTextField.setText(String.valueOf(myPlayera.getColor().toString()));
         tallaTextField.setText(String.valueOf(myPlayera.getTalla()));
-        tipoTextField.setText(myPlayera.getTipo().toString());
+        String tipo = myPlayera.getTipo().toString();
+        if(tipo.equals("NORM")) {
+            tipoChoiceBox.getSelectionModel().selectFirst();
+        }else {
+            tipoChoiceBox.getSelectionModel().selectLast();
+        }
         if(myPlayera.isBordado()) {
             bordadoCheckBox.setSelected(true);
         }else{
@@ -187,13 +194,105 @@ public class ProductViewController implements Initializable{
         precioMenTextField.setDisable(true);
         colorTextField.setDisable(true);
         tallaTextField.setDisable(true);
-        tipoTextField.setDisable(true);
+        tipoChoiceBox.setDisable(true);
         bordadoCheckBox.setDisable(true);
         serigrafiaCheckBox.setDisable(true);
         largoTextField.setDisable(true);
         anchoTextField.setDisable(true);
         agregarMaterialesButton.setDisable(true);
         eliminarButton.setDisable(true);
+    }
+
+    @FXML
+    public void playeraCheckBoxClicked(){
+        if(playeraCheckBox.isSelected()) {
+            gorraCheckBox.setDisable(true);
+            sudaderaCheckBox.setDisable(true);
+            parcheCheckBox.setDisable(true);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
+        }else{
+            gorraCheckBox.setDisable(false);
+            sudaderaCheckBox.setDisable(false);
+            parcheCheckBox.setDisable(false);
+            largoTextField.setDisable(false);
+            anchoTextField.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void sudaderaCheckBoxClicked(){
+        if(sudaderaCheckBox.isSelected()) {
+            gorraCheckBox.setDisable(true);
+            playeraCheckBox.setDisable(true);
+            parcheCheckBox.setDisable(true);
+            tipoChoiceBox.setDisable(true);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
+        }else{
+            gorraCheckBox.setDisable(false);
+            playeraCheckBox.setDisable(false);
+            parcheCheckBox.setDisable(false);
+            tipoChoiceBox.setDisable(false);
+            largoTextField.setDisable(false);
+            anchoTextField.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void gorraCheckBoxClicked(){
+        if(gorraCheckBox.isSelected()) {
+            playeraCheckBox.setDisable(true);
+            sudaderaCheckBox.setDisable(true);
+            parcheCheckBox.setDisable(true);
+            tipoChoiceBox.setDisable(true);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
+        }else{
+            playeraCheckBox.setDisable(false);
+            sudaderaCheckBox.setDisable(false);
+            parcheCheckBox.setDisable(false);
+            tipoChoiceBox.setDisable(false);
+            largoTextField.setDisable(false);
+            anchoTextField.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void parcheCheckBoxClicked(){
+        if(parcheCheckBox.isSelected()) {
+            gorraCheckBox.setDisable(true);
+            sudaderaCheckBox.setDisable(true);
+            playeraCheckBox.setDisable(true);
+            tallaTextField.setDisable(true);
+            colorTextField.setDisable(true);
+            tipoChoiceBox.setDisable(true);
+        }else{
+            gorraCheckBox.setDisable(false);
+            sudaderaCheckBox.setDisable(false);
+            playeraCheckBox.setDisable(false);
+            tallaTextField.setDisable(false);
+            colorTextField.setDisable(false);
+            tipoChoiceBox.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void serigrafiaCheckBoxClicked(){
+        if(serigrafiaCheckBox.isSelected()){
+            bordadoCheckBox.setDisable(true);
+        }else{
+            bordadoCheckBox.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void bordadoCheckBoxClicked(){
+        if(bordadoCheckBox.isSelected()){
+            serigrafiaCheckBox.setDisable(true);
+        }else{
+            serigrafiaCheckBox.setDisable(false);
+        }
     }
 
 }
