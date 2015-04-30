@@ -345,15 +345,27 @@ public class ProductViewController implements Initializable{
     public void guardarProducto(){
         ProductViewHandler myHandler = new ProductViewHandler();
         if(playeraCheckBox.isSelected()){
-            myHandler.guardarPlayera();
+            myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
+                    colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
         }
         else if(sudaderaCheckBox.isSelected()){
-            myHandler.guardarSudadera();
+            myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
+                    colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
         }
         else if(gorraCheckBox.isSelected()){
-            myHandler.guardarGorra();
+            myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
+                    colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
         }else{
-            myHandler.guardarParche();
+            myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
+                    Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
         }
     }
 

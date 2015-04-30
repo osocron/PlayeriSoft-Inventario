@@ -25,7 +25,7 @@ public class Parche extends Producto {
     }
 
     public Parche(String idProducto, double descuento, String descripcion, int existencias,
-                 double precioMayoreo, double precioMenudeo,Producto producto, double largo,
+                 double precioMayoreo, double precioMenudeo, double largo,
                  double ancho, boolean isBordado, boolean isSerigrafia) {
         super(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
         this.largo = largo;

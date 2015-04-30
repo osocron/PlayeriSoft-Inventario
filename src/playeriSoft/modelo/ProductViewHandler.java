@@ -124,19 +124,37 @@ public class ProductViewHandler {
         }
     }
 
-    public void guardarPlayera(){
+    public void guardarPlayera(double descuento, String descripcion, int existencias,
+                               double precioMayoreo, double precioMenudeo,double talla, String color,
+                               String tipo, boolean isBordado, boolean isSerigrafia){
+        String idProducto = "";
+        MysqlConnector myConnector = new MysqlConnector();
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            preparedStatement = connection.prepareStatement("INSERT INTO producto VALUES('"+ idProducto + "','"+descripcion+"',"+existencias+","+descuento+","+precioMayoreo+","+precioMenudeo);
+            resultSet = preparedStatement.executeQuery();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
-    public void guardarSudadera(){
+    public void guardarSudadera(double descuento, String descripcion, int existencias,
+                                double precioMayoreo, double precioMenudeo,double talla, String color,
+                                boolean isBordado, boolean isSerigrafia){
 
     }
 
-    public void guardarGorra(){
+    public void guardarGorra(double descuento, String descripcion, int existencias,
+                             double precioMayoreo, double precioMenudeo, double talla,
+                             String color, boolean isBordado, boolean isSerigrafia){
 
     }
 
-    public void guardarParche(){
+    public void guardarParche(double descuento, String descripcion, int existencias,
+                              double precioMayoreo, double precioMenudeo, double largo,
+                              double ancho, boolean isBordado, boolean isSerigrafia){
 
     }
 
