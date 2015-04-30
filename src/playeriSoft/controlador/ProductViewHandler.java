@@ -11,29 +11,19 @@ import java.sql.ResultSet;
  */
 public class ProductViewHandler {
 
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
 
     public ProductViewHandler(){}
 
     public Producto buildPlayera(Producto producto, String idPlayera){
         Playera playera = null;
-        Connection connection;
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
         try {
-            connection = MysqlConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM playera WHERE IdProducto = '"+idPlayera+"'");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = getResultSet("playera", idPlayera);
             while (resultSet.next()) {
-                String isBordadoString = resultSet.getString("Bordado");
-                String isSerigrafiaString = resultSet.getString("Serigrafia");
-                Boolean isBordado;
-                Boolean isSerigrafia;
-                if(isBordadoString.equals("true")){
-                    isBordado = true;
-                }else{isBordado = false;}
-                if(isSerigrafiaString.equals("true")){
-                    isSerigrafia = true;
-                }else{isSerigrafia = false;}
+                Boolean isBordado = getValueOfBordado(resultSet);
+                Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
                 playera = new Playera(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),resultSet.getString("Estilo"),isBordado,isSerigrafia);
             }
             connection.close();
@@ -46,24 +36,11 @@ public class ProductViewHandler {
 
     public Producto buildSudadera(Producto producto, String idSudadera){
         Sudadera sudadera = null;
-        Connection connection;
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
         try {
-            connection = MysqlConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM sudadera WHERE IdProducto = '"+idSudadera+"'");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = getResultSet("sudadera",idSudadera);
             while (resultSet.next()) {
-                String isBordadoString = resultSet.getString("Bordado");
-                String isSerigrafiaString = resultSet.getString("Serigrafia");
-                Boolean isBordado;
-                Boolean isSerigrafia;
-                if(isBordadoString.equals("true")){
-                    isBordado = true;
-                }else{isBordado = false;}
-                if(isSerigrafiaString.equals("true")){
-                    isSerigrafia = true;
-                }else{isSerigrafia = false;}
+                Boolean isBordado = getValueOfBordado(resultSet);
+                Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
                 sudadera = new Sudadera(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),isBordado,isSerigrafia);
             }
             connection.close();
@@ -76,24 +53,11 @@ public class ProductViewHandler {
 
     public Producto buildGorra(Producto producto, String idGorra){
         Gorro gorra = null;
-        Connection connection;
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
         try {
-            connection = MysqlConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM gorra WHERE IdProducto = '"+idGorra+"'");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = getResultSet("gorra",idGorra);
             while (resultSet.next()) {
-                String isBordadoString = resultSet.getString("Bordado");
-                String isSerigrafiaString = resultSet.getString("Serigrafia");
-                Boolean isBordado;
-                Boolean isSerigrafia;
-                if(isBordadoString.equals("true")){
-                    isBordado = true;
-                }else{isBordado = false;}
-                if(isSerigrafiaString.equals("true")){
-                    isSerigrafia = true;
-                }else{isSerigrafia = false;}
+                Boolean isBordado = getValueOfBordado(resultSet);
+                Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
                 gorra = new Gorro(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),isBordado,isSerigrafia);
             }
             connection.close();
@@ -106,24 +70,11 @@ public class ProductViewHandler {
 
     public Producto buildParche(Producto producto, String idParche){
         Parche parche = null;
-        Connection connection;
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
         try {
-            connection = MysqlConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM parche WHERE IdProducto = '"+idParche+"'");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = getResultSet("parche",idParche);
             while (resultSet.next()) {
-                String isBordadoString = resultSet.getString("Bordado");
-                String isSerigrafiaString = resultSet.getString("Serigrafia");
-                Boolean isBordado;
-                Boolean isSerigrafia;
-                if(isBordadoString.equals("true")){
-                    isBordado = true;
-                }else{isBordado = false;}
-                if(isSerigrafiaString.equals("true")){
-                    isSerigrafia = true;
-                }else{isSerigrafia = false;}
+                Boolean isBordado = getValueOfBordado(resultSet);
+                Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
                 parche = new Parche(producto,resultSet.getDouble("Largo"),resultSet.getDouble("Ancho"),isBordado,isSerigrafia);
             }
             connection.close();
@@ -134,5 +85,44 @@ public class ProductViewHandler {
         }
     }
 
+    private ResultSet getResultSet(String table, String idProd){
+        try {
+            connection = MysqlConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            preparedStatement = connection.prepareStatement("SELECT * FROM "+ table + " WHERE IdProducto = '" + idProd + "'");
+            resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Boolean getValueOfBordado(ResultSet resultSet){
+        try {
+            Boolean isBordado;
+            String isBordadoString = resultSet.getString("Bordado");
+            if(isBordadoString.equals("true")){
+                isBordado = true;
+            }else{isBordado = false;}
+            return isBordado;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Boolean getValueOfSerigrafia(ResultSet resultSet){
+        try {
+            Boolean isSerigrafia;
+            String isSerigrafiaString = resultSet.getString("Serigrafia");
+            if(isSerigrafiaString.equals("true")){
+                isSerigrafia = true;
+            }else{isSerigrafia = false;}
+            return isSerigrafia;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
