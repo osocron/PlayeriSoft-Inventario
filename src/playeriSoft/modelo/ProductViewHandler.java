@@ -1,6 +1,4 @@
-package playeriSoft.controlador;
-
-import playeriSoft.modelo.*;
+package playeriSoft.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,8 +84,9 @@ public class ProductViewHandler {
     }
 
     private ResultSet getResultSet(String table, String idProd){
+        MysqlConnector myConnector = new MysqlConnector();
         try {
-            connection = MysqlConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM "+ table + " WHERE IdProducto = '" + idProd + "'");
             resultSet = preparedStatement.executeQuery();
             return resultSet;
@@ -123,6 +122,22 @@ public class ProductViewHandler {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void guardarPlayera(){
+
+    }
+
+    public void guardarSudadera(){
+
+    }
+
+    public void guardarGorra(){
+
+    }
+
+    public void guardarParche(){
+
     }
 
 }

@@ -1,4 +1,4 @@
-package playeriSoft.controlador;
+package playeriSoft.modelo;
 
 import java.sql.*;
 
@@ -7,9 +7,11 @@ import java.sql.*;
  */
 public class MysqlConnector {
 
-    static Connection connect;
+    private Connection connect;
 
-    static Connection connectToMysqlDB(String dataBase, String user, String password, String host) throws Exception{
+    public MysqlConnector(){}
+
+    public Connection connectToMysqlDB(String dataBase, String user, String password, String host) throws Exception{
 
         //Conexión a Mysql
         try {

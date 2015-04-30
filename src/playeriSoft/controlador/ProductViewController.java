@@ -1,7 +1,6 @@
 package playeriSoft.controlador;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -203,6 +202,43 @@ public class ProductViewController implements Initializable{
         eliminarButton.setDisable(true);
     }
 
+    private void enableFields(){
+        if(playeraCheckBox.isSelected()){
+            playeraCheckBox.setDisable(false);
+            playeraCheckBoxClicked();
+        }
+        else if(sudaderaCheckBox.isSelected()){
+            sudaderaCheckBox.setDisable(false);
+            sudaderaCheckBoxClicked();
+        }
+        else if(gorraCheckBox.isSelected()){
+            gorraCheckBox.setDisable(false);
+            gorraCheckBoxClicked();
+        }else{
+            parcheCheckBox.setDisable(false);
+            parcheCheckBoxClicked();
+        }
+        descripTextField.setDisable(false);
+        existenciasTextField.setDisable(false);
+        descuentoTextField.setDisable(false);
+        precioMayTextField.setDisable(false);
+        precioMenTextField.setDisable(false);
+        colorTextField.setDisable(false);
+        tallaTextField.setDisable(false);
+        tipoChoiceBox.setDisable(false);
+        if(bordadoCheckBox.isSelected()){
+            bordadoCheckBox.setDisable(false);
+            bordadoCheckBoxClicked();
+        }else{
+            serigrafiaCheckBox.setDisable(false);
+            serigrafiaCheckBoxClicked();
+        }
+        largoTextField.setDisable(false);
+        anchoTextField.setDisable(false);
+        agregarMaterialesButton.setDisable(false);
+        eliminarButton.setDisable(false);
+    }
+
     @FXML
     public void playeraCheckBoxClicked(){
         if(playeraCheckBox.isSelected()) {
@@ -292,6 +328,32 @@ public class ProductViewController implements Initializable{
             serigrafiaCheckBox.setDisable(true);
         }else{
             serigrafiaCheckBox.setDisable(false);
+        }
+    }
+
+
+    @FXML
+    public void modificarButtonClicked(){
+        if (modificarButton.getText().equals("Guardar")){
+            guardarProducto();
+        }else{
+            enableFields();
+            modificarButton.setText("Guardar");
+        }
+    }
+
+    public void guardarProducto(){
+        ProductViewHandler myHandler = new ProductViewHandler();
+        if(playeraCheckBox.isSelected()){
+            myHandler.guardarPlayera();
+        }
+        else if(sudaderaCheckBox.isSelected()){
+            myHandler.guardarSudadera();
+        }
+        else if(gorraCheckBox.isSelected()){
+            myHandler.guardarGorra();
+        }else{
+            myHandler.guardarParche();
         }
     }
 

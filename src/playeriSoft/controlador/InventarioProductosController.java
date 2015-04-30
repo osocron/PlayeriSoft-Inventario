@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import playeriSoft.modelo.InventarioHandler;
 import playeriSoft.modelo.Producto;
 import java.net.URL;
 import java.util.ResourceBundle;
