@@ -175,7 +175,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button fx:id="agregarMaterialesButton" mnemonicParsing="false" text="Agregar Materiales" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                        <Button fx:id="agregarMaterialesButton" mnemonicParsing="false" onAction="#materialesButtonOnClicked" text="Agregar Materiales" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>

@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import playeriSoft.modelo.*;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -367,6 +369,13 @@ public class ProductViewController implements Initializable{
                     Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
                     Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
         }
+    }
+
+    @FXML
+    public void materialesButtonOnClicked(){
+        ViewOpener viewOpener = new ViewOpener();
+        List<Material> listaMateriales = new ArrayList<Material>();
+        listaMateriales = viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales",listaMateriales);
     }
 
 }

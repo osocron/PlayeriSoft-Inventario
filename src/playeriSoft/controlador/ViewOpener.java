@@ -4,9 +4,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import playeriSoft.modelo.Material;
 import playeriSoft.modelo.Producto;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by osocr_000 on 23/04/2015.
@@ -42,6 +44,21 @@ public class ViewOpener {
         } catch (IOException e) {
             return 1;
         }
+    }
+
+    public List<Material> openMaterialesPicker(String pathToFXML, String title, List<Material> listaMateriales){
+
+        try{
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(pathToFXML));
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle(title);
+            primaryStage.setScene(new Scene(root, 500, 400));
+            primaryStage.show();
+            return  listaMateriales;
+        }catch (IOException e){
+            return null;
+        }
+
     }
 
 

@@ -127,7 +127,7 @@ public class ProductViewHandler {
     public void guardarPlayera(double descuento, String descripcion, int existencias,
                                double precioMayoreo, double precioMenudeo,double talla, String color,
                                String tipo, boolean isBordado, boolean isSerigrafia){
-        String idProducto = "";
+        /*String idProducto = "";
         MysqlConnector myConnector = new MysqlConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
@@ -136,7 +136,7 @@ public class ProductViewHandler {
             connection.close();
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -157,5 +157,6 @@ public class ProductViewHandler {
                               double ancho, boolean isBordado, boolean isSerigrafia){
 
     }
+
 
 }
