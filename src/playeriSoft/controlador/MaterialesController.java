@@ -14,8 +14,11 @@ import javafx.util.Callback;
 import playeriSoft.modelo.Material;
 import playeriSoft.modelo.MaterialesHandler;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -24,9 +27,7 @@ import java.util.ResourceBundle;
 public class MaterialesController implements Initializable {
 
     private ObservableList<Material> items = FXCollections.observableArrayList();
-
-    @FXML
-    private TextField busqMaterialesTextField;
+    private ProductViewController productViewController;
 
     @FXML
     private ListView<Material> materialesListView;
@@ -34,12 +35,6 @@ public class MaterialesController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareListView();
-        busqMaterialesTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                searchMateriales(oldValue, newValue);
-            }
-        });
     }
 
     private void prepareListView(){
@@ -80,29 +75,18 @@ public class MaterialesController implements Initializable {
 
     @FXML
     public void guardarMateriales(){
-
+        List<Material> myListaMateriales = new ArrayList<Material>();
+        items.forEach((Material curMaterial) -> {
+            if (curMaterial.isSelected()){
+                myListaMateriales.add(curMaterial);
+            }
+        });
+        productViewController.setListaMateriales(myListaMateriales);
     }
 
-    public void searchMateriales(String oldVal, String newVal){
-        if (oldVal != null && (newVal.length() < oldVal.length())) {
-            materialesListView.setItems(items);
-        }
-        String[] parts = newVal.toUpperCase().split(" ");
-        ObservableList<Material> subentries = FXCollections.observableArrayList();
-        for (Material entry : materialesListView.getItems()) {
-            boolean match = true;
-            String entryText = entry.getDescripcionMaterial();
-            for ( String part: parts ) {
-                if ( ! entryText.toUpperCase().contains(part) ) {
-                    match = false;
-                    break;
-                }
-            }
-            if ( match ) {
-                subentries.add(entry);
-            }
-        }
-        materialesListView.setItems(subentries);
+    public void setParent(ProductViewController controller){
+        this.productViewController = controller;
     }
+
 
 }

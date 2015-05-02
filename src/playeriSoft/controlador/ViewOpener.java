@@ -49,14 +49,17 @@ public class ViewOpener {
         }
     }
 
-    public void openMaterialesPicker(String pathToFXML, String title, List<Material> listaMateriales){
+    public void openMaterialesPicker(String pathToFXML, String title, ProductViewController productViewController){
 
         try{
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(pathToFXML));
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle(title);
-            primaryStage.setScene(new Scene(root, 500, 400));
-            primaryStage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
+            Parent root = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root, 500, 400));
+            MaterialesController controller = loader.<MaterialesController>getController();
+            controller.setParent(productViewController);
+            stage.show();
 
         }catch (IOException e){
             e.printStackTrace();

@@ -18,7 +18,7 @@
          </HBox.margin>
       </Label>
       <Pane HBox.hgrow="ALWAYS" />
-      <TextField fx:id="materialCantidadTextField" alignment="BOTTOM_RIGHT" editable="false" prefWidth="50.0">
+      <TextField fx:id="materialCantidadTextField" alignment="BOTTOM_RIGHT" editable="false" prefWidth="70.0" promptText="Cantidad">
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </HBox.margin>

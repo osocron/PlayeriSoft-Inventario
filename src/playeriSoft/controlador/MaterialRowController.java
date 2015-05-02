@@ -1,5 +1,7 @@
 package playeriSoft.controlador;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,8 +35,6 @@ public class MaterialRowController implements Initializable{
     @FXML
     private HBox hBox;
 
-    @FXML
-    private Button guardarButton;
 
     public  MaterialRowController(){
 
@@ -53,12 +53,18 @@ public class MaterialRowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        materialCantidadTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                curMaterial.setCantidadSeleccionada(Double.valueOf(newValue));
+            }
+        });
     }
 
     @FXML
     public void materialCheckBoxClicked(){
         materialCantidadTextField.setEditable(materialCheckBox.isSelected() ? true : false);
+        curMaterial.setSelected( materialCheckBox.isSelected() ? true : false);
     }
 
 

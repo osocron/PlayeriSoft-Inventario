@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * Created by osocr_000 on 02/05/2015.
@@ -39,6 +40,10 @@ public class MaterialesHandler {
             e.printStackTrace();
             return null;
         }
+
+    }
+
+    public void guardarMateriales(List<Material> listaMateriales, Producto curProd){
 
     }
 

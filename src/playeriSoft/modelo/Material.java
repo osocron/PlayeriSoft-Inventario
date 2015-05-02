@@ -10,6 +10,8 @@ public class Material {
     private double precioMaterial;
     private String unidadMedida;
     private double cantidadDeProducto;
+    private boolean isSelected;
+    private double cantidadSeleccionada;
 
     public Material(String idMaterial, String descripcionMaterial, double precioMaterial, String unidadMedida, double cantidadDeProducto) {
         this.idMaterial = idMaterial;
@@ -17,6 +19,8 @@ public class Material {
         this.precioMaterial = precioMaterial;
         this.unidadMedida = unidadMedida;
         this.cantidadDeProducto = cantidadDeProducto;
+        this.isSelected = false;
+        this.cantidadSeleccionada = 0.0;
     }
 
     public String getIdMaterial() {
@@ -59,4 +63,19 @@ public class Material {
         this.cantidadDeProducto = cantidadDeProducto;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
+    public double getCantidadSeleccionada() {
+        return cantidadSeleccionada;
+    }
+
+    public void setCantidadSeleccionada(double cantidadSeleccionada) {
+        this.cantidadSeleccionada = cantidadSeleccionada;
+    }
 }
