@@ -35,18 +35,21 @@ public class ViewOpener {
 
     public int openEditableProductView(String pathToFXML, String title){
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(pathToFXML));
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle(title);
-            primaryStage.setScene(new Scene(root, 600, 400));
-            primaryStage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
+            Parent root = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root, 600, 400));
+            ProductViewController controller = loader.<ProductViewController>getController();
+            controller.setNewProductLayout();
+            stage.show();
             return 0;
         } catch (IOException e) {
             return 1;
         }
     }
 
-    public List<Material> openMaterialesPicker(String pathToFXML, String title, List<Material> listaMateriales){
+    public void openMaterialesPicker(String pathToFXML, String title, List<Material> listaMateriales){
 
         try{
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(pathToFXML));
@@ -54,9 +57,9 @@ public class ViewOpener {
             primaryStage.setTitle(title);
             primaryStage.setScene(new Scene(root, 500, 400));
             primaryStage.show();
-            return  listaMateriales;
+
         }catch (IOException e){
-            return null;
+            e.printStackTrace();
         }
 
     }

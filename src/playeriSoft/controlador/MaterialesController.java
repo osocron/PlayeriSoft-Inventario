@@ -3,6 +3,7 @@ package playeriSoft.controlador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -11,6 +12,7 @@ import javafx.util.Callback;
 import playeriSoft.modelo.Material;
 import playeriSoft.modelo.MaterialesHandler;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -45,7 +47,15 @@ public class MaterialesController implements Initializable {
                     protected void updateItem(Material material, boolean bool) {
                         super.updateItem(material, bool);
                         if (material != null) {
-                            setText(material.getDescripcionMaterial());
+                            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("playeriSoft/vista/MaterialRow.fxml"));
+                            try {
+                                loader.load();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            MaterialRowController controller = loader.<MaterialRowController>getController();
+                            controller.setInfo(material);
+                            setGraphic(controller.getBox());
                         }
                     }
                 };

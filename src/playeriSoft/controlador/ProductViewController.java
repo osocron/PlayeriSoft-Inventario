@@ -93,6 +93,10 @@ public class ProductViewController implements Initializable{
         sortClassName(resourceObject);
     }
 
+    public void setNewProductLayout(){
+        eliminarButton.setDisable(true);
+    }
+
     private void sortClassName(Producto resourceObject){
         ProductViewHandler myHandler = new ProductViewHandler();
         String idProd = resourceObject.getIdProducto();
@@ -243,94 +247,51 @@ public class ProductViewController implements Initializable{
 
     @FXML
     public void playeraCheckBoxClicked(){
-        if(playeraCheckBox.isSelected()) {
-            gorraCheckBox.setDisable(true);
-            sudaderaCheckBox.setDisable(true);
-            parcheCheckBox.setDisable(true);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-        }else{
-            gorraCheckBox.setDisable(false);
-            sudaderaCheckBox.setDisable(false);
-            parcheCheckBox.setDisable(false);
-            largoTextField.setDisable(false);
-            anchoTextField.setDisable(false);
-        }
+        gorraCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
+        sudaderaCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
+        parcheCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
+        largoTextField.setDisable(playeraCheckBox.isSelected() ? true : false);
+        anchoTextField.setDisable(playeraCheckBox.isSelected() ? true : false);
     }
 
     @FXML
     public void sudaderaCheckBoxClicked(){
-        if(sudaderaCheckBox.isSelected()) {
-            gorraCheckBox.setDisable(true);
-            playeraCheckBox.setDisable(true);
-            parcheCheckBox.setDisable(true);
-            tipoChoiceBox.setDisable(true);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-        }else{
-            gorraCheckBox.setDisable(false);
-            playeraCheckBox.setDisable(false);
-            parcheCheckBox.setDisable(false);
-            tipoChoiceBox.setDisable(false);
-            largoTextField.setDisable(false);
-            anchoTextField.setDisable(false);
-        }
+        gorraCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
+        playeraCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
+        parcheCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
+        tipoChoiceBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
+        largoTextField.setDisable(sudaderaCheckBox.isSelected() ? true : false);
+        anchoTextField.setDisable(sudaderaCheckBox.isSelected() ? true : false);
     }
 
     @FXML
     public void gorraCheckBoxClicked(){
-        if(gorraCheckBox.isSelected()) {
-            playeraCheckBox.setDisable(true);
-            sudaderaCheckBox.setDisable(true);
-            parcheCheckBox.setDisable(true);
-            tipoChoiceBox.setDisable(true);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-        }else{
-            playeraCheckBox.setDisable(false);
-            sudaderaCheckBox.setDisable(false);
-            parcheCheckBox.setDisable(false);
-            tipoChoiceBox.setDisable(false);
-            largoTextField.setDisable(false);
-            anchoTextField.setDisable(false);
-        }
+        playeraCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
+        sudaderaCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
+        parcheCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
+        tipoChoiceBox.setDisable(gorraCheckBox.isSelected() ? true : false);
+        largoTextField.setDisable(gorraCheckBox.isSelected() ? true : false);
+        anchoTextField.setDisable(gorraCheckBox.isSelected() ? true : false);
     }
 
     @FXML
     public void parcheCheckBoxClicked(){
-        if(parcheCheckBox.isSelected()) {
-            gorraCheckBox.setDisable(true);
-            sudaderaCheckBox.setDisable(true);
-            playeraCheckBox.setDisable(true);
-            tallaTextField.setDisable(true);
-            colorTextField.setDisable(true);
-            tipoChoiceBox.setDisable(true);
-        }else{
-            gorraCheckBox.setDisable(false);
-            sudaderaCheckBox.setDisable(false);
-            playeraCheckBox.setDisable(false);
-            tallaTextField.setDisable(false);
-            colorTextField.setDisable(false);
-            tipoChoiceBox.setDisable(false);
-        }
+        gorraCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
+        sudaderaCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
+        playeraCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
+        tallaTextField.setDisable(parcheCheckBox.isSelected() ? true : false);
+        colorTextField.setDisable(parcheCheckBox.isSelected() ? true : false);
+        tipoChoiceBox.setDisable(parcheCheckBox.isSelected() ? true : false);
     }
 
     @FXML
     public void serigrafiaCheckBoxClicked(){
-        if(serigrafiaCheckBox.isSelected()){
-            bordadoCheckBox.setDisable(true);
-        }else{
-            bordadoCheckBox.setDisable(false);
-        }
+        bordadoCheckBox.setDisable(serigrafiaCheckBox.isSelected() ? true : false);
     }
 
     @FXML
     public void bordadoCheckBoxClicked(){
-        if(bordadoCheckBox.isSelected()){
-            serigrafiaCheckBox.setDisable(true);
-        }else{
-            serigrafiaCheckBox.setDisable(false);
-        }
+        serigrafiaCheckBox.setDisable(bordadoCheckBox.isSelected() ? true : false);
     }
 
 
@@ -375,7 +336,7 @@ public class ProductViewController implements Initializable{
     public void materialesButtonOnClicked(){
         ViewOpener viewOpener = new ViewOpener();
         List<Material> listaMateriales = new ArrayList<Material>();
-        listaMateriales = viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales",listaMateriales);
+        viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales",listaMateriales);
     }
 
 }
