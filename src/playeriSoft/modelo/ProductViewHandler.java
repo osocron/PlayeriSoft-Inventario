@@ -158,5 +158,21 @@ public class ProductViewHandler {
 
     }
 
+    public String getPlayeraID(){
+        return null;
+    }
+
+    public String getSudaderaID(){
+        return null;
+    }
+
+    public String getGorraID(){
+        return null;
+    }
+
+    public String getParcheID(){
+        return null;
+    }
+
 
 }
