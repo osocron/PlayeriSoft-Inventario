@@ -93,7 +93,6 @@ public class InventarioProductosController implements Initializable{
 
     }
 
-    @FXML
     public void searchProducts(String oldVal, String newVal){
         if (oldVal != null && (newVal.length() < oldVal.length())) {
             prodListView.setItems(items);

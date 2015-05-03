@@ -1,15 +1,15 @@
 package playeriSoft.controlador;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import playeriSoft.modelo.Material;
 import playeriSoft.modelo.MaterialesHandler;
@@ -23,24 +23,31 @@ import java.util.ResourceBundle;
  */
 public class MaterialesController implements Initializable {
 
+    private ObservableList<Material> items = FXCollections.observableArrayList();
+
     @FXML
     private TextField busqMaterialesTextField;
 
     @FXML
-    private ListView materialesListView;
+    private ListView<Material> materialesListView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareListView();
+        busqMaterialesTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                searchMateriales(oldValue, newValue);
+            }
+        });
     }
 
     private void prepareListView(){
         MaterialesHandler myHandler = new MaterialesHandler();
         //Set items on ListView
-        ObservableList<Material> items = FXCollections.observableArrayList();
         items = myHandler.getAllMateriales(items);
         materialesListView.setItems(items);
-        //Tweak ListView to display only productos.descripcion
+        //Tweak ListView to display custom cell with checkbox, label and textfield
         materialesListView.setCellFactory(new Callback<ListView<Material>, ListCell<Material>>() {
             @Override
             public ListCell<Material> call(ListView<Material> param) {
@@ -48,16 +55,21 @@ public class MaterialesController implements Initializable {
                     @Override
                     protected void updateItem(Material material, boolean bool) {
                         super.updateItem(material, bool);
-                        if (material != null) {
-                            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("playeriSoft/vista/MaterialRow.fxml"));
-                            try {
-                                loader.load();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                        if(bool){
+                            setText(null);
+                            setGraphic(null);
+                        }else {
+                            if (material != null) {
+                                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("playeriSoft/vista/MaterialRow.fxml"));
+                                try {
+                                    loader.load();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                MaterialRowController controller = loader.<MaterialRowController>getController();
+                                controller.setInfo(material);
+                                setGraphic(controller.getBox());
                             }
-                            MaterialRowController controller = loader.<MaterialRowController>getController();
-                            controller.setInfo(material);
-                            setGraphic(controller.getBox());
                         }
                     }
                 };
@@ -69,6 +81,28 @@ public class MaterialesController implements Initializable {
     @FXML
     public void guardarMateriales(){
 
+    }
+
+    public void searchMateriales(String oldVal, String newVal){
+        if (oldVal != null && (newVal.length() < oldVal.length())) {
+            materialesListView.setItems(items);
+        }
+        String[] parts = newVal.toUpperCase().split(" ");
+        ObservableList<Material> subentries = FXCollections.observableArrayList();
+        for (Material entry : materialesListView.getItems()) {
+            boolean match = true;
+            String entryText = entry.getDescripcionMaterial();
+            for ( String part: parts ) {
+                if ( ! entryText.toUpperCase().contains(part) ) {
+                    match = false;
+                    break;
+                }
+            }
+            if ( match ) {
+                subentries.add(entry);
+            }
+        }
+        materialesListView.setItems(subentries);
     }
 
 }
