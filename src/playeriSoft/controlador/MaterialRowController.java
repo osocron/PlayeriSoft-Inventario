@@ -3,6 +3,7 @@ package playeriSoft.controlador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -32,6 +33,9 @@ public class MaterialRowController implements Initializable{
     @FXML
     private HBox hBox;
 
+    @FXML
+    private Button guardarButton;
+
     public  MaterialRowController(){
 
     }
@@ -39,7 +43,7 @@ public class MaterialRowController implements Initializable{
     public void setInfo(Material material)
     {
         curMaterial = material;
-        materialLabel.setText(curMaterial.getDescripcionMaterial());
+        materialLabel.setText(curMaterial.getDescripcionMaterial() + " " + String.valueOf(curMaterial.getCantidadDeProducto()) + curMaterial.getUnidadMedida());
     }
 
     public HBox getBox(){
@@ -51,4 +55,11 @@ public class MaterialRowController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
+    @FXML
+    public void materialCheckBoxClicked(){
+        materialCantidadTextField.setEditable(materialCheckBox.isSelected() ? true : false);
+    }
+
+
 }

@@ -62,11 +62,21 @@
             </Button>
          </bottom>
          <center>
-            <ListView fx:id="prodListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefViewportHeight="284.0" prefViewportWidth="580.0">
+               <content>
+                  <ListView fx:id="prodListView" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </BorderPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </ListView>
+               </content>
                <BorderPane.margin>
                   <Insets left="10.0" right="10.0" />
                </BorderPane.margin>
-            </ListView>
+            </ScrollPane>
          </center>
       </BorderPane>
    </children>

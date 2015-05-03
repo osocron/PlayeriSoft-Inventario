@@ -14,10 +14,24 @@
       </TextField>
    </top>
    <center>
-      <ListView fx:id="materialesListView" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefViewportHeight="345.0" prefViewportWidth="480.0">
+         <content>
+            <ListView fx:id="materialesListView" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </BorderPane.margin>
+            </ListView>
+         </content>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <Button fx:id="guardarButton" mnemonicParsing="false" onAction="#guardarMateriales" text="Guardar" BorderPane.alignment="CENTER_RIGHT">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" />
          </BorderPane.margin>
-      </ListView>
-   </center>
+      </Button>
+   </bottom>
 </BorderPane>

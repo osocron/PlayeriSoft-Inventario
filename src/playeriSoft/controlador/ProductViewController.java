@@ -192,18 +192,18 @@ public class ProductViewController implements Initializable{
         gorraCheckBox.setDisable(true);
         sudaderaCheckBox.setDisable(true);
         parcheCheckBox.setDisable(true);
-        descripTextField.setDisable(true);
-        existenciasTextField.setDisable(true);
-        descuentoTextField.setDisable(true);
-        precioMayTextField.setDisable(true);
-        precioMenTextField.setDisable(true);
-        colorTextField.setDisable(true);
-        tallaTextField.setDisable(true);
+        descripTextField.setEditable(false);
+        existenciasTextField.setEditable(false);
+        descuentoTextField.setEditable(false);
+        precioMayTextField.setEditable(false);
+        precioMenTextField.setEditable(false);
+        colorTextField.setEditable(false);
+        tallaTextField.setEditable(false);
         tipoChoiceBox.setDisable(true);
         bordadoCheckBox.setDisable(true);
         serigrafiaCheckBox.setDisable(true);
-        largoTextField.setDisable(true);
-        anchoTextField.setDisable(true);
+        largoTextField.setEditable(false);
+        anchoTextField.setEditable(false);
         agregarMaterialesButton.setDisable(true);
         eliminarButton.setDisable(true);
     }
@@ -224,13 +224,13 @@ public class ProductViewController implements Initializable{
             parcheCheckBox.setDisable(false);
             parcheCheckBoxClicked();
         }
-        descripTextField.setDisable(false);
-        existenciasTextField.setDisable(false);
-        descuentoTextField.setDisable(false);
-        precioMayTextField.setDisable(false);
-        precioMenTextField.setDisable(false);
-        colorTextField.setDisable(false);
-        tallaTextField.setDisable(false);
+        descripTextField.setEditable(true);
+        existenciasTextField.setEditable(true);
+        descuentoTextField.setEditable(true);
+        precioMayTextField.setEditable(true);
+        precioMenTextField.setEditable(true);
+        colorTextField.setEditable(true);
+        tallaTextField.setEditable(true);
         tipoChoiceBox.setDisable(false);
         if(bordadoCheckBox.isSelected()){
             bordadoCheckBox.setDisable(false);
@@ -239,8 +239,8 @@ public class ProductViewController implements Initializable{
             serigrafiaCheckBox.setDisable(false);
             serigrafiaCheckBoxClicked();
         }
-        largoTextField.setDisable(false);
-        anchoTextField.setDisable(false);
+        largoTextField.setEditable(true);
+        anchoTextField.setEditable(true);
         agregarMaterialesButton.setDisable(false);
         eliminarButton.setDisable(false);
     }
@@ -250,8 +250,8 @@ public class ProductViewController implements Initializable{
         gorraCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
         sudaderaCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
         parcheCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
-        largoTextField.setDisable(playeraCheckBox.isSelected() ? true : false);
-        anchoTextField.setDisable(playeraCheckBox.isSelected() ? true : false);
+        largoTextField.setEditable(playeraCheckBox.isSelected() ? false : true);
+        anchoTextField.setEditable(playeraCheckBox.isSelected() ? false : true);
     }
 
     @FXML
@@ -260,8 +260,8 @@ public class ProductViewController implements Initializable{
         playeraCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
         parcheCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
         tipoChoiceBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
-        largoTextField.setDisable(sudaderaCheckBox.isSelected() ? true : false);
-        anchoTextField.setDisable(sudaderaCheckBox.isSelected() ? true : false);
+        largoTextField.setEditable(sudaderaCheckBox.isSelected() ? false : true);
+        anchoTextField.setEditable(sudaderaCheckBox.isSelected() ? false : true);
     }
 
     @FXML
@@ -270,8 +270,8 @@ public class ProductViewController implements Initializable{
         sudaderaCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
         parcheCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
         tipoChoiceBox.setDisable(gorraCheckBox.isSelected() ? true : false);
-        largoTextField.setDisable(gorraCheckBox.isSelected() ? true : false);
-        anchoTextField.setDisable(gorraCheckBox.isSelected() ? true : false);
+        largoTextField.setEditable(gorraCheckBox.isSelected() ? false : true);
+        anchoTextField.setEditable(gorraCheckBox.isSelected() ? false : true);
     }
 
     @FXML
@@ -279,8 +279,8 @@ public class ProductViewController implements Initializable{
         gorraCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
         sudaderaCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
         playeraCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
-        tallaTextField.setDisable(parcheCheckBox.isSelected() ? true : false);
-        colorTextField.setDisable(parcheCheckBox.isSelected() ? true : false);
+        tallaTextField.setEditable(parcheCheckBox.isSelected() ? false : true);
+        colorTextField.setEditable(parcheCheckBox.isSelected() ? false : true);
         tipoChoiceBox.setDisable(parcheCheckBox.isSelected() ? true : false);
     }
 
