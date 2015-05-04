@@ -337,7 +337,11 @@ public class ProductViewController implements Initializable{
     @FXML
     public void materialesButtonOnClicked(){
         ViewOpener viewOpener = new ViewOpener();
-        viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this);
+        if(listaMateriales == null) {
+            viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this);
+        }else{
+            viewOpener.openMaterialesPickerWithSelectedMaterials("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this,listaMateriales);
+        }
     }
 
     public void setListaMateriales(List<Material> listaMateriales){

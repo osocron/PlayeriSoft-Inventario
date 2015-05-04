@@ -95,5 +95,17 @@ public class MaterialesController implements Initializable {
         this.productViewController = controller;
     }
 
+    public void setSelectedMaterials(List<Material> selectedMateriales){
+        for(Material material : items){
+            for(Material curMaterial : selectedMateriales){
+                if(material.getIdMaterial().equals(curMaterial.getIdMaterial())){
+                    material.setSelected(true);
+                    material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
+                }
+            }
+        }
+        materialesListView.setItems(items);
+    }
+
 
 }
