@@ -97,7 +97,7 @@ public class InputValidador {
 
     public static boolean txtFieldIsDecimalOnly (String text, String presicionPreDecimal, String precisionPostDecimal){
         boolean isNumericOnly;
-        Pattern pattern = Pattern.compile("^\\d{0,"+presicionPreDecimal+"}\\.?\\d{0,"+precisionPostDecimal+"}$");
+        Pattern pattern = Pattern.compile("^\\d{0,"+presicionPreDecimal+"}\\.?\\d{0,"+precisionPostDecimal+"}$");//Making Sense
         Matcher matcher = pattern.matcher(text);
         isNumericOnly = matcher.matches();
         return  isNumericOnly;
