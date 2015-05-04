@@ -326,11 +326,13 @@ public class ProductViewController implements Initializable{
                     Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                     Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
                     colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
-        }else{
+        }else if(parcheCheckBox.isSelected()){
             myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                     Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                     Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
                     Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+        }else{
+
         }
     }
 

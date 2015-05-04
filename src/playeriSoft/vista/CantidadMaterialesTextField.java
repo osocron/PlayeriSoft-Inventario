@@ -15,9 +15,9 @@ public class CantidadMaterialesTextField extends TextField {
     @Override
     public void replaceText(int start, int end, String text) {
         String newText = getText().substring(0, start)+text+getText().substring(end);
-        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText,"3");
+        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText,"4","3");
         int textLength = this.getText().length();
-        if (isDecimal && (textLength < 6) || text.isEmpty()) {
+        if (isDecimal && (textLength <= 6) || text.isEmpty()) {
             super.replaceText(start, end, text);
         }
     }
