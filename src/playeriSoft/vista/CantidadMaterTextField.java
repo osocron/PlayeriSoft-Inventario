@@ -6,9 +6,9 @@ import playeriSoft.modelo.InputValidador;
 /**
  * Created by osocr_000 on 05/05/2015.
  */
-public class CantidadMaterialesTextField  extends TextField {
+public class CantidadMaterTextField extends TextField {
 
-    public CantidadMaterialesTextField(){
+    public CantidadMaterTextField(){
         super();
     }
 
@@ -34,5 +34,4 @@ public class CantidadMaterialesTextField  extends TextField {
     public void replaceSelection(String replacement) {
         super.replaceSelection(replacement);
     }
-
 }
