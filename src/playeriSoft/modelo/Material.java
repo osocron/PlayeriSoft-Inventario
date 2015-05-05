@@ -1,5 +1,7 @@
 package playeriSoft.modelo;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Noe on 18/04/15.
  */
@@ -76,6 +78,7 @@ public class Material {
     }
 
     public void setCantidadSeleccionada(double cantidadSeleccionada) {
-        this.cantidadSeleccionada = cantidadSeleccionada;
+        DecimalFormat decimalFormat = new DecimalFormat("0.000");
+        this.cantidadSeleccionada = Double.valueOf(decimalFormat.format(cantidadSeleccionada));
     }
 }

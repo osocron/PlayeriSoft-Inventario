@@ -20,7 +20,7 @@ public class ViewOpener {
     public int openProductViewWithResourceObject(String pathToFXML, String title, Producto resourceObject) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(new Scene(root, 600, 400));
@@ -36,7 +36,7 @@ public class ViewOpener {
     public int openEditableProductView(String pathToFXML, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(new Scene(root, 600, 400));
@@ -53,7 +53,7 @@ public class ViewOpener {
 
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(new Scene(root, 500, 400));
