@@ -55,7 +55,7 @@ public class InputValidador {
     public static boolean txtFieldIsLatinTextOnly (TextField txtField){
         boolean isTextOnly;
         String text = txtField.getText();
-        Pattern pattern = Pattern.compile("^[\\p{L} .'-]+$");
+        Pattern pattern = Pattern.compile("^[\\p{L} .,'-]+$");
         Matcher matcher = pattern.matcher(text);
         isTextOnly = matcher.matches();
         return isTextOnly;
@@ -63,7 +63,15 @@ public class InputValidador {
 
     public static boolean txtFieldIsLatinTextOnly (String text){
         boolean isTextOnly;
-        Pattern pattern = Pattern.compile("^[\\p{L} .'-]+$");
+        Pattern pattern = Pattern.compile("^[\\p{L} .,'-]+$");
+        Matcher matcher = pattern.matcher(text);
+        isTextOnly = matcher.matches();
+        return isTextOnly;
+    }
+
+    public static boolean txtFieldIsLatinTextButNoPunctuation(String text){
+        boolean isTextOnly;
+        Pattern pattern = Pattern.compile("^[\\p{L} ]+$");
         Matcher matcher = pattern.matcher(text);
         isTextOnly = matcher.matches();
         return isTextOnly;
@@ -86,18 +94,18 @@ public class InputValidador {
         return  isNumericOnly;
     }
 
-    public static boolean txtFieldIsDecimalOnly (TextField txtField , String precision){
+    public static boolean txtFieldIsDecimalOnly (TextField txtField , String precisionPostDecimal){
         boolean isNumericOnly;
         String text = txtField.getText();
-        Pattern pattern = Pattern.compile("");
+        Pattern pattern = Pattern.compile("^\\d*\\.?\\d{0,"+precisionPostDecimal+"}$");
         Matcher matcher = pattern.matcher(text);
         isNumericOnly = matcher.matches();
         return  isNumericOnly;
     }
 
-    public static boolean txtFieldIsDecimalOnly (String text, String presicionPreDecimal, String precisionPostDecimal){
+    public static boolean txtFieldIsDecimalOnly (String text, String precisionPostDecimal){
         boolean isNumericOnly;
-        Pattern pattern = Pattern.compile("^\\d{0,"+presicionPreDecimal+"}\\.?\\d{0,"+precisionPostDecimal+"}$");
+        Pattern pattern = Pattern.compile("^\\d*\\.?\\d{0,"+precisionPostDecimal+"}$");
         Matcher matcher = pattern.matcher(text);
         isNumericOnly = matcher.matches();
         return  isNumericOnly;

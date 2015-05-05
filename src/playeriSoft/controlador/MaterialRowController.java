@@ -43,7 +43,8 @@ public class MaterialRowController implements Initializable{
     public void setInfo(Material material)
     {
         curMaterial = material;
-        materialLabel.setText(curMaterial.getDescripcionMaterial() + " " + String.valueOf(curMaterial.getCantidadDeProducto()) + curMaterial.getUnidadMedida());
+        materialLabel.setText(curMaterial.getDescripcionMaterial() + " " +
+                String.valueOf(curMaterial.getCantidadDeProducto()) + " " + curMaterial.getUnidadMedida());
         if(curMaterial.isSelected()){
             materialCheckBox.setSelected(true);
             materialCantidadTextField.setText(String.valueOf(curMaterial.getCantidadSeleccionada()));

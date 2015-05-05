@@ -6,7 +6,7 @@ import playeriSoft.modelo.InputValidador;
 /**
  * Created by osocr_000 on 05/05/2015.
  */
-public class CantidadMaterialesTextField extends TextField {
+public class CantidadMaterialesTextField  extends TextField {
 
     public CantidadMaterialesTextField(){
         super();
@@ -15,7 +15,7 @@ public class CantidadMaterialesTextField extends TextField {
     @Override
     public void replaceText(int start, int end, String text) {
         String newText = getText().substring(0, start)+text+getText().substring(end);
-        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText,"4","3");
+        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText, "3");
         int textLength = this.getText().length();
         Double curDouble;
         try{

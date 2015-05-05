@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import playeriSoft.vista.DescripcionTextField?>
+<?import playeriSoft.vista.ExistenciasTextField?>
+<?import playeriSoft.vista.DescuentoTextField?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playeriSoft.controlador.ProductViewController">
    <children>
       <BorderPane layoutX="152.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -96,22 +98,22 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="descripTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                        <DescripcionTextField fx:id="descripTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                            <GridPane.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="existenciasTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT">
+                        </DescripcionTextField>
+                        <ExistenciasTextField fx:id="existenciasTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
-                        </TextField>
+                        </ExistenciasTextField>
                         <Label focusTraversable="false" text="Descuento" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="descuentoTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+                        <DescuentoTextField fx:id="descuentoTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
                         <Label focusTraversable="false" text="Precio Mayoreo" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
