@@ -61,12 +61,9 @@ public class MaterialRowController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!newValue.isEmpty()) {
-                    if (newValue.equals(".")) {
-                        materialCantidadTextField.setText("");
-                    }else{
-                        curMaterial.setCantidadSeleccionada(Double.valueOf(newValue));
-                    }
-
+                    curMaterial.setCantidadSeleccionada(Double.valueOf(newValue));
+                }else{
+                    curMaterial.setCantidadSeleccionada(0.0);
                 }
             }
         });
