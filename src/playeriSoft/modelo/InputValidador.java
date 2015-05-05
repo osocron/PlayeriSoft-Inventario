@@ -71,7 +71,7 @@ public class InputValidador {
 
     public static boolean txtFieldIsLatinTextButNoPunctuation(String text){
         boolean isTextOnly;
-        Pattern pattern = Pattern.compile("^[\\p{L} ]+$");
+        Pattern pattern = Pattern.compile("^[\\p{L} -]+$");
         Matcher matcher = pattern.matcher(text);
         isTextOnly = matcher.matches();
         return isTextOnly;

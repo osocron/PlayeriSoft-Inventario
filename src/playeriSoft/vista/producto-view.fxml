@@ -5,9 +5,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import playeriSoft.vista.DescripcionTextField?>
-<?import playeriSoft.vista.ExistenciasTextField?>
-<?import playeriSoft.vista.DescuentoTextField?>
+<?import playeriSoft.vista.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playeriSoft.controlador.ProductViewController">
    <children>
       <BorderPane layoutX="152.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -124,53 +123,53 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="precioMayTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                        <PrecioMayoreoMenudeoTextField fx:id="precioMayTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
-                        </TextField>
+                        </PrecioMayoreoMenudeoTextField>
                         <Label focusTraversable="false" text="Talla" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="precioMenTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                        <PrecioMayoreoMenudeoTextField fx:id="precioMenTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="tallaTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                        </PrecioMayoreoMenudeoTextField>
+                        <TallaTextField fx:id="tallaTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="colorTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                        </TallaTextField>
+                        <ColorTextField fx:id="colorTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
                         <CheckBox fx:id="bordadoCheckBox" focusTraversable="false" mnemonicParsing="false" onAction="#bordadoCheckBoxClicked" text="Bordado" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
                         <Label focusTraversable="false" text="Color" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label focusTraversable="false" text="Largo" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                        <Label focusTraversable="false" text="Largo(cm)" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label focusTraversable="false" text="Ancho" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                        <Label focusTraversable="false" text="Ancho(cm)" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="largoTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                        <LargoAnchoTextField fx:id="largoTextField" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="anchoTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                        </LargoAnchoTextField>
+                        <LargoAnchoTextField fx:id="anchoTextField" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets bottom="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                        </TextField>
+                        </LargoAnchoTextField>
                         <CheckBox fx:id="serigrafiaCheckBox" focusTraversable="false" mnemonicParsing="false" onAction="#serigrafiaCheckBoxClicked" text="Serigrafia" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
                         <Label text="Materia Prima" GridPane.columnIndex="2" GridPane.rowIndex="6">
                            <GridPane.margin>
