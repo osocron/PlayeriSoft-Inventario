@@ -84,13 +84,17 @@ public class ProductViewController implements Initializable{
     private Button modificarButton;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> items = FXCollections.observableArrayList("Normal","Polo");
         tipoChoiceBox.setItems(items);
     }
 
-
+    /*/Este metodo prepara lo necesario para que la informacion del producto seleccionado desde la primera pantalla primcipal
+    se pueda visualizar en la pantalla de producto detallado, asimismo, junta la informacion de los materiales que el
+    usuario ha definido como materia prima del producto seleccionado y los guarda en una lista de materiales para uso
+    futuro por el metodo materialesButtonOnClicked*/
     public void setResourceObject(Producto resourceObject){
         this.curProduct = resourceObject;
         modificarButton.setText("Modificar");
@@ -99,6 +103,8 @@ public class ProductViewController implements Initializable{
         listaMateriales = myHandler.getSelectedMateriales(listaMateriales, curProduct);
     }
 
+    /*Este metodo se encarga de acomodar el Layout cuando el usuario desea crear un nuevo usuario, por default
+    * deja el Layout como si se fuera a ingresar una playera*/
     public void setNewProductLayout(){
         eliminarButton.setDisable(true);
         playeraCheckBox.setSelected(true);
@@ -106,6 +112,9 @@ public class ProductViewController implements Initializable{
 
     }
 
+    /*Cuando se recibe un objeto producto desde la pantalla ane¡terior, es necesario definir a que subclase pertenece,
+    * para esto, este metodo se encarga de verificar de que tipo de producto es el objeto que se pasa como parametro
+    * en el metodo setRsourceObject, una vez encontrado el tipo de producto se acomoda el Layout de la pantalla respectivamente*/
     private void sortClassName(Producto resourceObject){
         String idProd = resourceObject.getIdProducto();
         String prodType = idProd.substring(0, Math.min(idProd.length(), 4));
@@ -216,20 +225,23 @@ public class ProductViewController implements Initializable{
         eliminarButton.setDisable(true);
     }
 
-    private void enableFields(){
+    private void enableFieldsParaModificar(){
         if(playeraCheckBox.isSelected()){
-            playeraCheckBox.setDisable(false);
             playeraCheckBoxClicked();
+            colorTextField.setEditable(true);
+            tallaTextField.setEditable(true);
+            tipoChoiceBox.setDisable(false);
         }
         else if(sudaderaCheckBox.isSelected()){
-            sudaderaCheckBox.setDisable(false);
             sudaderaCheckBoxClicked();
+            colorTextField.setEditable(true);
+            tallaTextField.setEditable(true);
         }
         else if(gorraCheckBox.isSelected()){
-            gorraCheckBox.setDisable(false);
             gorraCheckBoxClicked();
+            colorTextField.setEditable(true);
+            tallaTextField.setEditable(true);
         }else{
-            parcheCheckBox.setDisable(false);
             parcheCheckBoxClicked();
         }
         descripTextField.setEditable(true);
@@ -237,18 +249,6 @@ public class ProductViewController implements Initializable{
         descuentoTextField.setEditable(true);
         precioMayTextField.setEditable(true);
         precioMenTextField.setEditable(true);
-        colorTextField.setEditable(true);
-        tallaTextField.setEditable(true);
-        tipoChoiceBox.setDisable(false);
-        if(bordadoCheckBox.isSelected()){
-            bordadoCheckBox.setDisable(false);
-            bordadoCheckBoxClicked();
-        }else{
-            serigrafiaCheckBox.setDisable(false);
-            serigrafiaCheckBoxClicked();
-        }
-        largoTextField.setEditable(true);
-        anchoTextField.setEditable(true);
         agregarMaterialesButton.setDisable(false);
         eliminarButton.setDisable(false);
     }
@@ -308,7 +308,7 @@ public class ProductViewController implements Initializable{
         if (modificarButton.getText().equals("Guardar")){
             guardarProducto();
         }else{
-            enableFields();
+            enableFieldsParaModificar();
             modificarButton.setText("Guardar");
         }
     }
