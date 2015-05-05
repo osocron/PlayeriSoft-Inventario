@@ -141,7 +141,8 @@ public class ProductViewHandler {
     public void guardarPlayera(double descuento, String descripcion, int existencias,
                                double precioMayoreo, double precioMenudeo,double talla, String color,
                                String tipo, boolean isBordado, boolean isSerigrafia){
-       String productID = getNextID("Playera",isBordado);
+        String productID = getNextID("Playera",isBordado);
+
 
     }
 
@@ -159,8 +160,47 @@ public class ProductViewHandler {
 
     public void guardarParche(double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
-                              double ancho, boolean isBordado, boolean isSerigrafia){
+                              double ancho, boolean isBordado){
         String productID = getNextID("Parche",isBordado);
+        guardarProducto(productID,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "INSERT INTO Parche VALUES (?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1,productID);
+            preparedStatement.setDouble(2, largo);
+            preparedStatement.setDouble(3, ancho);
+            if(isBordado) {
+                preparedStatement.setString(4, "true");
+                preparedStatement.setString(5, "false");
+            }else{
+                preparedStatement.setString(4, "false");
+                preparedStatement.setString(5, "true");
+            }
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void guardarProducto(String idProducto, double descuento, String descripcion, int existencias,
+                                 double precioMayoreo, double precioMenudeo){
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "INSERT INTO Producto VALUES (?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1,idProducto);
+            preparedStatement.setString(2, descripcion);
+            preparedStatement.setInt(3, existencias);
+            preparedStatement.setDouble(4, descuento);
+            preparedStatement.setDouble(5,precioMayoreo);
+            preparedStatement.setDouble(6,precioMenudeo);
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /*Metodo que se encarga de calcular el siguiente ID para el producto, tomando en cuenta el tipo de
