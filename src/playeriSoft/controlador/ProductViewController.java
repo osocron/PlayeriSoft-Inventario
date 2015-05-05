@@ -97,6 +97,8 @@ public class ProductViewController implements Initializable{
 
     public void setNewProductLayout(){
         eliminarButton.setDisable(true);
+        playeraCheckBox.setSelected(true);
+        playeraCheckBoxClicked();
     }
 
     private void sortClassName(Producto resourceObject){
