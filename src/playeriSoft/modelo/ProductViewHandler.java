@@ -3,6 +3,8 @@ package playeriSoft.modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Noe on 24/04/15.
@@ -174,5 +176,39 @@ public class ProductViewHandler {
         return null;
     }
 
-
+    //Este metodo regresa las coincidencias del producto dado en la Tabla de RMaterialProducto
+    public List<Material> getSelectedMateriales(List<Material> materialesSeleccionados, Producto curProduct){
+        MaterialesHandler handler = new MaterialesHandler();
+        String idProducto = curProduct.getIdProducto();
+        List<Material> todosMateriales = new ArrayList<Material>();
+        todosMateriales = handler.getAllMateriales(todosMateriales);
+        List<String[]> listaIdMateriales = new ArrayList<String[]>();
+        MysqlConnector myConnector = new MysqlConnector();
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            preparedStatement = connection.prepareStatement("SELECT * FROM RMaterialProducto WHERE IdProducto = '"+idProducto+"'");
+            resultSet = preparedStatement.executeQuery();
+            int cont = 0;
+            while(resultSet.next()){
+                String[] idCantidad = new String[2];
+                idCantidad[0] = resultSet.getString("IdMaterial");
+                idCantidad[1] = String.valueOf(resultSet.getDouble("Cantidad"));
+                listaIdMateriales.add(idCantidad);
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        for(Material material : todosMateriales){
+            for(String[] idMaterial : listaIdMateriales){
+                if (material.getIdMaterial().equals(idMaterial[0])){
+                    material.setSelected(true);
+                    material.setCantidadSeleccionada(Double.valueOf(idMaterial[1]));
+                    materialesSeleccionados.add(material);
+                }
+            }
+        }
+        return materialesSeleccionados;
+    }
 }

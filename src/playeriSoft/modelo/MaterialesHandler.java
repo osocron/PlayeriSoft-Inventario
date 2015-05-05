@@ -43,6 +43,29 @@ public class MaterialesHandler {
 
     }
 
+    public List<Material> getAllMateriales(List<Material> items){
+        MysqlConnector myConnector = new MysqlConnector();
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            preparedStatement = connection.prepareStatement("SELECT * FROM material");
+            resultSet = preparedStatement.executeQuery();
+            int cont = 0;
+            Material material;
+            while(resultSet.next()){
+                material = new Material(resultSet.getString("IdMaterial"),resultSet.getString("DescripMaterial"),
+                        resultSet.getDouble("PrecioMaterial"),resultSet.getString("UMedida"),
+                        resultSet.getDouble("CantidadMaterial"));
+                items.add(cont,material);
+            }
+            connection.close();
+            return items;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public void guardarMateriales(List<Material> listaMateriales, Producto curProd){
 
     }

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * Created by Noe on 27/04/15.
@@ -41,4 +42,5 @@ public class InventarioHandler {
         }
 
     }
+
 }

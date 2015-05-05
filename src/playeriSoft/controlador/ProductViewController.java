@@ -21,6 +21,8 @@ public class ProductViewController implements Initializable{
 
     private List<Material> listaMateriales;
 
+    private ProductViewHandler myHandler = new ProductViewHandler();
+
     @FXML
     private Label productoLabel;
 
@@ -93,16 +95,18 @@ public class ProductViewController implements Initializable{
         this.curProduct = resourceObject;
         modificarButton.setText("Modificar");
         sortClassName(resourceObject);
+        listaMateriales = new ArrayList<Material>();
+        listaMateriales = myHandler.getSelectedMateriales(listaMateriales, curProduct);
     }
 
     public void setNewProductLayout(){
         eliminarButton.setDisable(true);
         playeraCheckBox.setSelected(true);
         playeraCheckBoxClicked();
+
     }
 
     private void sortClassName(Producto resourceObject){
-        ProductViewHandler myHandler = new ProductViewHandler();
         String idProd = resourceObject.getIdProducto();
         String prodType = idProd.substring(0, Math.min(idProd.length(), 4));
         if(prodType.equals("PLAY")){
