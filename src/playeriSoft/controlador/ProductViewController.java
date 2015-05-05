@@ -314,7 +314,6 @@ public class ProductViewController implements Initializable{
     }
 
     public void guardarProducto(){
-        ProductViewHandler myHandler = new ProductViewHandler();
         if(playeraCheckBox.isSelected()){
             myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                     Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),

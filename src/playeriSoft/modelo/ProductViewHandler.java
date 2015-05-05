@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class ProductViewHandler {
 
+    private MysqlConnector myConnector = new MysqlConnector();
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -20,7 +21,7 @@ public class ProductViewHandler {
     public Producto buildPlayera(Producto producto, String idPlayera){
         Playera playera = null;
         try {
-            resultSet = getResultSet("playera", idPlayera);
+            resultSet = getResultSetForBuildingProduct("playera", idPlayera);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -37,7 +38,7 @@ public class ProductViewHandler {
     public Producto buildSudadera(Producto producto, String idSudadera){
         Sudadera sudadera = null;
         try {
-            resultSet = getResultSet("sudadera",idSudadera);
+            resultSet = getResultSetForBuildingProduct("sudadera", idSudadera);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -54,7 +55,7 @@ public class ProductViewHandler {
     public Producto buildGorra(Producto producto, String idGorra){
         Gorro gorra = null;
         try {
-            resultSet = getResultSet("gorra",idGorra);
+            resultSet = getResultSetForBuildingProduct("gorra", idGorra);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -71,7 +72,7 @@ public class ProductViewHandler {
     public Producto buildParche(Producto producto, String idParche){
         Parche parche = null;
         try {
-            resultSet = getResultSet("parche",idParche);
+            resultSet = getResultSetForBuildingProduct("parche", idParche);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -85,11 +86,22 @@ public class ProductViewHandler {
         }
     }
 
-    private ResultSet getResultSet(String table, String idProd){
-        MysqlConnector myConnector = new MysqlConnector();
+    private ResultSet getResultSetForBuildingProduct(String table, String idProd){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM "+ table + " WHERE IdProducto = '" + idProd + "'");
+            resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private ResultSet getResultSetToGetID(String table, String bordadoSerigrafia){
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            preparedStatement = connection.prepareStatement("SELECT IdProducto FROM " + table + " WHERE IdProducto LIKE '%"+bordadoSerigrafia+"%' ORDER BY IdProducto DESC LIMIT 1");
             resultSet = preparedStatement.executeQuery();
             return resultSet;
         }catch (Exception e){
@@ -129,52 +141,57 @@ public class ProductViewHandler {
     public void guardarPlayera(double descuento, String descripcion, int existencias,
                                double precioMayoreo, double precioMenudeo,double talla, String color,
                                String tipo, boolean isBordado, boolean isSerigrafia){
-        /*String idProducto = "";
-        MysqlConnector myConnector = new MysqlConnector();
-        try {
-            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("INSERT INTO producto VALUES('"+ idProducto + "','"+descripcion+"',"+existencias+","+descuento+","+precioMayoreo+","+precioMenudeo);
-            resultSet = preparedStatement.executeQuery();
-            connection.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
+       String productID = getNextID("Playera",isBordado);
 
     }
 
     public void guardarSudadera(double descuento, String descripcion, int existencias,
                                 double precioMayoreo, double precioMenudeo,double talla, String color,
                                 boolean isBordado, boolean isSerigrafia){
-
+        String productID = getNextID("Sudadera",isBordado);
     }
 
     public void guardarGorra(double descuento, String descripcion, int existencias,
                              double precioMayoreo, double precioMenudeo, double talla,
                              String color, boolean isBordado, boolean isSerigrafia){
-
+        String productID = getNextID("Gorra",isBordado);
     }
 
     public void guardarParche(double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
                               double ancho, boolean isBordado, boolean isSerigrafia){
-
+        String productID = getNextID("Parche",isBordado);
     }
 
-    public String getPlayeraID(){
-        return null;
+    /*Metodo que se encarga de calcular el siguiente ID para el producto, tomando en cuenta el tipo de
+    *producto y los valores existentes en la base de datos*/
+    public String getNextID(String table, Boolean isBordado){
+        String nextID = null;
+        String bordadoSerigrefia  = isBordado ? "BORD" : "SERI";
+        try {
+            resultSet = getResultSetToGetID(table,bordadoSerigrefia);
+            while (resultSet.next()) {
+                nextID = resultSet.getString("IdProducto");
+            }
+            connection.close();
+        }catch (Exception e){
+            return nextID;
+        }
+        if(nextID != null && !nextID.isEmpty()) {
+            nextID = getNextNumber(nextID);
+        }else{
+            nextID = table.substring(0,4).toUpperCase() + bordadoSerigrefia + "0001";
+        }
+        return nextID;
     }
 
-    public String getSudaderaID(){
-        return null;
+    /*Metodo que se encarga de recibir un Id de Producto, calcular el siguiente numero consetcutivo y agregarlo
+    * remplazarlo por el original, asi consiguiendo el nuevo numero consecutivo para el ID del Producto*/
+    private String getNextNumber(String nextID){
+        String nextNumber = String.format("%04d",(Integer.valueOf(nextID.substring(8,nextID.length())) + 1));
+        return nextID.substring(0,8)+nextNumber;
     }
 
-    public String getGorraID(){
-        return null;
-    }
-
-    public String getParcheID(){
-        return null;
-    }
 
     //Este metodo regresa las coincidencias del producto dado en la Tabla de RMaterialProducto
     public List<Material> getSelectedMateriales(List<Material> materialesSeleccionados, Producto curProduct){
