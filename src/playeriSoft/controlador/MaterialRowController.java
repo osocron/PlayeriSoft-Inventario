@@ -3,16 +3,12 @@ package playeriSoft.controlador;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import playeriSoft.modelo.Material;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -73,6 +69,9 @@ public class MaterialRowController implements Initializable{
     public void materialCheckBoxClicked(){
         materialCantidadTextField.setEditable(materialCheckBox.isSelected() ? true : false);
         curMaterial.setSelected( materialCheckBox.isSelected() ? true : false);
+        if(!materialCheckBox.isSelected()){
+            materialCantidadTextField.setText("");
+        }
     }
 
 

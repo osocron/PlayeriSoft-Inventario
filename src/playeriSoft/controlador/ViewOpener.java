@@ -17,7 +17,9 @@ public class ViewOpener {
 
     public ViewOpener(){}
 
-    public int openProductViewWithResourceObject(String pathToFXML, String title, Producto resourceObject) {
+    public int openProductViewWithResourceObject(String pathToFXML, String title,
+                                                 Producto resourceObject,
+                                                 InventarioProductosController inventarioProductosController) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
             Parent root = loader.load();
@@ -25,7 +27,7 @@ public class ViewOpener {
             stage.setTitle(title);
             stage.setScene(new Scene(root, 600, 400));
             ProductViewController controller = loader.<ProductViewController>getController();
-            controller.setResourceObject(resourceObject);
+            controller.setResourceObject(resourceObject, inventarioProductosController);
             stage.show();
             return 0;
         } catch (IOException e) {
@@ -33,7 +35,7 @@ public class ViewOpener {
         }
     }
 
-    public int openEditableProductView(String pathToFXML, String title){
+    public int openEditableProductView(String pathToFXML, String title, InventarioProductosController inventarioProductosController){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
             Parent root = loader.load();
@@ -41,7 +43,7 @@ public class ViewOpener {
             stage.setTitle(title);
             stage.setScene(new Scene(root, 600, 400));
             ProductViewController controller = loader.<ProductViewController>getController();
-            controller.setNewProductLayout();
+            controller.setNewProductLayout(inventarioProductosController);
             stage.show();
             return 0;
         } catch (IOException e) {

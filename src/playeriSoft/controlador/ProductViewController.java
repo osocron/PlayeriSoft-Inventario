@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import playeriSoft.modelo.*;
 
 import java.net.URL;
@@ -22,6 +23,8 @@ public class ProductViewController implements Initializable{
     private List<Material> listaMateriales;
 
     private ProductViewHandler myHandler = new ProductViewHandler();
+
+    private InventarioProductosController inventarioProductosController;
 
     @FXML
     private Label productoLabel;
@@ -95,21 +98,23 @@ public class ProductViewController implements Initializable{
     se pueda visualizar en la pantalla de producto detallado, asimismo, junta la informacion de los materiales que el
     usuario ha definido como materia prima del producto seleccionado y los guarda en una lista de materiales para uso
     futuro por el metodo materialesButtonOnClicked*/
-    public void setResourceObject(Producto resourceObject){
+    public void setResourceObject(Producto resourceObject, InventarioProductosController inventarioProductosController){
         this.curProduct = resourceObject;
         modificarButton.setText("Modificar");
         sortClassName(resourceObject);
         listaMateriales = new ArrayList<Material>();
         listaMateriales = myHandler.getSelectedMateriales(listaMateriales, curProduct);
+        this.inventarioProductosController = inventarioProductosController;
     }
 
     /*Este metodo se encarga de acomodar el Layout cuando el usuario desea crear un nuevo usuario, por default
-    * deja el Layout como si se fuera a ingresar una playera*/
-    public void setNewProductLayout(){
+    * deja el Layout como si se fuera a ingresar una playera. Tambien obtiene una referencia al controlador padre
+    * que llamo a esta clase*/
+    public void setNewProductLayout(InventarioProductosController inventarioProductosController){
         eliminarButton.setDisable(true);
         playeraCheckBox.setSelected(true);
         playeraCheckBoxClicked();
-
+        this.inventarioProductosController = inventarioProductosController;
     }
 
     /*Cuando se recibe un objeto producto desde la pantalla ane¡terior, es necesario definir a que subclase pertenece,
@@ -307,10 +312,17 @@ public class ProductViewController implements Initializable{
     public void modificarButtonClicked(){
         if (modificarButton.getText().equals("Guardar")){
             guardarProducto();
+            inventarioProductosController.refreshListView();
+            cerrarVentanActual();
         }else{
             enableFieldsParaModificar();
             modificarButton.setText("Guardar");
         }
+    }
+
+    private void cerrarVentanActual(){
+        Stage stage = (Stage) modificarButton.getScene().getWindow();
+        stage.close();
     }
 
     public void guardarProducto(){

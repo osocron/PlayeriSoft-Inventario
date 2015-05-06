@@ -25,6 +25,8 @@ public class InventarioProductosController implements Initializable{
     //Local variables
     private InventarioHandler myHandler;
 
+    private InventarioProductosController inventarioProductosController = this;
+
     private ObservableList<Producto> items = FXCollections.observableArrayList();
 
     @FXML
@@ -50,7 +52,7 @@ public class InventarioProductosController implements Initializable{
     @FXML
     public void abrirProductView(ActionEvent event){
         ViewOpener myViewOpener = new ViewOpener();
-        myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto");
+        myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto",this);
     }
 
     public void prepareListView(){
@@ -83,7 +85,8 @@ public class InventarioProductosController implements Initializable{
                         ViewOpener myViewOpener = new ViewOpener();
                         Producto curProd = prodListView.getSelectionModel().getSelectedItem();
                         if(curProd != null) {
-                            myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml", "Consulta de Producto", curProd);
+                            myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml",
+                                    "Consulta de Producto", curProd, inventarioProductosController);
                         }
                     }
                 });
@@ -91,6 +94,14 @@ public class InventarioProductosController implements Initializable{
             }
         });
 
+    }
+
+    public void refreshListView(){
+        prodListView.setItems(null);
+        items.removeAll(items);
+        myHandler = new InventarioHandler();
+        items = myHandler.getAllProducts(items);
+        prodListView.setItems(items);
     }
 
     public void searchProducts(String oldVal, String newVal){
