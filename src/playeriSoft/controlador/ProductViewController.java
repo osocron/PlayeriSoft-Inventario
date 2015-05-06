@@ -335,7 +335,7 @@ public class ProductViewController implements Initializable{
             myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                     Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                     Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
-                    Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected());
+                    Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(), listaMateriales);
         }else{
 
         }

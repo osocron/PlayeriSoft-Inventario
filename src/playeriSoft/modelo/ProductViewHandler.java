@@ -160,7 +160,7 @@ public class ProductViewHandler {
 
     public void guardarParche(double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
-                              double ancho, boolean isBordado){
+                              double ancho, boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Parche",isBordado);
         guardarProducto(productID,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
         try {
@@ -181,6 +181,24 @@ public class ProductViewHandler {
             connection.close();
         }catch (Exception e){
             e.printStackTrace();
+        }
+        guardarMateriales(listaMateriales, productID);
+    }
+
+    private void guardarMateriales(List<Material> listaMateriales, String productoID){
+        for(Material curMaterial : listaMateriales) {
+            try {
+                connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+                String statement = "INSERT INTO rmaterialproducto VALUES (?,?,?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(statement);
+                preparedStatement.setString(1, productoID);
+                preparedStatement.setString(2, curMaterial.getIdMaterial());
+                preparedStatement.setDouble(3, curMaterial.getCantidadSeleccionada());
+                preparedStatement.execute();
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
