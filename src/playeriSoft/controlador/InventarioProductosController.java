@@ -33,26 +33,20 @@ public class InventarioProductosController implements Initializable{
     private ListView<Producto> prodListView;
 
     @FXML
-    private Button nuevoButton;
-
-    @FXML
     private TextField searchTextField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareListView();
-        searchTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                searchProducts(oldValue, newValue);
-            }
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchProducts(oldValue, newValue);
         });
     }
 
     @FXML
-    public void abrirProductView(ActionEvent event){
+    public void abrirProductView(){
         ViewOpener myViewOpener = new ViewOpener();
-        myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto",this);
+        myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto", this);
     }
 
     public void prepareListView(){
@@ -77,15 +71,12 @@ public class InventarioProductosController implements Initializable{
                     }
                 };
                 //Handle mouse clicks
-                cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        ViewOpener myViewOpener = new ViewOpener();
-                        Producto curProd = prodListView.getSelectionModel().getSelectedItem();
-                        if(curProd != null) {
-                            myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml",
-                                    "Consulta de Producto", curProd, inventarioProductosController);
-                        }
+                cell.setOnMouseClicked(event -> {
+                    ViewOpener myViewOpener = new ViewOpener();
+                    Producto curProd = prodListView.getSelectionModel().getSelectedItem();
+                    if(curProd != null) {
+                        myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml",
+                                "Consulta de Producto", curProd, inventarioProductosController);
                     }
                 });
                 return cell;

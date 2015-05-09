@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
  */
 public class ProductViewController implements Initializable{
 
+    private boolean isModificar = false;
+
     private Producto curProduct;
 
     private List<Material> listaMateriales = new ArrayList<>();
@@ -370,11 +372,12 @@ public class ProductViewController implements Initializable{
     @FXML
     public void modificarButtonClicked(){
         if (modificarButton.getText().equals("Guardar")){
-            guardarProducto();
+            guardarProducto(isModificar);
             inventarioProductosController.refreshListView();
         }else{
             enableFieldsParaModificar();
             modificarButton.setText("Guardar");
+            isModificar = true;
         }
     }
 
@@ -416,7 +419,7 @@ public class ProductViewController implements Initializable{
         alert.showAndWait();
     }
 
-    public void guardarProducto() {
+    public void guardarProducto(boolean isForModificar) {
         if (playeraCheckBox.isSelected() && validarGuardarPlayera()) {
             myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
