@@ -67,8 +67,8 @@ public class MaterialRowController implements Initializable{
 
     @FXML
     public void materialCheckBoxClicked(){
-        materialCantidadTextField.setEditable(materialCheckBox.isSelected() ? true : false);
-        curMaterial.setSelected( materialCheckBox.isSelected() ? true : false);
+        materialCantidadTextField.setEditable(materialCheckBox.isSelected());
+        curMaterial.setSelected(materialCheckBox.isSelected());
         if(!materialCheckBox.isSelected()){
             materialCantidadTextField.setText("");
         }

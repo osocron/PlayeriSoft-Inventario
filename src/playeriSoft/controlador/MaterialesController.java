@@ -5,9 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import playeriSoft.modelo.Material;
@@ -51,10 +53,10 @@ public class MaterialesController implements Initializable {
                     @Override
                     protected void updateItem(Material material, boolean bool) {
                         super.updateItem(material, bool);
-                        if(bool){
+                        if (bool) {
                             setText(null);
                             setGraphic(null);
-                        }else {
+                        } else {
                             if (material != null) {
                                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("playeriSoft/vista/MaterialRow.fxml"));
                                 try {
@@ -77,13 +79,36 @@ public class MaterialesController implements Initializable {
     @FXML
     public void guardarMateriales(){
         List<Material> myListaMateriales = new ArrayList<Material>();
+        final boolean[] isValidated = {true};
+        final boolean[] atLeastOneSelected = {false};
+        final boolean[] allWithCantidades = {true};
         items.forEach((Material curMaterial) -> {
-            if (curMaterial.isSelected()){
+            if (curMaterial.isSelected() && curMaterial.getCantidadSeleccionada() > 0.0){
                 myListaMateriales.add(curMaterial);
+                atLeastOneSelected[0] = true;
+            }else if (curMaterial.isSelected() && curMaterial.getCantidadSeleccionada() == 0.0){
+                allWithCantidades[0] = false;
+                isValidated[0] = false;
             }
         });
-        productViewController.setListaMateriales(myListaMateriales);
-        cerrarVentanActual();
+
+        if(!allWithCantidades[0]){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error!");
+            alert.setHeaderText("Algunos materiales seleccionados no tienen cantidad seleccionada.");
+            alert.setContentText("Favor de ingresar cantidades o no seleccionar el material.");
+            alert.showAndWait();
+        }else if(!atLeastOneSelected[0]){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error!");
+            alert.setHeaderText("No se han seleccionado materiales.");
+            alert.setContentText("Favor de seleccionar al menos un material.");
+            alert.showAndWait();
+            isValidated[0] = false;
+        }else if(isValidated[0]) {
+            productViewController.setListaMateriales(myListaMateriales);
+            cerrarVentanActual();
+        }
     }
 
     private void cerrarVentanActual(){
@@ -106,6 +131,5 @@ public class MaterialesController implements Initializable {
         }
         materialesListView.setItems(items);
     }
-
 
 }

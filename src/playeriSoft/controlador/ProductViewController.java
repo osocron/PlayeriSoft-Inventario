@@ -20,7 +20,7 @@ public class ProductViewController implements Initializable{
 
     private Producto curProduct;
 
-    private List<Material> listaMateriales;
+    private List<Material> listaMateriales = new ArrayList<>();
 
     private ProductViewHandler myHandler = new ProductViewHandler();
 
@@ -102,7 +102,7 @@ public class ProductViewController implements Initializable{
         this.curProduct = resourceObject;
         modificarButton.setText("Modificar");
         sortClassName(resourceObject);
-        listaMateriales = new ArrayList<Material>();
+        listaMateriales = new ArrayList<>();
         listaMateriales = myHandler.getSelectedMateriales(listaMateriales, curProduct);
         this.inventarioProductosController = inventarioProductosController;
     }
@@ -123,29 +123,34 @@ public class ProductViewController implements Initializable{
     private void sortClassName(Producto resourceObject){
         String idProd = resourceObject.getIdProducto();
         String prodType = idProd.substring(0, Math.min(idProd.length(), 4));
-        if(prodType.equals("PLAY")){
-            curProduct = myHandler.buildPlayera(resourceObject,idProd);
-            setPlayeraLayout();
-        }else if(prodType.equals("SUDA")){
-            curProduct = myHandler.buildSudadera(resourceObject, idProd);
-            setSudaderaLayout();
-        }else if(prodType.equals("GORR")){
-            curProduct = myHandler.buildGorra(resourceObject, idProd);
-            setGorroLayout();
-        }else{
-            curProduct = myHandler.buildParche(resourceObject,idProd);
-            setParcheLayout();
+        switch (prodType) {
+            case "PLAY":
+                curProduct = myHandler.buildPlayera(resourceObject, idProd);
+                setPlayeraLayout();
+                break;
+            case "SUDA":
+                curProduct = myHandler.buildSudadera(resourceObject, idProd);
+                setSudaderaLayout();
+                break;
+            case "GORR":
+                curProduct = myHandler.buildGorra(resourceObject, idProd);
+                setGorroLayout();
+                break;
+            default:
+                curProduct = myHandler.buildParche(resourceObject, idProd);
+                setParcheLayout();
+                break;
         }
     }
 
 
     private void setPlayeraLayout(){
         Playera myPlayera = (Playera) curProduct;
-        productoLabel.setText(myPlayera.getDescripcion().toString());
+        productoLabel.setText(myPlayera.getDescripcion());
         playeraCheckBox.setSelected(true);
-        colorTextField.setText(String.valueOf(myPlayera.getColor().toString()));
+        colorTextField.setText(String.valueOf(myPlayera.getColor()));
         tallaTextField.setText(String.valueOf(myPlayera.getTalla()));
-        String tipo = myPlayera.getTipo().toString();
+        String tipo = myPlayera.getTipo();
         if(tipo.equals("NORM")) {
             tipoChoiceBox.getSelectionModel().selectFirst();
         }else {
@@ -162,9 +167,9 @@ public class ProductViewController implements Initializable{
 
     private void setSudaderaLayout(){
         Sudadera mySudadera = (Sudadera) curProduct;
-        productoLabel.setText(mySudadera.getDescripcion().toString());
+        productoLabel.setText(mySudadera.getDescripcion());
         sudaderaCheckBox.setSelected(true);
-        colorTextField.setText(String.valueOf(mySudadera.getColor().toString()));
+        colorTextField.setText(String.valueOf(mySudadera.getColor()));
         tallaTextField.setText(String.valueOf(mySudadera.getTalla()));
         if(mySudadera.isBordado()) {
             bordadoCheckBox.setSelected(true);
@@ -177,9 +182,9 @@ public class ProductViewController implements Initializable{
 
     private void setGorroLayout(){
         Gorro myGorro = (Gorro) curProduct;
-        productoLabel.setText(myGorro.getDescripcion().toString());
+        productoLabel.setText(myGorro.getDescripcion());
         gorraCheckBox.setSelected(true);
-        colorTextField.setText(String.valueOf(myGorro.getColor().toString()));
+        colorTextField.setText(String.valueOf(myGorro.getColor()));
         tallaTextField.setText(String.valueOf(myGorro.getTalla()));
         if(myGorro.isBordado()) {
             bordadoCheckBox.setSelected(true);
@@ -192,7 +197,7 @@ public class ProductViewController implements Initializable{
 
     private void setParcheLayout(){
         Parche myParche = (Parche) curProduct;
-        productoLabel.setText(myParche.getDescripcion().toString());
+        productoLabel.setText(myParche.getDescripcion());
         parcheCheckBox.setSelected(true);
         largoTextField.setText(String.valueOf(myParche.getLargo()));
         anchoTextField.setText(String.valueOf(myParche.getAncho()));
@@ -202,7 +207,7 @@ public class ProductViewController implements Initializable{
     }
 
     private void setGeneralAttributes(){
-        descripTextField.setText(curProduct.getDescripcion().toString());
+        descripTextField.setText(curProduct.getDescripcion());
         existenciasTextField.setText(String.valueOf(curProduct.getExistencias()));
         descuentoTextField.setText(String.valueOf(curProduct.getDescuento()));
         precioMayTextField.setText(String.valueOf(curProduct.getPrecioMayoreo()));
@@ -230,81 +235,135 @@ public class ProductViewController implements Initializable{
         eliminarButton.setDisable(true);
     }
 
+    private boolean verifyACheckBoxIsSelected(){
+        if(!playeraCheckBox.isSelected() && !sudaderaCheckBox.isSelected() && !gorraCheckBox.isSelected() && !parcheCheckBox.isSelected()){
+            descripTextField.setDisable(true);
+            existenciasTextField.setDisable(true);
+            descuentoTextField.setDisable(true);
+            precioMayTextField.setDisable(true);
+            precioMenTextField.setDisable(true);
+            tallaTextField.setDisable(true);
+            colorTextField.setDisable(true);
+            tipoChoiceBox.setDisable(true);
+            serigrafiaCheckBox.setDisable(true);
+            bordadoCheckBox.setDisable(true);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
+            agregarMaterialesButton.setDisable(true);
+            modificarButton.setDisable(true);
+            eliminarButton.setDisable(true);
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     private void enableFieldsParaModificar(){
         if(playeraCheckBox.isSelected()){
-            playeraCheckBoxClicked();
             colorTextField.setEditable(true);
+            colorTextField.setDisable(false);
             tallaTextField.setEditable(true);
+            tallaTextField.setDisable(false);
             tipoChoiceBox.setDisable(false);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
         }
         else if(sudaderaCheckBox.isSelected()){
-            sudaderaCheckBoxClicked();
             colorTextField.setEditable(true);
+            colorTextField.setDisable(false);
             tallaTextField.setEditable(true);
+            tallaTextField.setDisable(false);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
         }
         else if(gorraCheckBox.isSelected()){
-            gorraCheckBoxClicked();
             colorTextField.setEditable(true);
+            colorTextField.setDisable(false);
             tallaTextField.setEditable(true);
+            tallaTextField.setDisable(false);
+            largoTextField.setDisable(true);
+            anchoTextField.setDisable(true);
         }else{
-            parcheCheckBoxClicked();
+            colorTextField.setDisable(true);
+            tallaTextField.setDisable(true);
+            largoTextField.setEditable(true);
+            largoTextField.setDisable(false);
+            anchoTextField.setEditable(true);
+            anchoTextField.setDisable(false);
         }
         descripTextField.setEditable(true);
+        descripTextField.setDisable(false);
         existenciasTextField.setEditable(true);
+        existenciasTextField.setDisable(false);
         descuentoTextField.setEditable(true);
+        descuentoTextField.setDisable(false);
         precioMayTextField.setEditable(true);
+        precioMayTextField.setDisable(false);
         precioMenTextField.setEditable(true);
+        precioMenTextField.setDisable(false);
         agregarMaterialesButton.setDisable(false);
         eliminarButton.setDisable(false);
     }
 
-    @FXML
-    public void playeraCheckBoxClicked(){
-        gorraCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
-        sudaderaCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
-        parcheCheckBox.setDisable(playeraCheckBox.isSelected() ? true : false);
-        largoTextField.setEditable(playeraCheckBox.isSelected() ? false : true);
-        anchoTextField.setEditable(playeraCheckBox.isSelected() ? false : true);
+    private void enableFieldsForNewProducto(){
+        serigrafiaCheckBox.setDisable(false);
+        bordadoCheckBox.setDisable(false);
+        modificarButton.setDisable(false);
+        eliminarButton.setDisable(true);
     }
 
     @FXML
-    public void sudaderaCheckBoxClicked(){
-        gorraCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
-        playeraCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
-        parcheCheckBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
-        tipoChoiceBox.setDisable(sudaderaCheckBox.isSelected() ? true : false);
-        largoTextField.setEditable(sudaderaCheckBox.isSelected() ? false : true);
-        anchoTextField.setEditable(sudaderaCheckBox.isSelected() ? false : true);
+    public void playeraCheckBoxClicked() {
+        if(verifyACheckBoxIsSelected()){
+            enableFieldsParaModificar();
+            enableFieldsForNewProducto();
+        }
+        gorraCheckBox.setDisable(playeraCheckBox.isSelected());
+        sudaderaCheckBox.setDisable(playeraCheckBox.isSelected());
+        parcheCheckBox.setDisable(playeraCheckBox.isSelected());
+    }
+
+    @FXML
+    public void sudaderaCheckBoxClicked() {
+        if(verifyACheckBoxIsSelected()) {
+            enableFieldsParaModificar();
+            enableFieldsForNewProducto();
+        }
+        gorraCheckBox.setDisable(sudaderaCheckBox.isSelected());
+        playeraCheckBox.setDisable(sudaderaCheckBox.isSelected());
+        parcheCheckBox.setDisable(sudaderaCheckBox.isSelected());
     }
 
     @FXML
     public void gorraCheckBoxClicked(){
-        playeraCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
-        sudaderaCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
-        parcheCheckBox.setDisable(gorraCheckBox.isSelected() ? true : false);
-        tipoChoiceBox.setDisable(gorraCheckBox.isSelected() ? true : false);
-        largoTextField.setEditable(gorraCheckBox.isSelected() ? false : true);
-        anchoTextField.setEditable(gorraCheckBox.isSelected() ? false : true);
+        if(verifyACheckBoxIsSelected()) {
+            enableFieldsParaModificar();
+            enableFieldsForNewProducto();
+        }
+        playeraCheckBox.setDisable(gorraCheckBox.isSelected());
+        sudaderaCheckBox.setDisable(gorraCheckBox.isSelected());
+        parcheCheckBox.setDisable(gorraCheckBox.isSelected());
     }
 
     @FXML
     public void parcheCheckBoxClicked(){
-        gorraCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
-        sudaderaCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
-        playeraCheckBox.setDisable(parcheCheckBox.isSelected() ? true : false);
-        tallaTextField.setEditable(parcheCheckBox.isSelected() ? false : true);
-        colorTextField.setEditable(parcheCheckBox.isSelected() ? false : true);
-        tipoChoiceBox.setDisable(parcheCheckBox.isSelected() ? true : false);
+        if(verifyACheckBoxIsSelected()) {
+            enableFieldsParaModificar();
+            enableFieldsForNewProducto();
+        }
+        gorraCheckBox.setDisable(parcheCheckBox.isSelected());
+        sudaderaCheckBox.setDisable(parcheCheckBox.isSelected());
+        playeraCheckBox.setDisable(parcheCheckBox.isSelected());
     }
 
     @FXML
     public void serigrafiaCheckBoxClicked(){
-        bordadoCheckBox.setDisable(serigrafiaCheckBox.isSelected() ? true : false);
+        bordadoCheckBox.setDisable(serigrafiaCheckBox.isSelected());
     }
 
     @FXML
     public void bordadoCheckBoxClicked(){
-        serigrafiaCheckBox.setDisable(bordadoCheckBox.isSelected() ? true : false);
+        serigrafiaCheckBox.setDisable(bordadoCheckBox.isSelected());
     }
 
 
@@ -313,7 +372,6 @@ public class ProductViewController implements Initializable{
         if (modificarButton.getText().equals("Guardar")){
             guardarProducto();
             inventarioProductosController.refreshListView();
-            cerrarVentanActual();
         }else{
             enableFieldsParaModificar();
             modificarButton.setText("Guardar");
@@ -325,31 +383,85 @@ public class ProductViewController implements Initializable{
         stage.close();
     }
 
-    public void guardarProducto(){
-        if(playeraCheckBox.isSelected()){
-            myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                    colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
-        }
-        else if(sudaderaCheckBox.isSelected()){
-            myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                    colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
-        }
-        else if(gorraCheckBox.isSelected()){
-            myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                    colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
-        }else if(parcheCheckBox.isSelected()){
-            myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                    Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                    Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
-                    Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(), listaMateriales);
+    private boolean validarEntradasGeneralesParaGuardarProducto(){
+        if((descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
+                && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
+                && (precioMenTextField.getText().length() > 0) && (serigrafiaCheckBox.isSelected() || bordadoCheckBox.isSelected())
+                && (!listaMateriales.isEmpty())){
+            return true;
         }else{
+            return false;
+        }
+    }
 
+    private boolean validarGuardarPlayera(){
+        if(validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
+                && (colorTextField.getText().length() > 0)
+                && (tipoChoiceBox.getSelectionModel().isSelected(0) || tipoChoiceBox.getSelectionModel().isSelected(1))){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean validarGuardarSudaderaGorra(){
+        if(validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
+                && (colorTextField.getText().length() > 0) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validarGuardarParche(){
+        if(validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
+                && (anchoTextField.getText().length() > 0)
+                && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void mostrarMensajeDatosFaltantes(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Error!");
+        alert.setHeaderText("No se han ingresado todos los datos necesarios para guardar el producto.");
+        alert.setContentText("Favor de verificar que cada campo tenga informacion, que se haya seleccionado si es un " +
+                "producto serigrafiado o bordado e inclusive, verificar que se hayan seleccionado materiales para el producto.");
+        alert.showAndWait();
+    }
+
+    public void guardarProducto() {
+        if (playeraCheckBox.isSelected() && validarGuardarPlayera()) {
+            myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+            cerrarVentanActual();
+        }
+        else if(sudaderaCheckBox.isSelected() && validarGuardarSudaderaGorra()){
+            myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+            cerrarVentanActual();
+        }
+        else if(gorraCheckBox.isSelected() && validarGuardarSudaderaGorra()){
+            myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+            cerrarVentanActual();
+        }else if(parcheCheckBox.isSelected() && validarGuardarParche()){
+            myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
+                        Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(), listaMateriales);
+            cerrarVentanActual();
+        }else{
+            mostrarMensajeDatosFaltantes();
         }
     }
 
