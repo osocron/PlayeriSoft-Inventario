@@ -71,10 +71,8 @@ public class InventarioProductosController implements Initializable{
                         if(bool){
                             setText(null);
                             setGraphic(null);
-                        }else {
-                            if (prod != null) {
-                                setText(prod.getDescripcion());
-                            }
+                        }else if(prod != null){
+                            setText(prod.getDescripcion());
                         }
                     }
                 };

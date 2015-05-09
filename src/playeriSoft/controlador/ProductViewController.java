@@ -384,44 +384,27 @@ public class ProductViewController implements Initializable{
     }
 
     private boolean validarEntradasGeneralesParaGuardarProducto(){
-        if((descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
+        return (descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
                 && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
                 && (precioMenTextField.getText().length() > 0) && (serigrafiaCheckBox.isSelected() || bordadoCheckBox.isSelected())
-                && (!listaMateriales.isEmpty())){
-            return true;
-        }else{
-            return false;
-        }
+                && (!listaMateriales.isEmpty());
     }
 
     private boolean validarGuardarPlayera(){
-        if(validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
+        return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
                 && (colorTextField.getText().length() > 0)
-                && (tipoChoiceBox.getSelectionModel().isSelected(0) || tipoChoiceBox.getSelectionModel().isSelected(1))){
-            return true;
-        }
-        else{
-            return false;
-        }
+                && (tipoChoiceBox.getSelectionModel().isSelected(0) || tipoChoiceBox.getSelectionModel().isSelected(1));
     }
 
     private boolean validarGuardarSudaderaGorra(){
-        if(validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
-                && (colorTextField.getText().length() > 0) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0))) {
-            return true;
-        } else {
-            return false;
-        }
+        return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
+                && (colorTextField.getText().length() > 0) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
     }
 
     private boolean validarGuardarParche(){
-        if(validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
+        return validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
                 && (anchoTextField.getText().length() > 0)
-                && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0))) {
-            return true;
-        } else {
-            return false;
-        }
+                && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
     }
 
     private void mostrarMensajeDatosFaltantes(){

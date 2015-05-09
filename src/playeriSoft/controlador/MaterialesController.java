@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import playeriSoft.modelo.Material;
@@ -49,36 +48,33 @@ public class MaterialesController implements Initializable {
         materialesListView.setCellFactory(new Callback<ListView<Material>, ListCell<Material>>() {
             @Override
             public ListCell<Material> call(ListView<Material> param) {
-                ListCell<Material> cell = new ListCell<Material>() {
+                return new ListCell<Material>() {
                     @Override
                     protected void updateItem(Material material, boolean bool) {
                         super.updateItem(material, bool);
                         if (bool) {
                             setText(null);
                             setGraphic(null);
-                        } else {
-                            if (material != null) {
-                                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("playeriSoft/vista/MaterialRow.fxml"));
-                                try {
-                                    loader.load();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                MaterialRowController controller = loader.<MaterialRowController>getController();
-                                controller.setInfo(material);
-                                setGraphic(controller.getBox());
+                        }else if(material != null){
+                            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("playeriSoft/vista/MaterialRow.fxml"));
+                            try {
+                                loader.load();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
+                            MaterialRowController controller = loader.<MaterialRowController>getController();
+                            controller.setInfo(material);
+                            setGraphic(controller.getBox());
                         }
                     }
                 };
-                return cell;
             }
         });
     }
 
     @FXML
     public void guardarMateriales(){
-        List<Material> myListaMateriales = new ArrayList<Material>();
+        List<Material> myListaMateriales = new ArrayList<>();
         final boolean[] isValidated = {true};
         final boolean[] atLeastOneSelected = {false};
         final boolean[] allWithCantidades = {true};
@@ -121,14 +117,11 @@ public class MaterialesController implements Initializable {
     }
 
     public void setSelectedMaterials(List<Material> selectedMateriales){
-        for(Material material : items){
-            for(Material curMaterial : selectedMateriales){
-                if(material.getIdMaterial().equals(curMaterial.getIdMaterial())){
-                    material.setSelected(true);
-                    material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
-                }
-            }
-        }
+        for(Material material : items)
+            selectedMateriales.stream().filter(curMaterial -> material.getIdMaterial().equals(curMaterial.getIdMaterial())).forEach(curMaterial -> {
+                material.setSelected(true);
+                material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
+            });
         materialesListView.setItems(items);
     }
 
