@@ -1,4 +1,4 @@
-package playeriSoft.modelo;
+package playeriSoft.controlador;
 
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;

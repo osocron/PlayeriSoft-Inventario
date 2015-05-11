@@ -12,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import playeriSoft.modelo.Material;
-import playeriSoft.modelo.MaterialesHandler;
 
 import java.io.IOException;
 import java.net.URL;

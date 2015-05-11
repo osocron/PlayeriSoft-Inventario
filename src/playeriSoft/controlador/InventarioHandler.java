@@ -1,11 +1,11 @@
-package playeriSoft.modelo;
+package playeriSoft.controlador;
 
 import javafx.collections.ObservableList;
+import playeriSoft.modelo.Producto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
 /**
  * Created by Noe on 27/04/15.

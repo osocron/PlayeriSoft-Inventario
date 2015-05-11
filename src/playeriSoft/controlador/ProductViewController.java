@@ -96,7 +96,8 @@ public class ProductViewController implements Initializable{
         tipoChoiceBox.setItems(items);
     }
 
-    /*/Este metodo prepara lo necesario para que la informacion del producto seleccionado desde la primera pantalla primcipal
+    /*/Este metodo prepara lo necesario para que la informacion del producto seleccionado desde
+    la primera pantalla primcipal
     se pueda visualizar en la pantalla de producto detallado, asimismo, junta la informacion de los materiales que el
     usuario ha definido como materia prima del producto seleccionado y los guarda en una lista de materiales para uso
     futuro por el metodo materialesButtonOnClicked*/
@@ -121,7 +122,8 @@ public class ProductViewController implements Initializable{
 
     /*Cuando se recibe un objeto producto desde la pantalla ane¡terior, es necesario definir a que subclase pertenece,
     * para esto, este metodo se encarga de verificar de que tipo de producto es el objeto que se pasa como parametro
-    * en el metodo setRsourceObject, una vez encontrado el tipo de producto se acomoda el Layout de la pantalla respectivamente*/
+    * en el metodo setRsourceObject, una vez encontrado el tipo de producto se acomoda el Layout de
+    * la pantalla respectivamente*/
     private void sortClassName(Producto resourceObject){
         String idProd = resourceObject.getIdProducto();
         String prodType = idProd.substring(0, Math.min(idProd.length(), 4));
@@ -238,7 +240,8 @@ public class ProductViewController implements Initializable{
     }
 
     private boolean verifyACheckBoxIsSelected(){
-        if(!playeraCheckBox.isSelected() && !sudaderaCheckBox.isSelected() && !gorraCheckBox.isSelected() && !parcheCheckBox.isSelected()){
+        if(!playeraCheckBox.isSelected() && !sudaderaCheckBox.isSelected()
+                && !gorraCheckBox.isSelected() && !parcheCheckBox.isSelected()){
             descripTextField.setDisable(true);
             existenciasTextField.setDisable(true);
             descuentoTextField.setDisable(true);
@@ -389,7 +392,8 @@ public class ProductViewController implements Initializable{
     private boolean validarEntradasGeneralesParaGuardarProducto(){
         return (descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
                 && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
-                && (precioMenTextField.getText().length() > 0) && (serigrafiaCheckBox.isSelected() || bordadoCheckBox.isSelected())
+                && (precioMenTextField.getText().length() > 0) && (serigrafiaCheckBox.isSelected()
+                || bordadoCheckBox.isSelected())
                 && (!listaMateriales.isEmpty());
     }
 
@@ -401,7 +405,8 @@ public class ProductViewController implements Initializable{
 
     private boolean validarGuardarSudaderaGorra(){
         return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
-                && (colorTextField.getText().length() > 0) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
+                && (colorTextField.getText().length() > 0) && (!listaMateriales.isEmpty()
+                || (listaMateriales.size() > 0));
     }
 
     private boolean validarGuardarParche(){
@@ -415,7 +420,8 @@ public class ProductViewController implements Initializable{
         alert.setTitle("Error!");
         alert.setHeaderText("No se han ingresado todos los datos necesarios para guardar el producto.");
         alert.setContentText("Favor de verificar que cada campo tenga informacion, que se haya seleccionado si es un " +
-                "producto serigrafiado o bordado e inclusive, verificar que se hayan seleccionado materiales para el producto.");
+                "producto serigrafiado o bordado e inclusive, verificar que se hayan seleccionado " +
+                "materiales para el producto.");
         alert.showAndWait();
     }
 
@@ -424,21 +430,22 @@ public class ProductViewController implements Initializable{
             myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                         Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+                        colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),
+                        listaMateriales);
             cerrarVentanActual();
         }
         else if(sudaderaCheckBox.isSelected() && validarGuardarSudaderaGorra()){
             myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                         Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+                        colorTextField.getText(),bordadoCheckBox.isSelected(),listaMateriales);
             cerrarVentanActual();
         }
         else if(gorraCheckBox.isSelected() && validarGuardarSudaderaGorra()){
             myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                         Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(),bordadoCheckBox.isSelected(),serigrafiaCheckBox.isSelected());
+                        colorTextField.getText(),bordadoCheckBox.isSelected(),listaMateriales);
             cerrarVentanActual();
         }else if(parcheCheckBox.isSelected() && validarGuardarParche()){
             myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
@@ -457,7 +464,8 @@ public class ProductViewController implements Initializable{
         if(listaMateriales == null) {
             viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this);
         }else{
-            viewOpener.openMaterialesPickerWithSelectedMaterials("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this,listaMateriales);
+            viewOpener.openMaterialesPickerWithSelectedMaterials("playeriSoft/vista/MaterialPicker.fxml",
+                    "Seleccione Materiales", this,listaMateriales);
         }
     }
 

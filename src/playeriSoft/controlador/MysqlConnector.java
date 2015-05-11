@@ -1,4 +1,4 @@
-package playeriSoft.modelo;
+package playeriSoft.controlador;
 
 import java.sql.*;
 

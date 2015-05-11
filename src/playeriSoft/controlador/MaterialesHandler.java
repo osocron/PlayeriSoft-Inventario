@@ -1,6 +1,8 @@
-package playeriSoft.modelo;
+package playeriSoft.controlador;
 
 import javafx.collections.ObservableList;
+import playeriSoft.modelo.Material;
+import playeriSoft.modelo.Producto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

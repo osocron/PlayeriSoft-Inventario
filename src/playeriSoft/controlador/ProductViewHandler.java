@@ -1,4 +1,6 @@
-package playeriSoft.modelo;
+package playeriSoft.controlador;
+
+import playeriSoft.modelo.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -140,22 +142,85 @@ public class ProductViewHandler {
 
     public void guardarPlayera(double descuento, String descripcion, int existencias,
                                double precioMayoreo, double precioMenudeo,double talla, String color,
-                               String tipo, boolean isBordado, boolean isSerigrafia){
+                               String tipo, boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Playera",isBordado);
-
+        guardarProducto(productID,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "INSERT INTO Playera VALUES (?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1,productID);
+            preparedStatement.setDouble(2, talla);
+            preparedStatement.setString(3, color);
+            preparedStatement.setString(4, tipo.substring(0,4).toUpperCase());
+            if(isBordado) {
+                preparedStatement.setString(5, "true");
+                preparedStatement.setString(6, "false");
+            }else{
+                preparedStatement.setString(5, "false");
+                preparedStatement.setString(6, "true");
+            }
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        guardarMateriales(listaMateriales, productID);
 
     }
 
     public void guardarSudadera(double descuento, String descripcion, int existencias,
                                 double precioMayoreo, double precioMenudeo,double talla, String color,
-                                boolean isBordado, boolean isSerigrafia){
+                                boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Sudadera",isBordado);
+        guardarProducto(productID,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "INSERT INTO Sudadera VALUES (?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, productID);
+            preparedStatement.setDouble(2, talla);
+            preparedStatement.setString(3, color);
+            if(isBordado) {
+                preparedStatement.setString(4, "true");
+                preparedStatement.setString(5, "false");
+            }else{
+                preparedStatement.setString(4, "false");
+                preparedStatement.setString(5, "true");
+            }
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        guardarMateriales(listaMateriales, productID);
     }
 
     public void guardarGorra(double descuento, String descripcion, int existencias,
                              double precioMayoreo, double precioMenudeo, double talla,
-                             String color, boolean isBordado, boolean isSerigrafia){
+                             String color, boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Gorra",isBordado);
+        guardarProducto(productID,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "INSERT INTO Gorra VALUES (?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, productID);
+            preparedStatement.setDouble(2, talla);
+            preparedStatement.setString(3, color);
+            if(isBordado) {
+                preparedStatement.setString(4, "true");
+                preparedStatement.setString(5, "false");
+            }else{
+                preparedStatement.setString(4, "false");
+                preparedStatement.setString(5, "true");
+            }
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        guardarMateriales(listaMateriales, productID);
     }
 
     public void guardarParche(double descuento, String descripcion, int existencias,

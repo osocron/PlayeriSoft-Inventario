@@ -1,7 +1,7 @@
 package playeriSoft.vista;
 
 import javafx.scene.control.TextField;
-import playeriSoft.modelo.InputValidador;
+import playeriSoft.controlador.InputValidador;
 
 /**
  * Created by osocr_000 on 05/05/2015.
