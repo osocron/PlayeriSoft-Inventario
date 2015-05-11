@@ -33,6 +33,7 @@ public class Sudadera extends Producto{
         this.isSerigrafia = isSerigrafia;
     }
 
+
     public double getTalla() {
         return talla;
     }
