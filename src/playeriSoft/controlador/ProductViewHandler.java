@@ -23,7 +23,7 @@ public class ProductViewHandler {
     public Producto buildPlayera(Producto producto, String idPlayera){
         Playera playera = null;
         try {
-            resultSet = getResultSetForBuildingProduct("playera", idPlayera);
+            resultSet = getResultSetForBuildingProduct("Playera", idPlayera);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -254,7 +254,7 @@ public class ProductViewHandler {
         for(Material curMaterial : listaMateriales) {
             try {
                 connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-                String statement = "INSERT INTO rmaterialproducto VALUES (?,?,?)";
+                String statement = "INSERT INTO RMaterialProducto VALUES (?,?,?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(statement);
                 preparedStatement.setString(1, productoID);
                 preparedStatement.setString(2, curMaterial.getIdMaterial());
@@ -274,9 +274,9 @@ public class ProductViewHandler {
             String statement = "INSERT INTO Producto VALUES (?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1,idProducto);
-            preparedStatement.setString(2, descripcion);
-            preparedStatement.setInt(3, existencias);
-            preparedStatement.setDouble(4, descuento);
+            preparedStatement.setDouble(2, descuento);
+            preparedStatement.setString(3, descripcion);
+            preparedStatement.setInt(4, existencias);
             preparedStatement.setDouble(5,precioMayoreo);
             preparedStatement.setDouble(6,precioMenudeo);
             preparedStatement.execute();

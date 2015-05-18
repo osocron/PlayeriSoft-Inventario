@@ -26,7 +26,7 @@ public class MaterialesHandler {
         MysqlConnector myConnector = new MysqlConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM material");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Material");
             resultSet = preparedStatement.executeQuery();
             int cont = 0;
             Material material;
@@ -49,7 +49,7 @@ public class MaterialesHandler {
         MysqlConnector myConnector = new MysqlConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM material");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Material");
             resultSet = preparedStatement.executeQuery();
             int cont = 0;
             Material material;
