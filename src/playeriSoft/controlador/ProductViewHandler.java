@@ -166,7 +166,6 @@ public class ProductViewHandler {
             e.printStackTrace();
         }
         guardarMateriales(listaMateriales, productID);
-
     }
 
     public void guardarSudadera(double descuento, String descripcion, int existencias,
@@ -352,31 +351,127 @@ public class ProductViewHandler {
         return materialesSeleccionados;
     }
 
-    private void actualizarProducto(){
-        //UPDATE `playeriSoft`.`Playera` SET `Color`='Rosita, 'Precio' = 12.0 con Verde' WHERE `IdProducto`='PLAYBORD0002';
+    private void actualizarProducto(String idProducto, double descuento, String descripcion, int existencias,
+                                    double precioMayoreo, double precioMenudeo){
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "UPDATE Producto SET Descuento = ?, DescripProd = ?, Existencias = ?, PrecioMayoreo = ?, PrecioMenudeo = ? WHERE IdProducto = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setDouble(1, descuento);
+            preparedStatement.setString(2, descripcion);
+            preparedStatement.setInt(3, existencias);
+            preparedStatement.setDouble(4,precioMayoreo);
+            preparedStatement.setDouble(5,precioMenudeo);
+            preparedStatement.setString(6,idProducto);
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void actualizarPlayera(String idProducto, double descuento, String descripcion, int existencias,
                                    double precioMayoreo, double precioMenudeo,double talla, String color,
                                    String tipo, boolean isBordado, List<Material> listaMateriales ){
-
+        actualizarProducto(idProducto, descuento, descripcion, existencias, precioMayoreo, precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "UPDATE Playera SET Talla = ?, Color = ?, Estilo = ?, Bordado = ?, Serigrafia = ? WHERE IdProducto = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setDouble(1, talla);
+            preparedStatement.setString(2, color);
+            preparedStatement.setString(3, tipo.substring(0,4).toUpperCase());
+            if(isBordado) {
+                preparedStatement.setString(4, "true");
+                preparedStatement.setString(5, "false");
+            }else{
+                preparedStatement.setString(4, "false");
+                preparedStatement.setString(5, "true");
+            }
+            preparedStatement.setString(6, idProducto);
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        actualizarMateriales(listaMateriales, idProducto);
     }
 
     public void actualizarSudadera(String idProducto, double descuento, String descripcion, int existencias,
                                 double precioMayoreo, double precioMenudeo,double talla, String color,
                                 boolean isBordado, List<Material> listaMateriales){
-
+        actualizarProducto(idProducto,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "UPDATE Sudadera SET Talla = ?, Color = ?, Bordado = ?, Serigrafia = ? WHERE IdProducto = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setDouble(1, talla);
+            preparedStatement.setString(2, color);
+            if(isBordado) {
+                preparedStatement.setString(3, "true");
+                preparedStatement.setString(4, "false");
+            }else{
+                preparedStatement.setString(3, "false");
+                preparedStatement.setString(4, "true");
+            }
+            preparedStatement.setString(5, idProducto);
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        actualizarMateriales(listaMateriales, idProducto);
     }
 
     public void actualizarGorra(String idProducto, double descuento, String descripcion, int existencias,
                              double precioMayoreo, double precioMenudeo, double talla,
                              String color, boolean isBordado, List<Material> listaMateriales){
-
+        actualizarProducto(idProducto,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "UPDATE Gorra SET Talla = ?, Color = ?, Bordado = ?, Serigrafia = ? WHERE IdProducto = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setDouble(1, talla);
+            preparedStatement.setString(2, color);
+            if(isBordado) {
+                preparedStatement.setString(3, "true");
+                preparedStatement.setString(4, "false");
+            }else{
+                preparedStatement.setString(3, "false");
+                preparedStatement.setString(4, "true");
+            }
+            preparedStatement.setString(5, idProducto);
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        actualizarMateriales(listaMateriales, idProducto);
     }
 
     public void actualizarParche(String idProducto, double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
                               double ancho, boolean isBordado, List<Material> listaMateriales){
-
+        actualizarProducto(idProducto,descuento,descripcion,existencias,precioMayoreo,precioMenudeo);
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "UPDATE Parche SET Largo = ?, Ancho = ?, Bordado = ?, Serigrafia = ? WHERE IdProducto = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setDouble(1, largo);
+            preparedStatement.setDouble(2, ancho);
+            if(isBordado) {
+                preparedStatement.setString(3, "true");
+                preparedStatement.setString(4, "false");
+            }else{
+                preparedStatement.setString(3, "false");
+                preparedStatement.setString(4, "true");
+            }
+            preparedStatement.setString(5, idProducto);
+            preparedStatement.execute();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        actualizarMateriales(listaMateriales, idProducto);
     }
 }
