@@ -377,6 +377,7 @@ public class ProductViewController implements Initializable{
         if (modificarButton.getText().equals("Guardar")){
             guardarProducto(isModificar);
             inventarioProductosController.refreshListView();
+            isModificar = false;
         }else{
             enableFieldsParaModificar();
             modificarButton.setText("Guardar");
@@ -427,31 +428,60 @@ public class ProductViewController implements Initializable{
 
     public void guardarProducto(boolean isForModificar) {
         if (playeraCheckBox.isSelected() && validarGuardarPlayera()) {
-            myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
+            if(isForModificar){
+                myHandler.actualizarPlayera(curProduct.getIdProducto(),Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
                         Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
                         colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),
                         listaMateriales);
+            }else {
+                myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(), tipoChoiceBox.getValue(), bordadoCheckBox.isSelected(),
+                        listaMateriales);
+            }
             cerrarVentanActual();
         }
         else if(sudaderaCheckBox.isSelected() && validarGuardarSudaderaGorra()){
-            myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(),bordadoCheckBox.isSelected(),listaMateriales);
+            if (isForModificar) {
+                myHandler.actualizarSudadera(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(), bordadoCheckBox.isSelected(), listaMateriales);
+            }else{
+                myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(), bordadoCheckBox.isSelected(), listaMateriales);
+            }
             cerrarVentanActual();
         }
         else if(gorraCheckBox.isSelected() && validarGuardarSudaderaGorra()){
-            myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(),bordadoCheckBox.isSelected(),listaMateriales);
+            if (isForModificar) {
+                myHandler.actualizarGorra(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(), bordadoCheckBox.isSelected(), listaMateriales);
+            }else{
+                myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
+                        colorTextField.getText(), bordadoCheckBox.isSelected(), listaMateriales);
+            }
             cerrarVentanActual();
         }else if(parcheCheckBox.isSelected() && validarGuardarParche()){
-            myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(largoTextField.getText()),
-                        Double.valueOf(anchoTextField.getText()),bordadoCheckBox.isSelected(), listaMateriales);
+            if (isForModificar) {
+                myHandler.actualizarParche(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(largoTextField.getText()),
+                        Double.valueOf(anchoTextField.getText()), bordadoCheckBox.isSelected(), listaMateriales);
+            }else{
+                myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
+                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
+                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(largoTextField.getText()),
+                        Double.valueOf(anchoTextField.getText()), bordadoCheckBox.isSelected(), listaMateriales);
+            }
             cerrarVentanActual();
         }else{
             mostrarMensajeDatosFaltantes();

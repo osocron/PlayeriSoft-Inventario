@@ -40,7 +40,7 @@ public class ProductViewHandler {
     public Producto buildSudadera(Producto producto, String idSudadera){
         Sudadera sudadera = null;
         try {
-            resultSet = getResultSetForBuildingProduct("sudadera", idSudadera);
+            resultSet = getResultSetForBuildingProduct("Sudadera", idSudadera);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -57,7 +57,7 @@ public class ProductViewHandler {
     public Producto buildGorra(Producto producto, String idGorra){
         Gorro gorra = null;
         try {
-            resultSet = getResultSetForBuildingProduct("gorra", idGorra);
+            resultSet = getResultSetForBuildingProduct("Gorra", idGorra);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -74,7 +74,7 @@ public class ProductViewHandler {
     public Producto buildParche(Producto producto, String idParche){
         Parche parche = null;
         try {
-            resultSet = getResultSetForBuildingProduct("parche", idParche);
+            resultSet = getResultSetForBuildingProduct("Parche", idParche);
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
@@ -350,5 +350,33 @@ public class ProductViewHandler {
             }
         }
         return materialesSeleccionados;
+    }
+
+    private void actualizarProducto(){
+        //UPDATE `playeriSoft`.`Playera` SET `Color`='Rosita, 'Precio' = 12.0 con Verde' WHERE `IdProducto`='PLAYBORD0002';
+    }
+
+    public void actualizarPlayera(String idProducto, double descuento, String descripcion, int existencias,
+                                   double precioMayoreo, double precioMenudeo,double talla, String color,
+                                   String tipo, boolean isBordado, List<Material> listaMateriales ){
+
+    }
+
+    public void actualizarSudadera(String idProducto, double descuento, String descripcion, int existencias,
+                                double precioMayoreo, double precioMenudeo,double talla, String color,
+                                boolean isBordado, List<Material> listaMateriales){
+
+    }
+
+    public void actualizarGorra(String idProducto, double descuento, String descripcion, int existencias,
+                             double precioMayoreo, double precioMenudeo, double talla,
+                             String color, boolean isBordado, List<Material> listaMateriales){
+
+    }
+
+    public void actualizarParche(String idProducto, double descuento, String descripcion, int existencias,
+                              double precioMayoreo, double precioMenudeo, double largo,
+                              double ancho, boolean isBordado, List<Material> listaMateriales){
+
     }
 }
