@@ -474,4 +474,8 @@ public class ProductViewHandler {
         }
         actualizarMateriales(listaMateriales, idProducto);
     }
+
+    private void actualizarMateriales(List<Material> listaMateriales, String idProducto){
+
+    }
 }
