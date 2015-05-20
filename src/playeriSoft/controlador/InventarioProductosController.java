@@ -10,9 +10,12 @@ import playeriSoft.modelo.Producto;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Created by Noe on 27/04/15.
+ * Esta clase es el controlador para inventario-productos-view.fxml
+ */
 public class InventarioProductosController implements Initializable{
 
-    //Local variables
     private InventarioHandler myHandler;
 
     private InventarioProductosController inventarioProductosController = this;
@@ -86,7 +89,7 @@ public class InventarioProductosController implements Initializable{
 
     public void refreshListView(){
         prodListView.setItems(null);
-        items.removeAll(items);
+        items.clear();
         myHandler = new InventarioHandler();
         items = myHandler.getAllProducts(items);
         prodListView.setItems(items);
