@@ -503,4 +503,10 @@ public class ProductViewController implements Initializable{
         this.listaMateriales = listaMateriales;
     }
 
+    @FXML
+    public void eliminarButtonOnClicked(){
+        myHandler.eliminarProducto(curProduct.getIdProducto());
+        inventarioProductosController.refreshListView();
+        cerrarVentanActual();
+    }
 }

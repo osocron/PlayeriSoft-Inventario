@@ -394,7 +394,8 @@ public class ProductViewHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-        actualizarMateriales(listaMateriales, idProducto);
+        eliminarMaterial(idProducto);
+        guardarMateriales(listaMateriales, idProducto);
     }
 
     public void actualizarSudadera(String idProducto, double descuento, String descripcion, int existencias,
@@ -420,7 +421,8 @@ public class ProductViewHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-        actualizarMateriales(listaMateriales, idProducto);
+        eliminarMaterial(idProducto);
+        guardarMateriales(listaMateriales, idProducto);
     }
 
     public void actualizarGorra(String idProducto, double descuento, String descripcion, int existencias,
@@ -446,7 +448,8 @@ public class ProductViewHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-        actualizarMateriales(listaMateriales, idProducto);
+        eliminarMaterial(idProducto);
+        guardarMateriales(listaMateriales, idProducto);
     }
 
     public void actualizarParche(String idProducto, double descuento, String descripcion, int existencias,
@@ -472,10 +475,33 @@ public class ProductViewHandler {
         }catch (Exception e){
             e.printStackTrace();
         }
-        actualizarMateriales(listaMateriales, idProducto);
+        eliminarMaterial(idProducto);
+        guardarMateriales(listaMateriales, idProducto);
     }
 
-    private void actualizarMateriales(List<Material> listaMateriales, String idProducto){
+    public void eliminarProducto(String idProducto){
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "DELETE FROM Producto WHERE IdProducto=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, idProducto);
+            preparedStatement.execute();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void eliminarMaterial(String idProducto){
+        try {
+            connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
+            String statement = "DELETE FROM RMaterialProducto WHERE IdProducto=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, idProducto);
+            preparedStatement.execute();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
