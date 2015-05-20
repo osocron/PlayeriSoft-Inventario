@@ -26,6 +26,7 @@ public class MaterialesController implements Initializable {
 
     private ObservableList<Material> items = FXCollections.observableArrayList();
     private ProductViewController productViewController;
+    private boolean consulta;
 
     @FXML
     private ListView<Material> materialesListView;
@@ -62,7 +63,7 @@ public class MaterialesController implements Initializable {
                                 e.printStackTrace();
                             }
                             MaterialRowController controller = loader.<MaterialRowController>getController();
-                            controller.setInfo(material);
+                            controller.setInfo(material,consulta);
                             setGraphic(controller.getBox());
                         }
                     }
@@ -113,6 +114,7 @@ public class MaterialesController implements Initializable {
 
     public void setParent(ProductViewController controller){
         this.productViewController = controller;
+        disableFields(consulta);
     }
 
     public void setSelectedMaterials(List<Material> selectedMateriales){
@@ -122,6 +124,16 @@ public class MaterialesController implements Initializable {
                 material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
             });
         materialesListView.setItems(items);
+    }
+
+    public void isConsulta(boolean consulta){
+        this.consulta = consulta;
+    }
+
+    private void disableFields(boolean consulta){
+        if(consulta){
+            guardarButton.setDisable(true);
+        }
     }
 
 }

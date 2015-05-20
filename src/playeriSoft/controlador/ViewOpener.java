@@ -51,7 +51,7 @@ public class ViewOpener {
         }
     }
 
-    public void openMaterialesPicker(String pathToFXML, String title, ProductViewController productViewController){
+    public void openMaterialesPicker(String pathToFXML, String title, ProductViewController productViewController, boolean consulta){
 
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
@@ -60,6 +60,7 @@ public class ViewOpener {
             stage.setTitle(title);
             stage.setScene(new Scene(root, 500, 400));
             MaterialesController controller = loader.<MaterialesController>getController();
+            controller.isConsulta(consulta);
             controller.setParent(productViewController);
             stage.show();
 
@@ -71,7 +72,7 @@ public class ViewOpener {
 
     public void openMaterialesPickerWithSelectedMaterials(String pathToFXML, String title,
                                                           ProductViewController productViewController,
-                                                          List<Material> listaMateriales){
+                                                          List<Material> listaMateriales, boolean consulta){
 
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
@@ -80,6 +81,7 @@ public class ViewOpener {
             stage.setTitle(title);
             stage.setScene(new Scene(root, 500, 400));
             MaterialesController controller = loader.<MaterialesController>getController();
+            controller.isConsulta(consulta);
             controller.setParent(productViewController);
             controller.setSelectedMaterials(listaMateriales);
             stage.show();

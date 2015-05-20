@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 import playeriSoft.modelo.Producto;
 import java.net.URL;
@@ -27,12 +25,18 @@ public class InventarioProductosController implements Initializable{
     @FXML
     private TextField searchTextField;
 
+    @FXML
+    private Button nuevoButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareListView();
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             searchProducts(oldValue, newValue);
         });
+        //Set Tooltips
+        searchTextField.setTooltip(new Tooltip("Escribe para filtrar la lista"));
+        nuevoButton.setTooltip(new Tooltip("Haz clic para crear un producto nuevo"));
     }
 
     @FXML
@@ -46,6 +50,9 @@ public class InventarioProductosController implements Initializable{
         //Set items on ListView
         items = myHandler.getAllProducts(items);
         prodListView.setItems(items);
+        //Agregar un Tooltip al Listview
+        Tooltip tooltip = new Tooltip("Haz clic sobre un producto para consultarlo");
+        Tooltip.install(prodListView,tooltip);
         //Tweak ListView to display only productos.descripcion
         prodListView.setCellFactory(new Callback<ListView<Producto>, ListCell<Producto>>() {
             @Override

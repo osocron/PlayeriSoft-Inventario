@@ -36,7 +36,7 @@ public class MaterialRowController implements Initializable{
 
     }
 
-    public void setInfo(Material material)
+    public void setInfo(Material material, boolean isConsulta)
     {
         curMaterial = material;
         materialLabel.setText(curMaterial.getDescripcionMaterial() + " " + String.valueOf(curMaterial.getCantidadDeProducto()) + " " + curMaterial.getUnidadMedida());
@@ -44,6 +44,8 @@ public class MaterialRowController implements Initializable{
             materialCheckBox.setSelected(true);
             materialCantidadTextField.setText(String.valueOf(curMaterial.getCantidadSeleccionada()));
         }
+        materialCheckBox.setDisable(isConsulta);
+        materialCantidadTextField.setEditable(!isConsulta);
     }
 
     public HBox getBox(){

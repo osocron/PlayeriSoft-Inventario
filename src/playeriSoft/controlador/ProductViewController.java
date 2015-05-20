@@ -104,6 +104,7 @@ public class ProductViewController implements Initializable{
     public void setResourceObject(Producto resourceObject, InventarioProductosController inventarioProductosController){
         this.curProduct = resourceObject;
         modificarButton.setText("Modificar");
+        agregarMaterialesButton.setText("Consultar Materiales");
         sortClassName(resourceObject);
         listaMateriales = new ArrayList<>();
         listaMateriales = myHandler.getSelectedMateriales(listaMateriales, curProduct);
@@ -235,7 +236,6 @@ public class ProductViewController implements Initializable{
         serigrafiaCheckBox.setDisable(true);
         largoTextField.setEditable(false);
         anchoTextField.setEditable(false);
-        agregarMaterialesButton.setDisable(true);
         eliminarButton.setDisable(true);
     }
 
@@ -380,6 +380,7 @@ public class ProductViewController implements Initializable{
             isModificar = false;
         }else{
             enableFieldsParaModificar();
+            agregarMaterialesButton.setText("Agregar Materiales");
             modificarButton.setText("Guardar");
             isModificar = true;
         }
@@ -420,8 +421,8 @@ public class ProductViewController implements Initializable{
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Error!");
         alert.setHeaderText("No se han ingresado todos los datos necesarios para guardar el producto.");
-        alert.setContentText("Favor de verificar que cada campo tenga informacion, que se haya seleccionado si es un " +
-                "producto serigrafiado o bordado e inclusive, verificar que se hayan seleccionado " +
+        alert.setContentText("Favor de verificar que cada campo tenga informacion, que se haya seleccionado \nsi es un " +
+                "producto serigrafiado o bordado e inclusive, verificar que se hayan seleccionado\n" +
                 "materiales para el producto.");
         alert.showAndWait();
     }
@@ -491,11 +492,18 @@ public class ProductViewController implements Initializable{
     @FXML
     public void materialesButtonOnClicked(){
         ViewOpener viewOpener = new ViewOpener();
+        boolean isConsulta;
+        if (agregarMaterialesButton.getText().equals("Consultar Materiales")){
+            isConsulta = true;
+        }else{
+            isConsulta = false;
+        }
+
         if(listaMateriales == null) {
-            viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this);
+            viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this, isConsulta);
         }else{
             viewOpener.openMaterialesPickerWithSelectedMaterials("playeriSoft/vista/MaterialPicker.fxml",
-                    "Seleccione Materiales", this,listaMateriales);
+                    "Seleccione Materiales", this,listaMateriales, isConsulta);
         }
     }
 

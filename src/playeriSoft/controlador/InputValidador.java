@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  */
 public class InputValidador {
 
-//Various input validators used for input controll, perfectly tailored for the lazy programer ;)
+//Various input validators used for input control, perfectly tailored for the lazy programmer ;)
 
     public static boolean txtFieldIsInRange(int startRage, int endRange, TextField txtField){
         boolean isInRange;
