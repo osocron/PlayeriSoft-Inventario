@@ -31,21 +31,40 @@ public class InventarioProductosController implements Initializable{
     @FXML
     private Button nuevoButton;
 
+    /*
+    *Metodo que al inicializar la vista manda a llamar al método que permiten desplegar los
+    * productos al usuario, agrega un listener a la barra de búsqueda y manda a llamar al métdo
+    * que agrega tooltips a los distintos nodos de la vista.
+    */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareListView();
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            searchProducts(oldValue, newValue);
-        });
-        //Set Tooltips
-        searchTextField.setTooltip(new Tooltip("Escribe para filtrar la lista"));
-        nuevoButton.setTooltip(new Tooltip("Haz clic para crear un producto nuevo"));
+        addListenerToSearchTextField();
+        addToolTipsToNodes();
     }
 
+    /*
+    *Metodo que se manda a llamar cuando se le da click al botón de Nuevo producto.
+     * Este método crea una instancia de la clase ViewOpener para luego abrir la vista de
+      * productos detallados especificando que se abra con los campos habillitados y sin datos de
+      * algún producto.
+    */
     @FXML
     public void abrirProductView(){
         ViewOpener myViewOpener = new ViewOpener();
         myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto", this);
+    }
+
+
+    private void addListenerToSearchTextField(){
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchProducts(oldValue, newValue);
+        });
+    }
+
+    private void addToolTipsToNodes(){
+        searchTextField.setTooltip(new Tooltip("Escribe para filtrar la lista"));
+        nuevoButton.setTooltip(new Tooltip("Haz clic para crear un producto nuevo"));
     }
 
     public void prepareListView(){
@@ -74,9 +93,9 @@ public class InventarioProductosController implements Initializable{
                 };
                 //Handle mouse clicks
                 cell.setOnMouseClicked(event -> {
-                    ViewOpener myViewOpener = new ViewOpener();
                     Producto curProd = prodListView.getSelectionModel().getSelectedItem();
                     if(curProd != null) {
+                        ViewOpener myViewOpener = new ViewOpener();
                         myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml",
                                 "Consulta de Producto", curProd, inventarioProductosController);
                     }
