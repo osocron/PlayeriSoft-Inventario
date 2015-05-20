@@ -6,14 +6,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import playeriSoft.modelo.Producto;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Created by Noe on 27/04/15.
- * Esta clase es el controlador para inventario-productos-view.fxml
+ * Esta clase es el controlador para inventario-productos-view.fxml y se encarga de mostrar los productos
+ * al usuario, filtrarlos si el usuario desea, y proveer de eventos de click a las celdas de la lista de
+ * productos y al botón de Nuevo.
  */
-public class InventarioProductosController implements Initializable{
+public class InventarioProductosController implements Initializable {
 
     private static ObservableList<Producto> items = FXCollections.observableArrayList();
 
@@ -45,7 +48,7 @@ public class InventarioProductosController implements Initializable{
       * productos.
     */
     @FXML
-    public void abrirProductView(){
+    public void abrirProductView() {
         ViewOpener myViewOpener = new ViewOpener();
         myViewOpener.openEditableProductView("playeriSoft/vista/producto-view.fxml", "Nuevo Producto", this);
     }
@@ -55,7 +58,7 @@ public class InventarioProductosController implements Initializable{
      * se pueda filtrar la lista. La forma en que se filtra la lista se especifica en el método
       * searchProducts()
     */
-    private void addListenerToSearchTextField(){
+    private void addListenerToSearchTextField() {
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             searchProducts(oldValue, newValue);
         });
@@ -65,11 +68,11 @@ public class InventarioProductosController implements Initializable{
     *Método que agrega Tooltips a la barra de búsqueda, al botón de Nuevo y a la lista de
     * productos.
     */
-    private void addToolTipsToNodes(){
+    private void addToolTipsToNodes() {
         searchTextField.setTooltip(new Tooltip("Escribe para filtrar la lista"));
         nuevoButton.setTooltip(new Tooltip("Haz clic para crear un producto nuevo"));
         Tooltip tooltip = new Tooltip("Haz clic sobre un producto para consultarlo");
-        Tooltip.install(prodListView,tooltip);
+        Tooltip.install(prodListView, tooltip);
     }
 
     /*
@@ -77,7 +80,7 @@ public class InventarioProductosController implements Initializable{
      * de la base de datos, otro para crear celdas modificadas que permitan desplegar la información
      * detallada del producto que contienen cuando el usuario le de clic a la celda.
     */
-    private void prepareListView(){
+    private void prepareListView() {
         getProductsForListView();
         createCustomCells();
     }
@@ -86,7 +89,7 @@ public class InventarioProductosController implements Initializable{
     *Método que crea una instancia de InventarioHandler para obtener los productos de la base de datos.
     * Una vez obtenidos los productos, los agrega a la lista de productos con el método setItems();
     */
-    private void getProductsForListView(){
+    private void getProductsForListView() {
         InventarioHandler myHandler = new InventarioHandler();
         items = myHandler.getAllProducts(items);
         prodListView.setItems(items);
@@ -97,7 +100,7 @@ public class InventarioProductosController implements Initializable{
     * de mostrar la descripción del Producto que contienen y de responder a eventos de ratón por parte
     * del usuario por medio del método setOnMouseClicked();
     */
-    private void createCustomCells(){
+    private void createCustomCells() {
         prodListView.setCellFactory(param -> {
             ListCell<Producto> cell = (ListCell<Producto>) getCellWithUpdateItemOverriden();
             cell.setOnMouseClicked(event -> handleMouseClickOnCell());
@@ -111,15 +114,15 @@ public class InventarioProductosController implements Initializable{
      * no despliege información alguna y que solo despliege la información del producto si el objeto
      * producto que contiene no es nulo.
     */
-    private Cell<Producto> getCellWithUpdateItemOverriden(){
-        return new ListCell<Producto>(){
+    private Cell<Producto> getCellWithUpdateItemOverriden() {
+        return new ListCell<Producto>() {
             @Override
-            protected void updateItem(Producto prod, boolean bool){
-                super.updateItem(prod,bool);
-                if(bool){
+            protected void updateItem(Producto prod, boolean bool) {
+                super.updateItem(prod, bool);
+                if (bool) {
                     setText(null);
                     setGraphic(null);
-                }else if(prod != null){
+                } else if (prod != null) {
                     setText(prod.getDescripcion());
                 }
             }
@@ -133,10 +136,10 @@ public class InventarioProductosController implements Initializable{
        * el títlulo que se desea que aparezca en la pantalla, una instancia de esta clase y el objeto
        * de tipo Producto que pertenece a la celda a la que se le dió click.
     */
-    private void handleMouseClickOnCell(){
+    private void handleMouseClickOnCell() {
         InventarioProductosController inventarioProductosController = this;
         Producto curProd = prodListView.getSelectionModel().getSelectedItem();
-        if(curProd != null) {
+        if (curProd != null) {
             ViewOpener myViewOpener = new ViewOpener();
             myViewOpener.openProductViewWithResourceObject("playeriSoft/vista/producto-view.fxml",
                     "Consulta de Producto", curProd, inventarioProductosController);
@@ -147,7 +150,7 @@ public class InventarioProductosController implements Initializable{
     *Método que quita los productos de la lista de productos, vacía la lista y manda a llamar
      * el método para volver a cargar la lista de productos de elementos de la base de datos
     */
-    public void refreshListView(){
+    public void refreshListView() {
         prodListView.setItems(null);
         items.clear();
         getProductsForListView();
@@ -161,21 +164,21 @@ public class InventarioProductosController implements Initializable{
        * escribio es parte de la descripción del producto ese producto se agrega a una lista de productos
        * provicional que finalmente se asigna al ListView.
     */
-    private void searchProducts(String oldVal, String newVal){
+    private void searchProducts(String oldVal, String newVal) {
         if (oldVal != null && (newVal.length() < oldVal.length()))
             prodListView.setItems(items);
         String[] parts = newVal.toUpperCase().split(" ");
         ObservableList<Producto> subentries = FXCollections.observableArrayList();
-        for (Producto entry : prodListView.getItems()){
+        for (Producto entry : prodListView.getItems()) {
             boolean match = true;
             String entryText = entry.getDescripcion();
-            for ( String part: parts ) {
+            for (String part : parts) {
                 if (!entryText.toUpperCase().contains(part)) {
                     match = false;
                     break;
                 }
             }
-            if(match)
+            if (match)
                 subentries.add(entry);
         }
         prodListView.setItems(subentries);

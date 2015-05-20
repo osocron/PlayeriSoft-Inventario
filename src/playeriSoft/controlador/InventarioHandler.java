@@ -17,7 +17,6 @@ public class InventarioHandler {
     public InventarioHandler(){
 
     }
-
     /*
      *Este metodo recibe como parámetro una lista, se conecta a la Base de Datos, hace una consulta para
       * obtener todos los productos y del resultado que obtiene, hace un ciclo para construir objetos de

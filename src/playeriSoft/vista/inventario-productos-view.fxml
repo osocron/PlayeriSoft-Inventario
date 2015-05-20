@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -12,26 +10,6 @@
          <top>
             <VBox>
                <children>
-                  <MenuBar BorderPane.alignment="CENTER">
-                    <menus>
-                      <Menu mnemonicParsing="false" text="Archivo">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Cerrar" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Edición">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Modificar" />
-                              <MenuItem mnemonicParsing="false" text="Borrar" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Ayuda">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Acerca de..." />
-                        </items>
-                      </Menu>
-                    </menus>
-                  </MenuBar>
                   <HBox alignment="CENTER_RIGHT" pickOnBounds="false">
                      <children>
                         <AnchorPane prefHeight="26.0" HBox.hgrow="ALWAYS">
