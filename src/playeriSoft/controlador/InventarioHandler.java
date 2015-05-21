@@ -6,6 +6,7 @@ import playeriSoft.modelo.Producto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by Noe on 27/04/15.
@@ -29,8 +30,7 @@ public class InventarioHandler {
         DBConnector myConnector = new DBConnector();
         try {
             Connection connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Producto");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = myConnector.getResultSet(connection, "SELECT * FROM Producto");
             int cont = 0;
             Producto curProd;
             while(resultSet.next()){
@@ -47,5 +47,6 @@ public class InventarioHandler {
         }
 
     }
+
 
 }

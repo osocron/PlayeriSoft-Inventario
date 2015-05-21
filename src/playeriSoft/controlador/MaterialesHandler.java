@@ -15,7 +15,6 @@ import java.util.List;
 public class MaterialesHandler {
 
     private Connection connection;
-    private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
     public MaterialesHandler(){
@@ -26,8 +25,7 @@ public class MaterialesHandler {
         DBConnector myConnector = new DBConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM Material");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = myConnector.getResultSet(connection,"SELECT * FROM Material");
             int cont = 0;
             Material material;
             while(resultSet.next()){
@@ -49,8 +47,7 @@ public class MaterialesHandler {
         DBConnector myConnector = new DBConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM Material");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = myConnector.getResultSet(connection,"SELECT * FROM Material");
             int cont = 0;
             Material material;
             while(resultSet.next()){
@@ -65,10 +62,6 @@ public class MaterialesHandler {
             e.printStackTrace();
             return null;
         }
-
-    }
-
-    public void guardarMateriales(List<Material> listaMateriales, Producto curProd){
 
     }
 
