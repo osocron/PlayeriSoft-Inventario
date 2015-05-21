@@ -56,7 +56,7 @@ public class MaterialRowController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         materialCantidadTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.isEmpty()) {
+            if(!newValue.isEmpty() && !newValue.equals(".")) {
                 curMaterial.setCantidadSeleccionada(Double.valueOf(newValue));
             }else{
                 curMaterial.setCantidadSeleccionada(0.0);

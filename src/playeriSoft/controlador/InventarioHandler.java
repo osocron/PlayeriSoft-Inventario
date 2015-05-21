@@ -11,6 +11,7 @@ import java.sql.ResultSet;
  * Created by Noe on 27/04/15.
  * Esta clase tiene como propósito el realizar consultas a la base de datos y obtener todos
  * los productos para que se puedan visualizar y manipular por otras clases.
+ * TODO: Hacer prueba para la clase y separar getAllProducts en submétodos
  */
 public class InventarioHandler {
 

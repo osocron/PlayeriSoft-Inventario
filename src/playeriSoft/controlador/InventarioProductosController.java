@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
  * Esta clase es el controlador para inventario-productos-view.fxml y se encarga de mostrar los productos
  * al usuario, filtrarlos si el usuario desea, y proveer de eventos de click a las celdas de la lista de
  * productos y al botón de Nuevo.
+ * TODO: Hacer pruebas!
  */
 public class InventarioProductosController implements Initializable {
 

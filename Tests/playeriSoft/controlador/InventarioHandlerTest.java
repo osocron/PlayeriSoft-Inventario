@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by osocron on 20/05/15.
+ * TODO: Implementar pruebas
  */
 public class InventarioHandlerTest extends TestCase {
 
