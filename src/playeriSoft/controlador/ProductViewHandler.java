@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ProductViewHandler {
 
-    private MysqlConnector myConnector = new MysqlConnector();
+    private DBConnector myConnector = new DBConnector();
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -322,7 +322,7 @@ public class ProductViewHandler {
         List<Material> todosMateriales = new ArrayList<Material>();
         todosMateriales = handler.getAllMateriales(todosMateriales);
         List<String[]> listaIdMateriales = new ArrayList<String[]>();
-        MysqlConnector myConnector = new MysqlConnector();
+        DBConnector myConnector = new DBConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM RMaterialProducto WHERE IdProducto = '"+idProducto+"'");

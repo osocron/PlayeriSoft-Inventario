@@ -4,12 +4,14 @@ import java.sql.*;
 
 /**
  * Created by osocron on 16/03/15.
+ * Clase que se encarga de Proveer una conexión a la base de datos por medio de una intefaz simple.
+ * TODO: Proveer conexiones a diferentes manejadores de bases de datos
  */
-public class MysqlConnector {
+public class DBConnector {
 
     private Connection connect;
 
-    public MysqlConnector(){}
+    public DBConnector(){}
 
     public Connection connectToMysqlDB(String dataBase, String user, String password, String host) throws Exception{
 

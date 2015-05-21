@@ -26,7 +26,7 @@ public class InventarioHandler {
         * Al finalizar, se regresa la lista.
     */
     public ObservableList<Producto> getAllProducts(ObservableList<Producto> items){
-        MysqlConnector myConnector = new MysqlConnector();
+        DBConnector myConnector = new DBConnector();
         try {
             Connection connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Producto");

@@ -23,7 +23,7 @@ public class MaterialesHandler {
     }
 
     public ObservableList<Material> getAllMateriales(ObservableList<Material> items){
-        MysqlConnector myConnector = new MysqlConnector();
+        DBConnector myConnector = new DBConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM Material");
@@ -46,7 +46,7 @@ public class MaterialesHandler {
     }
 
     public List<Material> getAllMateriales(List<Material> items){
-        MysqlConnector myConnector = new MysqlConnector();
+        DBConnector myConnector = new DBConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM Material");
