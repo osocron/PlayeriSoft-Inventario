@@ -1,5 +1,7 @@
 package playeriSoft.controlador;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.*;
 
 /**
@@ -15,8 +17,6 @@ public class DBConnector {
     public DBConnector(){}
 
     public Connection connectToMysqlDB(String dataBase, String user, String password, String host) throws Exception{
-
-        //Conexión a Mysql
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://"+host+"/"+dataBase+"?"
@@ -28,25 +28,33 @@ public class DBConnector {
             /*MailSender mailSender = new MailSender();
             mailSender.sendMail("Error al conectarse a la base de datos",e.getMessage());*/
         }
-
         return connect;
-
     }
 
     public ResultSet getResultSet(Connection connection, String sqlQuery){
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(sqlQuery);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        PreparedStatement preparedStatement = getPreparedStatement(connection, sqlQuery);
         ResultSet resultSet = null;
         try {
             resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            /*MailSender mailSender = new MailSender();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(sw);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al ObtenerResultset",stringWriter.toString);*/
         }
         return resultSet;
+    }
+
+    private PreparedStatement getPreparedStatement(Connection connection, String sqlQuery){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sqlQuery);
+        } catch (Exception e) {
+             /*MailSender mailSender = new MailSender();
+            mailSender.sendMail("Error al obtener PreparedStatement",e.getMessage());*/
+        }
+        return  preparedStatement;
     }
 
 }

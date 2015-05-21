@@ -1,6 +1,7 @@
 package playeriSoft.controlador;
 
 import javafx.collections.ObservableList;
+import org.intellij.lang.annotations.Language;
 import playeriSoft.modelo.Producto;
 
 import java.sql.Connection;
@@ -31,13 +32,12 @@ public class InventarioHandler {
         try {
             Connection connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             ResultSet resultSet = myConnector.getResultSet(connection, "SELECT * FROM Producto");
-            int cont = 0;
             Producto curProd;
             while(resultSet.next()){
                 curProd = new Producto(resultSet.getString("IdProducto"), resultSet.getDouble("Descuento"),
                         resultSet.getString("DescripProd"), resultSet.getInt("Existencias"),
                         resultSet.getDouble("PrecioMayoreo"), resultSet.getDouble("PrecioMenudeo"));
-                items.add(cont,curProd);
+                items.add(curProd);
             }
             connection.close();
             return items;
@@ -45,8 +45,6 @@ public class InventarioHandler {
             e.printStackTrace();
             return null;
         }
-
     }
-
 
 }
