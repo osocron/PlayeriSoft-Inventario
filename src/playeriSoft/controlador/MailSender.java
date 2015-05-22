@@ -30,7 +30,7 @@ public class MailSender {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("osocron@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("osocron@ngmail.com"));
+                    InternetAddress.parse("osocron@gmail.com"));
             message.setSubject(asunto);
             message.setText(mensaje);
 

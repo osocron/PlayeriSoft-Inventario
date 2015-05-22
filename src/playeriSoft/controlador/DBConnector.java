@@ -20,13 +20,19 @@ public class DBConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://"+host+"/"+dataBase+"?"
-                    + "user="+user+"&password="+password);
+                    + "user="+user+"&passwoasrd="+password);
         }catch (ClassNotFoundException e) {
-            /*MailSender mailSender = new MailSender();
-            mailSender.sendMail("Error al conectarse a la base de datos",e.getMessage());*/
+            MailSender mailSender = new MailSender();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error, mysql Class not Found!",stringWriter.toString());
         }catch (Exception e){
-            /*MailSender mailSender = new MailSender();
-            mailSender.sendMail("Error al conectarse a la base de datos",e.getMessage());*/
+            MailSender mailSender = new MailSender();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al Conectarse a la base de datos!",stringWriter.toString());
         }
         return connect;
     }
@@ -37,11 +43,11 @@ public class DBConnector {
         try {
             resultSet = preparedStatement.executeQuery();
         } catch (Exception e) {
-            /*MailSender mailSender = new MailSender();
+            MailSender mailSender = new MailSender();
             StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(sw);
+            PrintWriter printWriter = new PrintWriter(stringWriter);
             e.printStackTrace(printWriter);
-            mailSender.sendMail("Error al ObtenerResultset",stringWriter.toString);*/
+            mailSender.sendMail("Error al ObtenerResultset",stringWriter.toString());
         }
         return resultSet;
     }
@@ -51,8 +57,11 @@ public class DBConnector {
         try {
             preparedStatement = connection.prepareStatement(sqlQuery);
         } catch (Exception e) {
-             /*MailSender mailSender = new MailSender();
-            mailSender.sendMail("Error al obtener PreparedStatement",e.getMessage());*/
+            MailSender mailSender = new MailSender();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear Prepared Statement",stringWriter.toString());
         }
         return  preparedStatement;
     }
