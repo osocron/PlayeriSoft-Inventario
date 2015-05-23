@@ -3,17 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playeriSoft.controlador.LoginViewController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="150.0" layoutY="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="130.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Res/PlayeriSoft.jpg" />
+                  <Image url="@/Res/PlayeriSoft.jpg" />
                </image>
                <VBox.margin>
                   <Insets left="15.0" right="15.0" top="15.0" />
@@ -41,7 +40,7 @@
             </TextField>
             <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false" prefWidth="200.0" text="Entrar" HBox.hgrow="ALWAYS">
+                  <Button fx:id="loginButton" onAction="#entrarLoginButtonOnClickedActionEvent" mnemonicParsing="false" prefWidth="200.0" text="Entrar" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="15.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>

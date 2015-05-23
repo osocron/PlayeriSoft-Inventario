@@ -20,7 +20,7 @@ public class DBConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://"+host+"/"+dataBase+"?"
-                    + "user="+user+"&passwoasrd="+password);
+                    + "user="+user+"&password="+password);
         }catch (ClassNotFoundException e) {
             MailSender mailSender = new MailSender();
             StringWriter stringWriter = new StringWriter();
