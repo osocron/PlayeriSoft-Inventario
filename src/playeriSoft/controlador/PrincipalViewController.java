@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,11 +13,9 @@ import java.util.ResourceBundle;
 
 /**
  * Created by osocron on 22/05/15.
+ * Clase que funciona como controlador para la ventana principal de PlayeriSoft inc.
  */
 public class PrincipalViewController implements Initializable {
-
-    @FXML
-    private Button productosButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,9 +31,6 @@ public class PrincipalViewController implements Initializable {
             stage.setTitle("Inventario de Productos");
             stage.setScene(new Scene(root, 600, 400));
             stage.show();
-            //Cerrar ventana
-            Stage stage1 = (Stage) productosButton.getScene().getWindow();
-            stage1.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
