@@ -6,6 +6,7 @@ import javax.mail.internet.*;
 
 /**
  * Created by osocron on 21/05/15.
+ * Clase que se encarga de crear correos electrónicos mandarlos pormedio del servidor smtp de google
  */
 public class MailSender {
 
@@ -21,7 +22,7 @@ public class MailSender {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("osocron@gmail.com", "patumecha3");
+                        return new PasswordAuthentication("osocron@gmail.com", "");
                     }
                 });
 

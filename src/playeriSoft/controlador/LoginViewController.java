@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by osocron on 22/05/15.
+ * Clase chafita que funciona como controlador de la ventana de Login para el proyecto.
  */
 public class LoginViewController implements Initializable{
 

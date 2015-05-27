@@ -22,6 +22,7 @@ public class PrincipalViewController implements Initializable {
 
     }
 
+
     @FXML
     private void pedidosButtonOnClickActionEvent(){
         try {
@@ -29,7 +30,7 @@ public class PrincipalViewController implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Inventario de Productos");
-            stage.setScene(new Scene(root, 600, 400));
+            stage.setScene(new Scene(root, 700, 450));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

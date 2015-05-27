@@ -320,7 +320,7 @@ public class ProductViewHandler {
         MaterialesHandler handler = new MaterialesHandler();
         String idProducto = curProduct.getIdProducto();
         List<Material> todosMateriales = new ArrayList<Material>();
-        todosMateriales = handler.getAllMateriales(todosMateriales);
+        todosMateriales = (List<Material>) handler.getAllMateriales(todosMateriales);
         List<String[]> listaIdMateriales = new ArrayList<String[]>();
         DBConnector myConnector = new DBConnector();
         try {

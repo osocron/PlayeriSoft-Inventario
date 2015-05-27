@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Noe on 24/04/15.
+ *Clase que funciona como controlador a la vista producto-view.fxml
  */
 public class ProductViewController implements Initializable{
 
@@ -22,7 +23,7 @@ public class ProductViewController implements Initializable{
 
     private Producto curProduct;
 
-    private List<Material> listaMateriales = new ArrayList<>();
+    private static List<Material> listaMateriales = new ArrayList<>();
 
     private ProductViewHandler myHandler = new ProductViewHandler();
 
@@ -148,7 +149,10 @@ public class ProductViewController implements Initializable{
         }
     }
 
-
+    /**
+     * Método que se encarga de cargar los elementos de la vista con los valores de la playera
+     * y deshabiliatar campos que no necesitan ser habilitados.
+     * */
     private void setPlayeraLayout(){
         Playera myPlayera = (Playera) curProduct;
         productoLabel.setText(myPlayera.getDescripcion());
@@ -170,6 +174,9 @@ public class ProductViewController implements Initializable{
         disableFields();
     }
 
+    /**
+     *
+     * */
     private void setSudaderaLayout(){
         Sudadera mySudadera = (Sudadera) curProduct;
         productoLabel.setText(mySudadera.getDescripcion());
