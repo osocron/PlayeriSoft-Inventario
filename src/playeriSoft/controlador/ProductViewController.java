@@ -5,12 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import playeriSoft.modelo.*;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -340,15 +342,14 @@ public class ProductViewController implements Initializable{
         precioMenTextField.setDisable(!bool);
         agregarMaterialesButton.setDisable(!bool);
         eliminarButton.setDisable(!bool);
-        serigrafiaCheckBox.setDisable(false);
-        bordadoCheckBox.setDisable(false);
+        serigrafiaCheckBox.setDisable(isModificar);
+        bordadoCheckBox.setDisable(isModificar);
         modificarButton.setDisable(false);
-        eliminarButton.setDisable(true);
+        eliminarButton.setDisable(!isModificar);
     }
 
     /**
-     * Método que habilita los campos necesarios para la modificaión de un parche
-     * */
+     * Método que habilita los campos necesarios para la modificaión de un parche*/
     private void enableParcheAttributesForModificar(){
         colorTextField.setDisable(true);
         tallaTextField.setDisable(true);
@@ -359,24 +360,25 @@ public class ProductViewController implements Initializable{
     }
 
     /**
-     * Borra los datos escritos por el usuario, incluyendo los materiales seleccionados.
-     * */
+     * Borra los datos escritos por el usuario, incluyendo los materiales seleccionados.*/
     private void clearInput(){
         descripTextField.clear();
         existenciasTextField.clear();
         descripTextField.clear();
+        descuentoTextField.clear();
         precioMayTextField.clear();
         precioMenTextField.clear();
         tallaTextField.clear();
         colorTextField.clear();
         largoTextField.clear();
         anchoTextField.clear();
+        serigrafiaCheckBox.setSelected(false);
+        bordadoCheckBox.setSelected(false);
         clearMaterialesSelection();
     }
 
     /**
-     * Borra los materiales seleccionados
-     * */
+     * Borra los materiales seleccionados*/
     private void clearMaterialesSelection(){
         listaMateriales.forEach(material ->{
             material.setSelected(false);
@@ -385,7 +387,8 @@ public class ProductViewController implements Initializable{
     }
 
     /**
-     * Métdo que responde al evento de un click del usuario.
+     * Métdo que responde al evento de un click del usuario y manda a llamar al metodo checkBoxClickHandler() y
+     * habilita el checkbox de la playera.
      * */
     @FXML
     public void playeraCheckBoxClicked() {
@@ -394,7 +397,8 @@ public class ProductViewController implements Initializable{
     }
 
     /**
-     * Métdo que responde al evento de un click del usuario.
+     * Métdo que responde al evento de un click del usuarioy manda a llamar al metodo checkBoxClickHandler() y
+     * habilita el checkbox de la sudadera.
      * */
     @FXML
     public void sudaderaCheckBoxClicked() {
@@ -403,7 +407,8 @@ public class ProductViewController implements Initializable{
     }
 
     /**
-     * Métdo que responde al evento de un click del usuario.
+     * Métdo que responde al evento de un click del usuarioy manda a llamar al metodo checkBoxClickHandler() y
+     * habilita el checkbox de la gorra.
      * */
     @FXML
     public void gorraCheckBoxClicked(){
@@ -412,7 +417,8 @@ public class ProductViewController implements Initializable{
     }
 
     /**
-     * Métdo que responde al evento de un click del usuario.
+     * Métdo que responde al evento de un click del usuarioy manda a llamar al metodo checkBoxClickHandler() y
+     * habilita el checkbox de el parche.
      * */
     @FXML
     public void parcheCheckBoxClicked(){
@@ -436,18 +442,28 @@ public class ProductViewController implements Initializable{
         clearInput();
     }
 
-
+    /**
+     * Métdo que responde al evento de un click del usuario y deshabilita el checkbox de bordado dependiendo en si
+     * el checkbox de serigrafía está seleccionado o no.
+     * */
     @FXML
     public void serigrafiaCheckBoxClicked(){
         bordadoCheckBox.setDisable(serigrafiaCheckBox.isSelected());
     }
 
+    /**
+     * Métdo que responde al evento de un click del usuario y deshabilita el checkbox de serigrafia dependiendo en si
+     * el checkbox de bordado está seleccionado o no.
+     * */
     @FXML
     public void bordadoCheckBoxClicked(){
         serigrafiaCheckBox.setDisable(bordadoCheckBox.isSelected());
     }
 
-
+    /**
+     * Método que responde al evento de un click del usuario y que dependiendo el texto del botón permite guardar el
+     * producto o habilitar los campos para modificar un un producto.
+     * */
     @FXML
     public void modificarButtonClicked(){
         if (modificarButton.getText().equals("Guardar")){
@@ -455,18 +471,25 @@ public class ProductViewController implements Initializable{
             inventarioProductosController.refreshListView();
             isModificar = false;
         }else{
+            isModificar = true;
             enableFieldsParaModificar();
             agregarMaterialesButton.setText("Agregar Materiales");
             modificarButton.setText("Guardar");
-            isModificar = true;
         }
     }
 
+    /**
+     * Cierra la ventana actual
+     * */
     private void cerrarVentanActual(){
         Stage stage = (Stage) modificarButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Método que valida si todos los campos necesarios para guardar un producto han sido llenados por el usuario. De
+     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.
+     * */
     private boolean validarEntradasGeneralesParaGuardarProducto(){
         return (descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
                 && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
@@ -474,40 +497,60 @@ public class ProductViewController implements Initializable{
                 || bordadoCheckBox.isSelected()) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
     }
 
+    /**
+     * Método que valida si todos los campos necesarios para guardar una playera han sido llenados por el usuario. De
+     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.
+     * */
     private boolean validarGuardarPlayera(){
         return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
                 && (colorTextField.getText().length() > 0)
                 && (tipoChoiceBox.getSelectionModel().isSelected(0) || tipoChoiceBox.getSelectionModel().isSelected(1));
     }
 
+    /**
+     * Método que valida si todos los campos necesarios para guardar una sudadera o una gorra han sido llenados por el
+     * usuario. De ser así regresa un booleano verdadero, de lo contrario un booleano falso.
+     * */
     private boolean validarGuardarSudaderaGorra(){
         return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
                 && (colorTextField.getText().length() > 0);
     }
 
+    /**
+     * Método que valida si todos los campos necesarios para guardar un parche han sido llenados por el usuario. De
+     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.
+     * */
     private boolean validarGuardarParche(){
         return validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
                 && (anchoTextField.getText().length() > 0);
     }
 
+    /**
+     * Método que se encarga de construir una alerta para el usuario en el caso de que la validación de los datos al
+     * momento de guardar o modificar un producto haya fallado.
+     * */
     private void mostrarMensajeDatosFaltantes(){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Error!");
         alert.setHeaderText("No se han ingresado todos los datos necesarios para guardar el producto.");
-        alert.setContentText("Favor de verificar que cada campo tenga informacion, que se haya seleccionado \nsi es un " +
-                "producto serigrafiado o bordado e inclusive, verificar que se hayan seleccionado\n" +
-                "materiales para el producto.");
+        alert.setContentText("Favor de verificar que cada campo tenga informacion, " +
+                "que se haya seleccionado \nsi es un producto serigrafiado o bordado e inclusive, " +
+                "verificar que se hayan seleccionado\nmateriales para el producto.");
         alert.showAndWait();
     }
 
+    /**
+     * Método que se encarga de guardar o actualizar un producto dependiendo de la variable global isModificar y del
+     * checkbox que esté seleccionado, esto puede ser, el checkbox de playera, de sudadera, de gorra o de parche.
+     * */
     public void guardarProducto(boolean isForModificar) {
         if (playeraCheckBox.isSelected() && validarGuardarPlayera()) {
             if(isForModificar){
-                myHandler.actualizarPlayera(curProduct.getIdProducto(),Double.valueOf(descuentoTextField.getText()),descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()),Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()),Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(),tipoChoiceBox.getValue(),bordadoCheckBox.isSelected(),
-                        listaMateriales);
+                myHandler.actualizarPlayera(curProduct.getIdProducto(),Double.valueOf(descuentoTextField.getText()),
+                        descripTextField.getText(), Integer.valueOf(existenciasTextField.getText()),
+                        Double.valueOf(precioMayTextField.getText()), Double.valueOf(precioMenTextField.getText()),
+                        Double.valueOf(tallaTextField.getText()), colorTextField.getText(),tipoChoiceBox.getValue(),
+                        bordadoCheckBox.isSelected(), listaMateriales);
             }else {
                 myHandler.guardarPlayera(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
@@ -519,10 +562,11 @@ public class ProductViewController implements Initializable{
         }
         else if(sudaderaCheckBox.isSelected() && validarGuardarSudaderaGorra()){
             if (isForModificar) {
-                myHandler.actualizarSudadera(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(), bordadoCheckBox.isSelected(), listaMateriales);
+                myHandler.actualizarSudadera(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()),
+                        descripTextField.getText(), Integer.valueOf(existenciasTextField.getText()),
+                        Double.valueOf(precioMayTextField.getText()), Double.valueOf(precioMenTextField.getText()),
+                        Double.valueOf(tallaTextField.getText()), colorTextField.getText(),
+                        bordadoCheckBox.isSelected(), listaMateriales);
             }else{
                 myHandler.guardarSudadera(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
@@ -533,10 +577,11 @@ public class ProductViewController implements Initializable{
         }
         else if(gorraCheckBox.isSelected() && validarGuardarSudaderaGorra()){
             if (isForModificar) {
-                myHandler.actualizarGorra(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(tallaTextField.getText()),
-                        colorTextField.getText(), bordadoCheckBox.isSelected(), listaMateriales);
+                myHandler.actualizarGorra(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()),
+                        descripTextField.getText(), Integer.valueOf(existenciasTextField.getText()),
+                        Double.valueOf(precioMayTextField.getText()), Double.valueOf(precioMenTextField.getText()),
+                        Double.valueOf(tallaTextField.getText()), colorTextField.getText(),
+                        bordadoCheckBox.isSelected(), listaMateriales);
             }else{
                 myHandler.guardarGorra(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
@@ -546,10 +591,11 @@ public class ProductViewController implements Initializable{
             cerrarVentanActual();
         }else if(parcheCheckBox.isSelected() && validarGuardarParche()){
             if (isForModificar) {
-                myHandler.actualizarParche(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
-                        Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
-                        Double.valueOf(precioMenTextField.getText()), Double.valueOf(largoTextField.getText()),
-                        Double.valueOf(anchoTextField.getText()), bordadoCheckBox.isSelected(), listaMateriales);
+                myHandler.actualizarParche(curProduct.getIdProducto(), Double.valueOf(descuentoTextField.getText()),
+                        descripTextField.getText(), Integer.valueOf(existenciasTextField.getText()),
+                        Double.valueOf(precioMayTextField.getText()), Double.valueOf(precioMenTextField.getText()),
+                        Double.valueOf(largoTextField.getText()), Double.valueOf(anchoTextField.getText()),
+                        bordadoCheckBox.isSelected(), listaMateriales);
             }else{
                 myHandler.guardarParche(Double.valueOf(descuentoTextField.getText()), descripTextField.getText(),
                         Integer.valueOf(existenciasTextField.getText()), Double.valueOf(precioMayTextField.getText()),
@@ -562,27 +608,62 @@ public class ProductViewController implements Initializable{
         }
     }
 
+    /**
+     * Metodo que se encarga de abrir la ventana de seleccion de materiales con materiales seleccionados previamente
+     * por el usuario en caso de existan o sin materiales seleccionados previamente. Tambien pasa como argumento a la
+     * clase que se encarga de abrir la ventana si se estan consultando los materiales de un producto existente o si el
+     * usuario desea agregar o modificar materiales ya existentes en el producto.
+     * */
     @FXML
     public void materialesButtonOnClicked(){
         ViewOpener viewOpener = new ViewOpener();
         boolean isConsulta;
         isConsulta = agregarMaterialesButton.getText().equals("Consultar Materiales");
         if(listaMateriales == null) {
-            viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this, isConsulta);
+            viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml",
+                    "Seleccione Materiales", this, isConsulta);
         }else{
             viewOpener.openMaterialesPickerWithSelectedMaterials("playeriSoft/vista/MaterialPicker.fxml",
                     "Seleccione Materiales", this,listaMateriales, isConsulta);
         }
     }
 
+    /**
+     * Método setter para la lista de materiales
+     * */
     public void setListaMateriales(List<Material> listaMateriales){
         this.listaMateriales = listaMateriales;
     }
 
+    /**
+     * Método que responde al evento de un clock del usuario y que manda  llamar al método encargado de eliminar el
+     * producto, el método que actualiza la lista de productos de la ventana de selección de productos y al método
+     * que cierra la ventana dependiendo de la decisión del usuario.
+     * */
     @FXML
     public void eliminarButtonOnClicked(){
-        myHandler.eliminarProducto(curProduct.getIdProducto());
-        inventarioProductosController.refreshListView();
-        cerrarVentanActual();
+        if(showConfirmationDialog("¡Atención!", "¿Está seguro que desea eliminar el producto?",
+                "Esta operación no podrá revertirse aunque le ore \na los dioses del Olimpo.")) {
+            myHandler.eliminarProducto(curProduct.getIdProducto());
+            inventarioProductosController.refreshListView();
+            cerrarVentanActual();
+        }
+    }
+
+    /**
+     * Método que crea un mensaje de confirmación con dos opciónes. Regresa un booleano verdadero si el usuario da click
+     * al botón de OK y un booleano falso de lo contrario.
+     * */
+    private boolean showConfirmationDialog(String title, String headerText, String contextText){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contextText);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
