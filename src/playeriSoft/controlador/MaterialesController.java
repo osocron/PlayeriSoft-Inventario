@@ -198,7 +198,7 @@ public class MaterialesController implements Initializable {
         for(Material material : items)
             selectedMateriales.stream().filter(curMaterial ->
                     material.getIdMaterial().equals(curMaterial.getIdMaterial())).forEach(curMaterial -> {
-                material.setSelected(true);
+                material.setSelected(curMaterial.isSelected());
                 material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
             });
         materialesListView.setItems(items);

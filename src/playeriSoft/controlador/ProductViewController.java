@@ -23,7 +23,7 @@ public class ProductViewController implements Initializable{
 
     private Producto curProduct;
 
-    private static List<Material> listaMateriales = new ArrayList<>();
+    private List<Material> listaMateriales = new ArrayList<>();
 
     private ProductViewHandler myHandler = new ProductViewHandler();
 
@@ -151,74 +151,75 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que se encarga de cargar los elementos de la vista con los valores de la playera
-     * y deshabiliatar campos que no necesitan ser habilitados.
+     * y deshabiliatar campos que no necesitan ser habilitados por medio del método disableEditableFields().
      * */
     private void setPlayeraLayout(){
         Playera myPlayera = (Playera) curProduct;
-        productoLabel.setText(myPlayera.getDescripcion());
         playeraCheckBox.setSelected(true);
         colorTextField.setText(String.valueOf(myPlayera.getColor()));
         tallaTextField.setText(String.valueOf(myPlayera.getTalla()));
         String tipo = myPlayera.getTipo();
-        if(tipo.equals("NORM")) {
-            tipoChoiceBox.getSelectionModel().selectFirst();
-        }else {
-            tipoChoiceBox.getSelectionModel().selectLast();
-        }
-        if(myPlayera.isBordado()) {
-            bordadoCheckBox.setSelected(true);
-        }else{
-            serigrafiaCheckBox.setSelected(true);
-        }
+        if(tipo.equals("NORM")) tipoChoiceBox.getSelectionModel().selectFirst();
+        else tipoChoiceBox.getSelectionModel().selectLast();
+        if(myPlayera.isBordado()) bordadoCheckBox.setSelected(true);
+        else serigrafiaCheckBox.setSelected(true);
         setGeneralAttributes();
-        disableFields();
+        disableCheckBoxes();
+        disableEditableFields();
     }
 
     /**
-     *
+     *Método que se encarga de cargar los elementos de la vista con los valores de la sudadera
+     * y deshabiliatar campos que no necesitan ser habilitados por medio del método disableEditableFields().
      * */
     private void setSudaderaLayout(){
         Sudadera mySudadera = (Sudadera) curProduct;
-        productoLabel.setText(mySudadera.getDescripcion());
         sudaderaCheckBox.setSelected(true);
         colorTextField.setText(String.valueOf(mySudadera.getColor()));
         tallaTextField.setText(String.valueOf(mySudadera.getTalla()));
-        if(mySudadera.isBordado()) {
-            bordadoCheckBox.setSelected(true);
-        }else{
-            serigrafiaCheckBox.setSelected(true);
-        }
+        if(mySudadera.isBordado()) bordadoCheckBox.setSelected(true);
+        else serigrafiaCheckBox.setSelected(true);
         setGeneralAttributes();
-        disableFields();
+        disableCheckBoxes();
+        disableEditableFields();
     }
 
+    /**
+     *Método que se encarga de cargar los elementos de la vista con los valores del gorro
+     * y deshabiliatar campos que no necesitan ser habilitados por medio del método disableEditableFields().
+     * */
     private void setGorroLayout(){
         Gorro myGorro = (Gorro) curProduct;
-        productoLabel.setText(myGorro.getDescripcion());
         gorraCheckBox.setSelected(true);
         colorTextField.setText(String.valueOf(myGorro.getColor()));
         tallaTextField.setText(String.valueOf(myGorro.getTalla()));
-        if(myGorro.isBordado()) {
-            bordadoCheckBox.setSelected(true);
-        }else{
-            serigrafiaCheckBox.setSelected(true);
-        }
+        if(myGorro.isBordado()) bordadoCheckBox.setSelected(true);
+        else serigrafiaCheckBox.setSelected(true);
         setGeneralAttributes();
-        disableFields();
+        disableCheckBoxes();
+        disableEditableFields();
     }
 
+    /**
+     *Método que se encarga de cargar los elementos de la vista con los valores del parche
+     * y deshabiliatar campos que no necesitan ser habilitados por medio del método disableEditableFields().
+     * */
     private void setParcheLayout(){
         Parche myParche = (Parche) curProduct;
-        productoLabel.setText(myParche.getDescripcion());
         parcheCheckBox.setSelected(true);
         largoTextField.setText(String.valueOf(myParche.getLargo()));
         anchoTextField.setText(String.valueOf(myParche.getAncho()));
         bordadoCheckBox.setSelected(true);
         setGeneralAttributes();
-        disableFields();
+        disableCheckBoxes();
+        disableEditableFields();
     }
 
+    /**
+     *Método refactorizado que permite agregar los datos independientes al tipo de producto a la vista.
+     * */
     private void setGeneralAttributes(){
+        productoLabel.setText(curProduct.getDescripcion());
         descripTextField.setText(curProduct.getDescripcion());
         existenciasTextField.setText(String.valueOf(curProduct.getExistencias()));
         descuentoTextField.setText(String.valueOf(curProduct.getDescuento()));
@@ -226,11 +227,11 @@ public class ProductViewController implements Initializable{
         precioMenTextField.setText(String.valueOf(curProduct.getPrecioMenudeo()));
     }
 
-    private void disableFields(){
-        playeraCheckBox.setDisable(true);
-        gorraCheckBox.setDisable(true);
-        sudaderaCheckBox.setDisable(true);
-        parcheCheckBox.setDisable(true);
+    /**
+     *Método que se encarga de deshabilitar la propiedad setEditable de los nodos de la vista
+     * y deshabiliatr otros nodos necesarios.
+     * */
+    private void disableEditableFields(){
         descripTextField.setEditable(false);
         existenciasTextField.setEditable(false);
         descuentoTextField.setEditable(false);
@@ -238,135 +239,203 @@ public class ProductViewController implements Initializable{
         precioMenTextField.setEditable(false);
         colorTextField.setEditable(false);
         tallaTextField.setEditable(false);
-        tipoChoiceBox.setDisable(true);
-        bordadoCheckBox.setDisable(true);
-        serigrafiaCheckBox.setDisable(true);
         largoTextField.setEditable(false);
         anchoTextField.setEditable(false);
         eliminarButton.setDisable(true);
+        tipoChoiceBox.setDisable(true);
+        bordadoCheckBox.setDisable(true);
+        serigrafiaCheckBox.setDisable(true);
     }
 
+    /**
+     * Deshabilita los checkboxes
+     * */
+    private void disableCheckBoxes(){
+        playeraCheckBox.setDisable(true);
+        gorraCheckBox.setDisable(true);
+        sudaderaCheckBox.setDisable(true);
+        parcheCheckBox.setDisable(true);
+    }
+
+    /**
+     *Método que se encarga de verificar si los checkboxes han sido seleccionados
+     * */
     private boolean verifyACheckBoxIsSelected(){
         if(!playeraCheckBox.isSelected() && !sudaderaCheckBox.isSelected()
                 && !gorraCheckBox.isSelected() && !parcheCheckBox.isSelected()){
-            descripTextField.setDisable(true);
-            existenciasTextField.setDisable(true);
-            descuentoTextField.setDisable(true);
-            precioMayTextField.setDisable(true);
-            precioMenTextField.setDisable(true);
-            tallaTextField.setDisable(true);
-            colorTextField.setDisable(true);
-            tipoChoiceBox.setDisable(true);
-            serigrafiaCheckBox.setDisable(true);
-            bordadoCheckBox.setDisable(true);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-            agregarMaterialesButton.setDisable(true);
-            modificarButton.setDisable(true);
-            eliminarButton.setDisable(true);
+            disableAllFields(true);
             return false;
         }else{
             return true;
         }
     }
 
-    private void enableFieldsParaModificar(){
-        if(playeraCheckBox.isSelected()){
-            colorTextField.setEditable(true);
-            colorTextField.setDisable(false);
-            tallaTextField.setEditable(true);
-            tallaTextField.setDisable(false);
-            tipoChoiceBox.setDisable(false);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-        }
-        else if(sudaderaCheckBox.isSelected()){
-            colorTextField.setEditable(true);
-            colorTextField.setDisable(false);
-            tallaTextField.setEditable(true);
-            tallaTextField.setDisable(false);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-        }
-        else if(gorraCheckBox.isSelected()){
-            colorTextField.setEditable(true);
-            colorTextField.setDisable(false);
-            tallaTextField.setEditable(true);
-            tallaTextField.setDisable(false);
-            largoTextField.setDisable(true);
-            anchoTextField.setDisable(true);
-        }else{
-            colorTextField.setDisable(true);
-            tallaTextField.setDisable(true);
-            largoTextField.setEditable(true);
-            largoTextField.setDisable(false);
-            anchoTextField.setEditable(true);
-            anchoTextField.setDisable(false);
-        }
-        descripTextField.setEditable(true);
-        descripTextField.setDisable(false);
-        existenciasTextField.setEditable(true);
-        existenciasTextField.setDisable(false);
-        descuentoTextField.setEditable(true);
-        descuentoTextField.setDisable(false);
-        precioMayTextField.setEditable(true);
-        precioMayTextField.setDisable(false);
-        precioMenTextField.setEditable(true);
-        precioMenTextField.setDisable(false);
-        agregarMaterialesButton.setDisable(false);
-        eliminarButton.setDisable(false);
+    /**
+     * Deshabilita todos los nodos de la vista
+     * */
+    private void disableAllFields(Boolean bool){
+        descripTextField.setDisable(bool);
+        existenciasTextField.setDisable(bool);
+        descuentoTextField.setDisable(bool);
+        precioMayTextField.setDisable(bool);
+        precioMenTextField.setDisable(bool);
+        tallaTextField.setDisable(bool);
+        colorTextField.setDisable(bool);
+        tipoChoiceBox.setDisable(bool);
+        serigrafiaCheckBox.setDisable(bool);
+        bordadoCheckBox.setDisable(bool);
+        largoTextField.setDisable(bool);
+        anchoTextField.setDisable(bool);
+        agregarMaterialesButton.setDisable(bool);
+        modificarButton.setDisable(bool);
+        eliminarButton.setDisable(bool);
     }
 
-    private void enableFieldsForNewProducto(){
+    /**
+     * Método que se encarga de llamar a los métodos que habilitan los campos necesarios para la modificación de un
+     * producto dependiendo de cuál checkbox está seleccionado.
+     * */
+    private void enableFieldsParaModificar(){
+        if(playeraCheckBox.isSelected()){
+            enableGeneralAttributesForPLayeraSudaderaGorra(true);
+            tipoChoiceBox.setDisable(false);
+        }
+        else if(sudaderaCheckBox.isSelected()){
+            enableGeneralAttributesForPLayeraSudaderaGorra(true);
+        }
+        else if(gorraCheckBox.isSelected()){
+            enableGeneralAttributesForPLayeraSudaderaGorra(true);
+        }else{
+            enableParcheAttributesForModificar();
+        }
+        enableGeneralAttributesForModificar(true);
+    }
+
+    /**
+     * Método que habilita los campos para edición necesarios tanto para la playera como la sudadera y la gorra
+     * */
+    private void enableGeneralAttributesForPLayeraSudaderaGorra(Boolean bool){
+        colorTextField.setEditable(bool);
+        colorTextField.setDisable(!bool);
+        tallaTextField.setEditable(bool);
+        tallaTextField.setDisable(!bool);
+        largoTextField.setDisable(bool);
+        anchoTextField.setDisable(bool);
+    }
+
+    /**
+     * Método que habilita los campos necesarios para la modificación de un producto independientemente del tipo de
+     * producto que sea.
+     * */
+    private void enableGeneralAttributesForModificar(Boolean bool){
+        descripTextField.setEditable(bool);
+        descripTextField.setDisable(!bool);
+        existenciasTextField.setEditable(bool);
+        existenciasTextField.setDisable(!bool);
+        descuentoTextField.setEditable(bool);
+        descuentoTextField.setDisable(!bool);
+        precioMayTextField.setEditable(bool);
+        precioMayTextField.setDisable(!bool);
+        precioMenTextField.setEditable(bool);
+        precioMenTextField.setDisable(!bool);
+        agregarMaterialesButton.setDisable(!bool);
+        eliminarButton.setDisable(!bool);
         serigrafiaCheckBox.setDisable(false);
         bordadoCheckBox.setDisable(false);
         modificarButton.setDisable(false);
         eliminarButton.setDisable(true);
     }
 
+    /**
+     * Método que habilita los campos necesarios para la modificaión de un parche
+     * */
+    private void enableParcheAttributesForModificar(){
+        colorTextField.setDisable(true);
+        tallaTextField.setDisable(true);
+        largoTextField.setEditable(true);
+        largoTextField.setDisable(false);
+        anchoTextField.setEditable(true);
+        anchoTextField.setDisable(false);
+    }
+
+    /**
+     * Borra los datos escritos por el usuario, incluyendo los materiales seleccionados.
+     * */
+    private void clearInput(){
+        descripTextField.clear();
+        existenciasTextField.clear();
+        descripTextField.clear();
+        precioMayTextField.clear();
+        precioMenTextField.clear();
+        tallaTextField.clear();
+        colorTextField.clear();
+        largoTextField.clear();
+        anchoTextField.clear();
+        clearMaterialesSelection();
+    }
+
+    /**
+     * Borra los materiales seleccionados
+     * */
+    private void clearMaterialesSelection(){
+        listaMateriales.forEach(material ->{
+            material.setSelected(false);
+            material.setCantidadSeleccionada(0);
+        });
+    }
+
+    /**
+     * Métdo que responde al evento de un click del usuario.
+     * */
     @FXML
     public void playeraCheckBoxClicked() {
-        if(verifyACheckBoxIsSelected()){
-            enableFieldsParaModificar();
-            enableFieldsForNewProducto();
-        }
-        gorraCheckBox.setDisable(playeraCheckBox.isSelected());
-        sudaderaCheckBox.setDisable(playeraCheckBox.isSelected());
-        parcheCheckBox.setDisable(playeraCheckBox.isSelected());
+        checkBoxClickHandler(playeraCheckBox.isSelected());
+        playeraCheckBox.setDisable(false);
     }
 
+    /**
+     * Métdo que responde al evento de un click del usuario.
+     * */
     @FXML
     public void sudaderaCheckBoxClicked() {
-        if(verifyACheckBoxIsSelected()) {
-            enableFieldsParaModificar();
-            enableFieldsForNewProducto();
-        }
-        gorraCheckBox.setDisable(sudaderaCheckBox.isSelected());
-        playeraCheckBox.setDisable(sudaderaCheckBox.isSelected());
-        parcheCheckBox.setDisable(sudaderaCheckBox.isSelected());
+        checkBoxClickHandler(sudaderaCheckBox.isSelected());
+        sudaderaCheckBox.setDisable(false);
     }
 
+    /**
+     * Métdo que responde al evento de un click del usuario.
+     * */
     @FXML
     public void gorraCheckBoxClicked(){
-        if(verifyACheckBoxIsSelected()) {
-            enableFieldsParaModificar();
-            enableFieldsForNewProducto();
-        }
-        playeraCheckBox.setDisable(gorraCheckBox.isSelected());
-        sudaderaCheckBox.setDisable(gorraCheckBox.isSelected());
-        parcheCheckBox.setDisable(gorraCheckBox.isSelected());
+        checkBoxClickHandler(gorraCheckBox.isSelected());
+        gorraCheckBox.setDisable(false);
     }
 
+    /**
+     * Métdo que responde al evento de un click del usuario.
+     * */
     @FXML
     public void parcheCheckBoxClicked(){
+        checkBoxClickHandler(parcheCheckBox.isSelected());
+        parcheCheckBox.setDisable(false);
+    }
+
+    /**
+     * Método que verifica si almenos un checkbox ha sido seleccionado para habilitar los campos para la edición del
+     * producto. También deshabilita los checkbox para evitar que el usuario seleccione dos o más checkbox al mismo
+     * tiempo y así truene el programa como ejote.
+     * */
+    private void checkBoxClickHandler(Boolean bool){
         if(verifyACheckBoxIsSelected()) {
             enableFieldsParaModificar();
-            enableFieldsForNewProducto();
         }
-        gorraCheckBox.setDisable(parcheCheckBox.isSelected());
-        sudaderaCheckBox.setDisable(parcheCheckBox.isSelected());
-        playeraCheckBox.setDisable(parcheCheckBox.isSelected());
+        playeraCheckBox.setDisable(bool);
+        sudaderaCheckBox.setDisable(bool);
+        gorraCheckBox.setDisable(bool);
+        parcheCheckBox.setDisable(bool);
+        clearInput();
     }
+
 
     @FXML
     public void serigrafiaCheckBoxClicked(){
@@ -402,8 +471,7 @@ public class ProductViewController implements Initializable{
         return (descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
                 && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
                 && (precioMenTextField.getText().length() > 0) && (serigrafiaCheckBox.isSelected()
-                || bordadoCheckBox.isSelected())
-                && (!listaMateriales.isEmpty());
+                || bordadoCheckBox.isSelected()) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
     }
 
     private boolean validarGuardarPlayera(){
@@ -414,14 +482,12 @@ public class ProductViewController implements Initializable{
 
     private boolean validarGuardarSudaderaGorra(){
         return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
-                && (colorTextField.getText().length() > 0) && (!listaMateriales.isEmpty()
-                || (listaMateriales.size() > 0));
+                && (colorTextField.getText().length() > 0);
     }
 
     private boolean validarGuardarParche(){
         return validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
-                && (anchoTextField.getText().length() > 0)
-                && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
+                && (anchoTextField.getText().length() > 0);
     }
 
     private void mostrarMensajeDatosFaltantes(){
@@ -500,12 +566,7 @@ public class ProductViewController implements Initializable{
     public void materialesButtonOnClicked(){
         ViewOpener viewOpener = new ViewOpener();
         boolean isConsulta;
-        if (agregarMaterialesButton.getText().equals("Consultar Materiales")){
-            isConsulta = true;
-        }else{
-            isConsulta = false;
-        }
-
+        isConsulta = agregarMaterialesButton.getText().equals("Consultar Materiales");
         if(listaMateriales == null) {
             viewOpener.openMaterialesPicker("playeriSoft/vista/MaterialPicker.fxml", "Seleccione Materiales", this, isConsulta);
         }else{

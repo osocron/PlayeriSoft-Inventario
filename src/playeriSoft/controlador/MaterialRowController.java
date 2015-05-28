@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  */
 public class MaterialRowController implements Initializable{
 
-    Material curMaterial;
+    private Material curMaterial;
 
     @FXML
     private Label materialLabel;
@@ -51,7 +51,7 @@ public class MaterialRowController implements Initializable{
             materialCantidadTextField.setText(String.valueOf(curMaterial.getCantidadSeleccionada()));
         }
         materialCheckBox.setDisable(isConsulta);
-        materialCantidadTextField.setEditable(!isConsulta);
+        materialCantidadTextField.setEditable(curMaterial.isSelected());
     }
 
     //Método que regersa el nodo principal de la vista para ser usado como el root de la celda
