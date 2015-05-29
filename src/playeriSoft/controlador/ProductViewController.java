@@ -128,26 +128,26 @@ public class ProductViewController implements Initializable{
     * para esto, este metodo se encarga de verificar de que tipo de producto es el objeto que se pasa como parametro
     * en el metodo setRsourceObject, una vez encontrado el tipo de producto se acomoda el Layout de
     * la pantalla respectivamente*/
-    private void sortClassName(Producto resourceObject){
+    private int sortClassName(Producto resourceObject){
         String idProd = resourceObject.getIdProducto();
         String prodType = idProd.substring(0, Math.min(idProd.length(), 4));
         switch (prodType) {
             case "PLAY":
                 curProduct = myHandler.buildPlayera(resourceObject, idProd);
                 setPlayeraLayout();
-                break;
+                return 1;
             case "SUDA":
                 curProduct = myHandler.buildSudadera(resourceObject, idProd);
                 setSudaderaLayout();
-                break;
+                return 2;
             case "GORR":
                 curProduct = myHandler.buildGorra(resourceObject, idProd);
                 setGorroLayout();
-                break;
+                return 3;
             default:
                 curProduct = myHandler.buildParche(resourceObject, idProd);
                 setParcheLayout();
-                break;
+                return 4;
         }
     }
 
@@ -297,20 +297,26 @@ public class ProductViewController implements Initializable{
      * Método que se encarga de llamar a los métodos que habilitan los campos necesarios para la modificación de un
      * producto dependiendo de cuál checkbox está seleccionado.
      * */
-    private void enableFieldsParaModificar(){
+    private int enableFieldsParaModificar(){
+        int returnNumber;
         if(playeraCheckBox.isSelected()){
             enableGeneralAttributesForPLayeraSudaderaGorra(true);
             tipoChoiceBox.setDisable(false);
+            returnNumber = 1;
         }
         else if(sudaderaCheckBox.isSelected()){
             enableGeneralAttributesForPLayeraSudaderaGorra(true);
+            returnNumber = 2;
         }
         else if(gorraCheckBox.isSelected()){
             enableGeneralAttributesForPLayeraSudaderaGorra(true);
+            returnNumber = 3;
         }else{
             enableParcheAttributesForModificar();
+            returnNumber = 4;
         }
         enableGeneralAttributesForModificar(true);
+        return returnNumber;
     }
 
     /**
@@ -465,7 +471,7 @@ public class ProductViewController implements Initializable{
      * producto o habilitar los campos para modificar un un producto.
      * */
     @FXML
-    public void modificarButtonClicked(){
+    public boolean modificarButtonClicked(){
         if (modificarButton.getText().equals("Guardar")){
             guardarProducto(isModificar);
             inventarioProductosController.refreshListView();
@@ -476,6 +482,7 @@ public class ProductViewController implements Initializable{
             agregarMaterialesButton.setText("Agregar Materiales");
             modificarButton.setText("Guardar");
         }
+        return isModificar;
     }
 
     /**

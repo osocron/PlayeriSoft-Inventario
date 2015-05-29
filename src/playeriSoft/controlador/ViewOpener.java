@@ -12,11 +12,17 @@ import java.util.List;
 
 /**
  * Created by osocr_000 on 23/04/2015.
+ * Clase que se encarga de establecer una comunicación entre las distintas ventanas del módulo abriéndolas y
+ * mandando información entre ellas.
  */
 public class ViewOpener {
 
     public ViewOpener(){}
 
+    /**
+     * Método que se encarga que se encarga de abrir la ventana de Productos con un objeto de tipo Producto
+     * y con una instancia de la clase controladora que la mandó a llamar.
+     * */
     public int openProductViewWithResourceObject(String pathToFXML, String title,
                                                  Producto resourceObject,
                                                  InventarioProductosController inventarioProductosController) {
@@ -35,6 +41,9 @@ public class ViewOpener {
         }
     }
 
+    /**
+     * Método que abre la ventana de Productos en modo editable.
+     * */
     public int openEditableProductView(String pathToFXML, String title, InventarioProductosController inventarioProductosController){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(pathToFXML));
@@ -51,6 +60,10 @@ public class ViewOpener {
         }
     }
 
+    /**
+     * Método que abre la ventana de Materiales y le manda una instancia de la clase controladora que la mandó
+     * a llamar.
+     * */
     public int openMaterialesPicker(String pathToFXML, String title, ProductViewController productViewController, boolean consulta){
 
         try{
@@ -71,6 +84,11 @@ public class ViewOpener {
 
     }
 
+    /**
+     * Método que se encarga de abrir la ventana de materiales con la información de los materiales seleccionados
+     * por el usuario y con un booleano para saber si solo se desea consultar los materiales o si se desea modificar
+     * o agregar materiales.
+     * */
     public int openMaterialesPickerWithSelectedMaterials(String pathToFXML, String title,
                                                           ProductViewController productViewController,
                                                           List<Material> listaMateriales, boolean consulta){

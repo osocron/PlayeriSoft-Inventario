@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * Created by Noe on 24/04/15.
+ *Clase que se encarga de realizar la comunicación entre la clase ProductViewCotroller y la base de datos, realizando
+ * las operaciones necesarias para guardar, actualizar y eliminar productos.
  */
 public class ProductViewHandler {
 
@@ -20,6 +22,9 @@ public class ProductViewHandler {
 
     public ProductViewHandler(){}
 
+    /**
+     *Método que crea un objeto de tipo Playera en base a la información recuperada de la base de datos.
+     * */
     public Producto buildPlayera(Producto producto, String idPlayera){
         Playera playera = null;
         try {
@@ -37,6 +42,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que crea un objeto de tipo Sudadera en base a la información recuperada de la base de datos.
+     * */
     public Producto buildSudadera(Producto producto, String idSudadera){
         Sudadera sudadera = null;
         try {
@@ -54,6 +62,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que crea un objeto de tipo Gorra en base a la información recuperada de la base de datos.
+     * */
     public Producto buildGorra(Producto producto, String idGorra){
         Gorro gorra = null;
         try {
@@ -71,6 +82,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que crea un objeto de tipo Parche en base a la información recuperada de la base de datos.
+     * */
     public Producto buildParche(Producto producto, String idParche){
         Parche parche = null;
         try {
@@ -88,11 +102,14 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que regresa el resultset necesario para crear un objeto de tipo Producto.
+     * */
     private ResultSet getResultSetForBuildingProduct(String table, String idProd){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM "+ table + " WHERE IdProducto = '" + idProd + "'");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = myConnector.getResultSet(connection,"SELECT * FROM "+ table +
+                    " WHERE IdProducto = '" + idProd + "'");
             return resultSet;
         }catch (Exception e){
             e.printStackTrace();
@@ -100,11 +117,14 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que regresa el resultset necesario para obtener el ID del producto que se agregará a la base de datos.
+     * */
     private ResultSet getResultSetToGetID(String table, String bordadoSerigrafia){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT IdProducto FROM " + table + " WHERE IdProducto LIKE '%"+bordadoSerigrafia+"%' ORDER BY IdProducto DESC LIMIT 1");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = myConnector.getResultSet(connection,"SELECT IdProducto FROM " + table +
+                    " WHERE IdProducto LIKE '%"+bordadoSerigrafia+"%' ORDER BY IdProducto DESC LIMIT 1");
             return resultSet;
         }catch (Exception e){
             e.printStackTrace();
@@ -112,6 +132,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que convierte la cadena de caracteres de la columna Bordado en la base de datos a un booleano.
+     * */
     public Boolean getValueOfBordado(ResultSet resultSet){
         try {
             Boolean isBordado;
@@ -126,6 +149,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que convierte la cadena de caracteres de la columna Serigrafia en la base de datos a un booleano.
+     * */
     public Boolean getValueOfSerigrafia(ResultSet resultSet){
         try {
             Boolean isSerigrafia;
@@ -140,6 +166,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que se encarga de guardar una playera a la base de datos.
+     * */
     public void guardarPlayera(double descuento, String descripcion, int existencias,
                                double precioMayoreo, double precioMenudeo,double talla, String color,
                                String tipo, boolean isBordado, List<Material> listaMateriales){
@@ -168,6 +197,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, productID);
     }
 
+    /**
+     * Método que se encarga de guardar una sudadera en la base de datos.
+     * */
     public void guardarSudadera(double descuento, String descripcion, int existencias,
                                 double precioMayoreo, double precioMenudeo,double talla, String color,
                                 boolean isBordado, List<Material> listaMateriales){
@@ -195,6 +227,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, productID);
     }
 
+    /**
+     * Método que se encarga de guardar una Gorra en la base de datos.
+     * */
     public void guardarGorra(double descuento, String descripcion, int existencias,
                              double precioMayoreo, double precioMenudeo, double talla,
                              String color, boolean isBordado, List<Material> listaMateriales){
@@ -222,6 +257,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, productID);
     }
 
+    /**
+     * Méotdo que se encarga de guardar un Parche en la base de datos.
+     * */
     public void guardarParche(double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
                               double ancho, boolean isBordado, List<Material> listaMateriales){
@@ -249,6 +287,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, productID);
     }
 
+    /**
+     * Método que se encarga de guardar los materiales seleccionados en la relación de producto con materiales
+     * */
     private void guardarMateriales(List<Material> listaMateriales, String productoID){
         for(Material curMaterial : listaMateriales) {
             try {
@@ -266,6 +307,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que se encarga de guardar un Producto en la base de datos.
+     * */
     private void guardarProducto(String idProducto, double descuento, String descripcion, int existencias,
                                  double precioMayoreo, double precioMenudeo){
         try {
@@ -315,7 +359,9 @@ public class ProductViewHandler {
     }
 
 
-    //Este metodo regresa las coincidencias del producto dado en la Tabla de RMaterialProducto
+    /**
+     * Método que regresa las coincidencias de materiales con el producto dado.
+     * */
     public List<Material> getSelectedMateriales(List<Material> materialesSeleccionados, Producto curProduct){
         MaterialesHandler handler = new MaterialesHandler();
         String idProducto = curProduct.getIdProducto();
@@ -327,7 +373,6 @@ public class ProductViewHandler {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
             preparedStatement = connection.prepareStatement("SELECT * FROM RMaterialProducto WHERE IdProducto = '"+idProducto+"'");
             resultSet = preparedStatement.executeQuery();
-            int cont = 0;
             while(resultSet.next()){
                 String[] idCantidad = new String[2];
                 idCantidad[0] = resultSet.getString("IdMaterial");
@@ -351,6 +396,9 @@ public class ProductViewHandler {
         return materialesSeleccionados;
     }
 
+    /**
+     * Método que se encarga de actualizar un producto de la base de datos.
+     * */
     private void actualizarProducto(String idProducto, double descuento, String descripcion, int existencias,
                                     double precioMayoreo, double precioMenudeo){
         try {
@@ -370,6 +418,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que se encarga de actualizar una playera.
+     * */
     public void actualizarPlayera(String idProducto, double descuento, String descripcion, int existencias,
                                    double precioMayoreo, double precioMenudeo,double talla, String color,
                                    String tipo, boolean isBordado, List<Material> listaMateriales ){
@@ -398,6 +449,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, idProducto);
     }
 
+    /**
+     * Método que se encarga de actualizar
+     * */
     public void actualizarSudadera(String idProducto, double descuento, String descripcion, int existencias,
                                 double precioMayoreo, double precioMenudeo,double talla, String color,
                                 boolean isBordado, List<Material> listaMateriales){
@@ -425,6 +479,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, idProducto);
     }
 
+    /**
+     * Método que se encarga de actualizar una gorra
+     * */
     public void actualizarGorra(String idProducto, double descuento, String descripcion, int existencias,
                              double precioMayoreo, double precioMenudeo, double talla,
                              String color, boolean isBordado, List<Material> listaMateriales){
@@ -452,6 +509,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, idProducto);
     }
 
+    /**
+     * Método que se encarga de actualizar un parche
+     * */
     public void actualizarParche(String idProducto, double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
                               double ancho, boolean isBordado, List<Material> listaMateriales){
@@ -479,6 +539,9 @@ public class ProductViewHandler {
         guardarMateriales(listaMateriales, idProducto);
     }
 
+    /**
+     * Método que se encarga de eliminar un producto de la base de datos
+     * */
     public void eliminarProducto(String idProducto){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
@@ -492,6 +555,9 @@ public class ProductViewHandler {
         }
     }
 
+    /**
+     * Método que se encarga de eliminar la relación entre materiales y el producto dado
+     * */
     private void eliminarMaterial(String idProducto){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
