@@ -5,6 +5,9 @@ import playeriSoft.controlador.InputValidador;
 
 /**
  * Created by osocr_000 on 05/05/2015.
+ * Esta clase permite crear un Text Field que impida que el usuario ingrese datos que no sean
+ * numeros decimales o que sean de un valor mayor a 99.9 o que el decimal rebase una precision
+ * de un digito.
  */
 public class TallaTextField extends TextField {
 

@@ -118,7 +118,7 @@ public class MaterialesController implements Initializable {
      * datos han sido validados correctamente, devuelve la lista de materiales seleccionados al controlador de la vista
       * que mando a llamar a esta ventana por medio del método setListaMateriales() y cierra la ventana actual
     */
-    private void validarMateriales(){
+    private boolean validarMateriales(){
         List<Material> myListaMateriales = new ArrayList<>();
         final boolean[] isValidated = {true};
         final boolean[] atLeastOneSelected = {false};
@@ -138,6 +138,7 @@ public class MaterialesController implements Initializable {
             sendMaterialListToParentController(myListaMateriales);
             cerrarVentanActual();
         }
+        return isValidated[0] && atLeastOneSelected[0] && allWithCantidades[0];
     }
 
     private void sendMaterialListToParentController(List<Material> listaMateriales){
@@ -195,12 +196,11 @@ public class MaterialesController implements Initializable {
     * de un filtro para cargar la lista de materiales con los datos correspondientes.
     */
     public void setSelectedMaterials(List<Material> selectedMateriales){
-        for(Material material : items)
-            selectedMateriales.stream().filter(curMaterial ->
-                    material.getIdMaterial().equals(curMaterial.getIdMaterial())).forEach(curMaterial -> {
-                material.setSelected(curMaterial.isSelected());
-                material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
-            });
+        items.forEach(material -> selectedMateriales.stream().filter(curMaterial ->
+                material.getIdMaterial().equals(curMaterial.getIdMaterial())).forEach(curMaterial -> {
+            material.setSelected(curMaterial.isSelected());
+            material.setCantidadSeleccionada(curMaterial.getCantidadSeleccionada());
+        }));
         materialesListView.setItems(items);
     }
 

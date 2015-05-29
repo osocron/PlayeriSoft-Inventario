@@ -450,8 +450,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Métdo que responde al evento de un click del usuario y deshabilita el checkbox de bordado dependiendo en si
-     * el checkbox de serigrafía está seleccionado o no.
-     * */
+     * el checkbox de serigrafía está seleccionado o no.* */
     @FXML
     public void serigrafiaCheckBoxClicked(){
         bordadoCheckBox.setDisable(serigrafiaCheckBox.isSelected());
@@ -459,8 +458,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Métdo que responde al evento de un click del usuario y deshabilita el checkbox de serigrafia dependiendo en si
-     * el checkbox de bordado está seleccionado o no.
-     * */
+     * el checkbox de bordado está seleccionado o no.* */
     @FXML
     public void bordadoCheckBoxClicked(){
         serigrafiaCheckBox.setDisable(bordadoCheckBox.isSelected());
@@ -468,8 +466,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que responde al evento de un click del usuario y que dependiendo el texto del botón permite guardar el
-     * producto o habilitar los campos para modificar un un producto.
-     * */
+     * producto o habilitar los campos para modificar un un producto.* */
     @FXML
     public boolean modificarButtonClicked(){
         if (modificarButton.getText().equals("Guardar")){
@@ -495,8 +492,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que valida si todos los campos necesarios para guardar un producto han sido llenados por el usuario. De
-     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.
-     * */
+     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarEntradasGeneralesParaGuardarProducto(){
         return (descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
                 && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
@@ -506,8 +502,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que valida si todos los campos necesarios para guardar una playera han sido llenados por el usuario. De
-     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.
-     * */
+     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarGuardarPlayera(){
         return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
                 && (colorTextField.getText().length() > 0)
@@ -516,8 +511,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que valida si todos los campos necesarios para guardar una sudadera o una gorra han sido llenados por el
-     * usuario. De ser así regresa un booleano verdadero, de lo contrario un booleano falso.
-     * */
+     * usuario. De ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarGuardarSudaderaGorra(){
         return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
                 && (colorTextField.getText().length() > 0);
@@ -525,8 +519,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que valida si todos los campos necesarios para guardar un parche han sido llenados por el usuario. De
-     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.
-     * */
+     * ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarGuardarParche(){
         return validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
                 && (anchoTextField.getText().length() > 0);
@@ -534,8 +527,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que se encarga de construir una alerta para el usuario en el caso de que la validación de los datos al
-     * momento de guardar o modificar un producto haya fallado.
-     * */
+     * momento de guardar o modificar un producto haya fallado.* */
     private void mostrarMensajeDatosFaltantes(){
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Error!");
@@ -548,8 +540,7 @@ public class ProductViewController implements Initializable{
 
     /**
      * Método que se encarga de guardar o actualizar un producto dependiendo de la variable global isModificar y del
-     * checkbox que esté seleccionado, esto puede ser, el checkbox de playera, de sudadera, de gorra o de parche.
-     * */
+     * checkbox que esté seleccionado, esto puede ser, el checkbox de playera, de sudadera, de gorra o de parche.* */
     public void guardarProducto(boolean isForModificar) {
         if (playeraCheckBox.isSelected() && validarGuardarPlayera()) {
             if(isForModificar){
@@ -667,10 +658,6 @@ public class ProductViewController implements Initializable{
         alert.setHeaderText(headerText);
         alert.setContentText(contextText);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            return true;
-        } else {
-            return false;
-        }
+        return result.get() == ButtonType.OK;
     }
 }

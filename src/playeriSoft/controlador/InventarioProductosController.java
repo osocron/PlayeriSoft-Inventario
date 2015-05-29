@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  */
 public class InventarioProductosController implements Initializable {
 
-    private static ObservableList<Producto> items = FXCollections.observableArrayList();
+    private ObservableList<Producto> items = FXCollections.observableArrayList();
 
     @FXML
     private ListView<Producto> prodListView;

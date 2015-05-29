@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import org.intellij.lang.annotations.Language;
 import playeriSoft.modelo.Producto;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,14 +20,12 @@ import java.sql.SQLException;
 public class InventarioHandler {
 
     public InventarioHandler(){
-
     }
     /*
      *Este metodo recibe como parámetro una lista, se conecta a la Base de Datos, hace una consulta para
       * obtener todos los productos y del resultado que obtiene, hace un ciclo para construir objetos de
        * tipo Producto con los datos obtenidos de la base de datos y luego agregarlos a la lista que se
-        * obtuvo como parámetro.
-        * Al finalizar, se regresa la lista.
+        * obtuvo como parámetro. Al finalizar, se regresa la lista.
     */
     public ObservableList<Producto> getAllProducts(ObservableList<Producto> items){
         DBConnector myConnector = new DBConnector();
@@ -42,7 +42,11 @@ public class InventarioHandler {
             connection.close();
             return items;
         } catch (Exception e) {
-            e.printStackTrace();
+            MailSender mailSender = new MailSender();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al recuperar los productos", stringWriter.toString());
             return null;
         }
     }

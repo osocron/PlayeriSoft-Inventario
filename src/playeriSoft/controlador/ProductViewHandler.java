@@ -1,30 +1,31 @@
 package playeriSoft.controlador;
-
 import playeriSoft.modelo.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Noe on 24/04/15.
+/**Created by Noe on 24/04/15.
  *Clase que se encarga de realizar la comunicación entre la clase ProductViewCotroller y la base de datos, realizando
- * las operaciones necesarias para guardar, actualizar y eliminar productos.
- */
+ * las operaciones necesarias para guardar, actualizar y eliminar productos.*/
 public class ProductViewHandler {
 
     private DBConnector myConnector = new DBConnector();
     private Connection connection;
-    private PreparedStatement preparedStatement;
     private ResultSet resultSet;
+    private MailSender mailSender;
+    private StringWriter stringWriter;
+    private PrintWriter printWriter;
 
-    public ProductViewHandler(){}
-
+    public ProductViewHandler(){
+        mailSender = new MailSender();
+        stringWriter = new StringWriter();
+    }
     /**
-     *Método que crea un objeto de tipo Playera en base a la información recuperada de la base de datos.
-     * */
+     *Método que crea un objeto de tipo Playera en base a la información recuperada de la base de datos.* */
     public Producto buildPlayera(Producto producto, String idPlayera){
         Playera playera = null;
         try {
@@ -32,19 +33,21 @@ public class ProductViewHandler {
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
-                playera = new Playera(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),resultSet.getString("Estilo"),isBordado,isSerigrafia);
+                playera = new Playera(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),
+                        resultSet.getString("Estilo"),isBordado,isSerigrafia);
             }
             connection.close();
             return playera;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear el objeto Playera", stringWriter.toString());
             return null;
         }
     }
 
     /**
-     * Método que crea un objeto de tipo Sudadera en base a la información recuperada de la base de datos.
-     * */
+     * Método que crea un objeto de tipo Sudadera en base a la información recuperada de la base de datos.* */
     public Producto buildSudadera(Producto producto, String idSudadera){
         Sudadera sudadera = null;
         try {
@@ -52,19 +55,21 @@ public class ProductViewHandler {
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
-                sudadera = new Sudadera(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),isBordado,isSerigrafia);
+                sudadera = new Sudadera(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),
+                        isBordado,isSerigrafia);
             }
             connection.close();
             return sudadera;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear el objeto Sudadera", stringWriter.toString());
             return null;
         }
     }
 
     /**
-     * Método que crea un objeto de tipo Gorra en base a la información recuperada de la base de datos.
-     * */
+     * Método que crea un objeto de tipo Gorra en base a la información recuperada de la base de datos.* */
     public Producto buildGorra(Producto producto, String idGorra){
         Gorro gorra = null;
         try {
@@ -72,19 +77,21 @@ public class ProductViewHandler {
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
-                gorra = new Gorro(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),isBordado,isSerigrafia);
+                gorra = new Gorro(producto,resultSet.getDouble("Talla"),resultSet.getString("Color"),
+                        isBordado,isSerigrafia);
             }
             connection.close();
             return gorra;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear el objeto Gorra", stringWriter.toString());
             return null;
         }
     }
 
     /**
-     * Método que crea un objeto de tipo Parche en base a la información recuperada de la base de datos.
-     * */
+     * Método que crea un objeto de tipo Parche en base a la información recuperada de la base de datos.* */
     public Producto buildParche(Producto producto, String idParche){
         Parche parche = null;
         try {
@@ -92,12 +99,15 @@ public class ProductViewHandler {
             while (resultSet.next()) {
                 Boolean isBordado = getValueOfBordado(resultSet);
                 Boolean isSerigrafia = getValueOfSerigrafia(resultSet);
-                parche = new Parche(producto,resultSet.getDouble("Largo"),resultSet.getDouble("Ancho"),isBordado,isSerigrafia);
+                parche = new Parche(producto,resultSet.getDouble("Largo"),resultSet.getDouble("Ancho"),
+                        isBordado,isSerigrafia);
             }
             connection.close();
             return parche;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear el objeto Parche", stringWriter.toString());
             return null;
         }
     }
@@ -112,14 +122,15 @@ public class ProductViewHandler {
                     " WHERE IdProducto = '" + idProd + "'");
             return resultSet;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al obtener el resultset para crear un Producto", stringWriter.toString());
             return null;
         }
     }
 
     /**
-     * Método que regresa el resultset necesario para obtener el ID del producto que se agregará a la base de datos.
-     * */
+     * Método que regresa el resultset necesario para obtener el ID del producto que se agregará a la base de datos.* */
     private ResultSet getResultSetToGetID(String table, String bordadoSerigrafia){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
@@ -127,7 +138,10 @@ public class ProductViewHandler {
                     " WHERE IdProducto LIKE '%"+bordadoSerigrafia+"%' ORDER BY IdProducto DESC LIMIT 1");
             return resultSet;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al obtener el resultset para obtener el ID del producto",
+                    stringWriter.toString());
             return null;
         }
     }
@@ -144,14 +158,15 @@ public class ProductViewHandler {
             }else{isBordado = false;}
             return isBordado;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al obtener el String Bordado del resultset", stringWriter.toString());
             return null;
         }
     }
 
     /**
-     * Método que convierte la cadena de caracteres de la columna Serigrafia en la base de datos a un booleano.
-     * */
+     * Método que convierte la cadena de caracteres de la columna Serigrafia en la base de datos a un booleano.* */
     public Boolean getValueOfSerigrafia(ResultSet resultSet){
         try {
             Boolean isSerigrafia;
@@ -161,7 +176,10 @@ public class ProductViewHandler {
             }else{isSerigrafia = false;}
             return isSerigrafia;
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear al obtener el String Serigrafia del resultSet",
+                    stringWriter.toString());
             return null;
         }
     }
@@ -169,7 +187,7 @@ public class ProductViewHandler {
     /**
      * Método que se encarga de guardar una playera a la base de datos.
      * */
-    public void guardarPlayera(double descuento, String descripcion, int existencias,
+    public int guardarPlayera(double descuento, String descripcion, int existencias,
                                double precioMayoreo, double precioMenudeo,double talla, String color,
                                String tipo, boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Playera",isBordado);
@@ -192,15 +210,19 @@ public class ProductViewHandler {
             preparedStatement.execute();
             connection.close();
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al guardar la Playera a la base de datos", stringWriter.toString());
+            return 0;
         }
         guardarMateriales(listaMateriales, productID);
+        return 1;
     }
 
     /**
      * Método que se encarga de guardar una sudadera en la base de datos.
      * */
-    public void guardarSudadera(double descuento, String descripcion, int existencias,
+    public int guardarSudadera(double descuento, String descripcion, int existencias,
                                 double precioMayoreo, double precioMenudeo,double talla, String color,
                                 boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Sudadera",isBordado);
@@ -222,15 +244,19 @@ public class ProductViewHandler {
             preparedStatement.execute();
             connection.close();
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al guardar la Sudadera a la base de datos", stringWriter.toString());
+            return 0;
         }
         guardarMateriales(listaMateriales, productID);
+        return 1;
     }
 
     /**
      * Método que se encarga de guardar una Gorra en la base de datos.
      * */
-    public void guardarGorra(double descuento, String descripcion, int existencias,
+    public int guardarGorra(double descuento, String descripcion, int existencias,
                              double precioMayoreo, double precioMenudeo, double talla,
                              String color, boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Gorra",isBordado);
@@ -252,15 +278,19 @@ public class ProductViewHandler {
             preparedStatement.execute();
             connection.close();
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al guardar la gorra a la base de datos", stringWriter.toString());
+            return 0;
         }
         guardarMateriales(listaMateriales, productID);
+        return 1;
     }
 
     /**
      * Méotdo que se encarga de guardar un Parche en la base de datos.
      * */
-    public void guardarParche(double descuento, String descripcion, int existencias,
+    public int guardarParche(double descuento, String descripcion, int existencias,
                               double precioMayoreo, double precioMenudeo, double largo,
                               double ancho, boolean isBordado, List<Material> listaMateriales){
         String productID = getNextID("Parche",isBordado);
@@ -282,9 +312,13 @@ public class ProductViewHandler {
             preparedStatement.execute();
             connection.close();
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al guardar el parche a la base de datos", stringWriter.toString());
+            return 0;
         }
         guardarMateriales(listaMateriales, productID);
+        return 1;
     }
 
     /**
@@ -302,7 +336,9 @@ public class ProductViewHandler {
                 preparedStatement.execute();
                 connection.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                printWriter = new PrintWriter(stringWriter);
+                e.printStackTrace(printWriter);
+                mailSender.sendMail("Error al guardar los materiales en la base de datos", stringWriter.toString());
             }
         }
     }
@@ -310,7 +346,7 @@ public class ProductViewHandler {
     /**
      * Método que se encarga de guardar un Producto en la base de datos.
      * */
-    private void guardarProducto(String idProducto, double descuento, String descripcion, int existencias,
+    private int guardarProducto(String idProducto, double descuento, String descripcion, int existencias,
                                  double precioMayoreo, double precioMenudeo){
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
@@ -325,8 +361,12 @@ public class ProductViewHandler {
             preparedStatement.execute();
             connection.close();
         }catch (Exception e){
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al guardar el producto en la base de datos", stringWriter.toString());
+            return 0;
         }
+        return 1;
     }
 
     /*Metodo que se encarga de calcular el siguiente ID para el producto, tomando en cuenta el tipo de
@@ -341,13 +381,14 @@ public class ProductViewHandler {
             }
             connection.close();
         }catch (Exception e){
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al crear el obtener el ID del producto", stringWriter.toString());
             return nextID;
         }
-        if(nextID != null && !nextID.isEmpty()) {
+        if(nextID != null && !nextID.isEmpty())
             nextID = getNextNumber(nextID);
-        }else{
-            nextID = table.substring(0,4).toUpperCase() + bordadoSerigrefia + "0001";
-        }
+        else nextID = table.substring(0, 4).toUpperCase() + bordadoSerigrefia + "0001";
         return nextID;
     }
 
@@ -371,8 +412,8 @@ public class ProductViewHandler {
         DBConnector myConnector = new DBConnector();
         try {
             connection = myConnector.connectToMysqlDB("playeriSoft", "osocron", "patumecha1", "localhost");
-            preparedStatement = connection.prepareStatement("SELECT * FROM RMaterialProducto WHERE IdProducto = '"+idProducto+"'");
-            resultSet = preparedStatement.executeQuery();
+            resultSet = myConnector.getResultSet(connection,"SELECT * FROM RMaterialProducto WHERE IdProducto = '"
+                    + idProducto + "'");
             while(resultSet.next()){
                 String[] idCantidad = new String[2];
                 idCantidad[0] = resultSet.getString("IdMaterial");
@@ -381,7 +422,10 @@ public class ProductViewHandler {
             }
             connection.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mailSender.sendMail("Error al obetner la información de la relación de materiales con productos" +
+                    "para obtener los materiales seleccionados", stringWriter.toString());
             return null;
         }
         for(Material material : todosMateriales){
