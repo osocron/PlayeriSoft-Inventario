@@ -18,7 +18,7 @@ public class PrecioMayoreoMenudeoTextField  extends TextField {
     @Override
     public void replaceText(int start, int end, String text) {
         String newText = getText().substring(0, start)+text+getText().substring(end);
-        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText, "2");
+        boolean isDecimal = InputValidador.textIsDecimalOnly(newText, "2");
         int textLength = this.getText().length();
         Double curDouble;
         try{
@@ -26,10 +26,8 @@ public class PrecioMayoreoMenudeoTextField  extends TextField {
         }catch (Exception e){
             curDouble = 0.0;
         }
-        if(curDouble < 100000){
-            if (isDecimal && (textLength < 9) || text.isEmpty()) {
-                super.replaceText(start, end, text);
-            }
+        if (InputValidador.validateIncomingTextForMayoreoMenudeoTextField(text,textLength,isDecimal,curDouble)) {
+            super.replaceText(start, end, text);
         }
     }
 

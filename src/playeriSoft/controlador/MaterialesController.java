@@ -150,12 +150,13 @@ public class MaterialesController implements Initializable {
      * agrega a la lista que se mando como parámetro para luego ser manipulada por el método que mandó a llamar a este
       * método. Como aclaracion, las variables usadas en Lambdas deben ser declaradas final.
     */
-    private void validateMaterialItems(List<Material> myListaMateriales, boolean[] isValidated, boolean[] atLeastOneSelected, boolean[] allWithCantidades) {
+    public void validateMaterialItems(List<Material> myListaMateriales, boolean[] isValidated,
+                                      boolean[] atLeastOneSelected, boolean[] allWithCantidades) {
         items.forEach((Material curMaterial) -> {
-            if (curMaterial.isSelected() && curMaterial.getCantidadSeleccionada() > 0.0){
+            if (InputValidador.validateIfMaterialIsSelectedAndHasCantidadSeleccionada(curMaterial)){
                 myListaMateriales.add(curMaterial);
                 atLeastOneSelected[0] = true;
-            }else if (curMaterial.isSelected() && curMaterial.getCantidadSeleccionada() == 0.0){
+            }else if (InputValidador.validateIfMaterialIsSelectedButHasNoCantidadSeleccionada(curMaterial)){
                 allWithCantidades[0] = false;
                 isValidated[0] = false;
             }

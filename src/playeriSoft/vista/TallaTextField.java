@@ -18,7 +18,7 @@ public class TallaTextField extends TextField {
     @Override
     public void replaceText(int start, int end, String text) {
         String newText = getText().substring(0, start) + text + getText().substring(end);
-        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText, "1");
+        boolean isDecimal = InputValidador.textIsDecimalOnly(newText, "1");
         int textLength = this.getText().length();
         Double curDouble;
         try {
@@ -26,10 +26,8 @@ public class TallaTextField extends TextField {
         } catch (Exception e) {
             curDouble = 0.0;
         }
-        if (curDouble < 100) {
-            if (isDecimal && (textLength < 5) || text.isEmpty()) {
-                super.replaceText(start, end, text);
-            }
+        if (InputValidador.validateIncomingTextForTallaTextField(text,textLength,isDecimal,curDouble)) {
+            super.replaceText(start, end, text);
         }
     }
 

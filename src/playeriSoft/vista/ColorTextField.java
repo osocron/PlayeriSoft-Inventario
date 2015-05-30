@@ -14,9 +14,9 @@ public class ColorTextField extends TextField {
 
     @Override
     public void replaceText(int start, int end, String text){
-        boolean isTextOnly = InputValidador.txtFieldIsLatinTextButNoPunctuation(text);
+        boolean isTextOnly = InputValidador.textIsLatinButNoPunctuation(text);
         int textLength = this.getText().length();
-        if(isTextOnly && (textLength < 30)|| text.isEmpty()) {
+        if(InputValidador.validateIncomingTextForColorTextField(text,textLength,isTextOnly)) {
             super.replaceText(start, end, text);
         }
     }

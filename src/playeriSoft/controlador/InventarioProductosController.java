@@ -165,8 +165,8 @@ public class InventarioProductosController implements Initializable {
        * escribio es parte de la descripción del producto ese producto se agrega a una lista de productos
        * provicional que finalmente se asigna al ListView.
     */
-    private void searchProducts(String oldVal, String newVal) {
-        if (oldVal != null && (newVal.length() < oldVal.length()))
+    private ObservableList<Producto> searchProducts(String oldVal, String newVal) {
+        if (InputValidador.validateIfUserPressedBackSpaceForSearchProducts(oldVal,newVal))
             prodListView.setItems(items);
         String[] parts = newVal.toUpperCase().split(" ");
         ObservableList<Producto> subentries = FXCollections.observableArrayList();
@@ -174,7 +174,7 @@ public class InventarioProductosController implements Initializable {
             boolean match = true;
             String entryText = entry.getDescripcion();
             for (String part : parts) {
-                if (!entryText.toUpperCase().contains(part)) {
+                if (!InputValidador.validateIfEntryTextContainsUserInput(entryText,part)) {
                     match = false;
                     break;
                 }
@@ -183,5 +183,6 @@ public class InventarioProductosController implements Initializable {
                 subentries.add(entry);
         }
         prodListView.setItems(subentries);
+        return subentries;
     }
 }

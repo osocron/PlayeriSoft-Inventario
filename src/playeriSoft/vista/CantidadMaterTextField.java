@@ -18,7 +18,7 @@ public class CantidadMaterTextField extends TextField {
     @Override
     public void replaceText(int start, int end, String text) {
         String newText = getText().substring(0, start)+text+getText().substring(end);
-        boolean isDecimal = InputValidador.txtFieldIsDecimalOnly(newText, "2");
+        boolean isDecimal = InputValidador.textIsDecimalOnly(newText, "2");
         int textLength = this.getText().length();
         Double curDouble;
         try{
@@ -26,12 +26,11 @@ public class CantidadMaterTextField extends TextField {
         }catch (Exception e){
             curDouble = 0.0;
         }
-        if(curDouble < 10000){
-            if (isDecimal && (textLength < 8) || text.isEmpty()) {
-                super.replaceText(start, end, text);
-            }
+        if (InputValidador.validateIncomingTextForCantidadMateriales(text,textLength,isDecimal,curDouble)) {
+            super.replaceText(start, end, text);
         }
     }
+
 
     @Override
     public void replaceSelection(String replacement) {

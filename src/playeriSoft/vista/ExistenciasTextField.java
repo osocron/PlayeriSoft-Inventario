@@ -14,9 +14,9 @@ public class ExistenciasTextField extends TextField {
 
     @Override
     public void replaceText(int start, int end, String text){
-        boolean txtFieldIsNumericOnly = InputValidador.txtFieldIsNumericOnly(text);
+        boolean textIsNumericOnly = InputValidador.textIsNumericOnly(text);
         int textLength = this.getText().length();
-        if(txtFieldIsNumericOnly && (textLength < 7)|| text.isEmpty()) {
+        if(InputValidador.validateIncomingTextForExistenciasTextField(text,textLength,textIsNumericOnly)) {
             super.replaceText(start, end, text);
         }
     }

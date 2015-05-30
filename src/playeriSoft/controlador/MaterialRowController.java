@@ -86,7 +86,7 @@ public class MaterialRowController implements Initializable{
      * */
     private void addListenerToTextField(){
         materialCantidadTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.isEmpty() && !newValue.equals("."))
+            if(InputValidador.validateCantidadDeMaterialIsNotEmptyAndIsNotADot(newValue))
                 curMaterial.setCantidadSeleccionada(Double.valueOf(newValue));
             else curMaterial.setCantidadSeleccionada(0.0);
         });
