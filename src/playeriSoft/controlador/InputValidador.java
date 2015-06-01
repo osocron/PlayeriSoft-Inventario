@@ -1,7 +1,9 @@
 package playeriSoft.controlador;
 
+import javafx.scene.control.CheckBox;
 import playeriSoft.modelo.Material;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -94,6 +96,29 @@ public class InputValidador {
 
     public static boolean validateCantidadDeMaterialIsNotEmptyAndIsNotADot(String newValue){
         return !newValue.isEmpty() && !newValue.equals(".");
+    }
+
+    public static boolean validateGuardarProducto(String descripcion, String existencias, String descuento,
+                                               String precioMayoreo, String precioMenudeo, boolean serigrafiaIsSelected,
+                                               boolean bordadoIsSelected, List<Material> listaMateriales){
+        return (descripcion.length() > 0) && (existencias.length() > 0)
+                && (descuento.length() > 0) && (precioMayoreo.length() > 0)
+                && (precioMenudeo.length() > 0) && (serigrafiaIsSelected
+                || bordadoIsSelected) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
+    }
+
+    public static boolean validateGuardarPlayera(boolean guardarProductoOK, String talla, String color,
+                                                 boolean tipoFirstChoiceSelected, boolean tipoSecondChoiceSelected){
+        return guardarProductoOK && (talla.length() > 0) && (color.length() > 0)
+                &&(tipoFirstChoiceSelected || tipoSecondChoiceSelected);
+    }
+
+    public static boolean validateGuardarSudaderaGorra(boolean guardarProductoOK, String talla, String color){
+        return guardarProductoOK && (talla.length() > 0) && (color.length() > 0);
+    }
+
+    public static boolean validateGuardarParche(boolean guardarProductoOK, String largo, String ancho){
+        return guardarProductoOK && (largo.length() > 0) && (ancho.length() > 0);
     }
 
 }

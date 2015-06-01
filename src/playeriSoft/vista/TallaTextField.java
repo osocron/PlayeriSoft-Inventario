@@ -15,6 +15,7 @@ public class TallaTextField extends TextField {
         super();
     }
 
+
     @Override
     public void replaceText(int start, int end, String text) {
         String newText = getText().substring(0, start) + text + getText().substring(end);

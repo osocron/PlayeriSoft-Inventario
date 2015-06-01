@@ -26,6 +26,7 @@ public class CantidadMaterTextField extends TextField {
         }catch (Exception e){
             curDouble = 0.0;
         }
+
         if (InputValidador.validateIncomingTextForCantidadMateriales(text,textLength,isDecimal,curDouble)) {
             super.replaceText(start, end, text);
         }

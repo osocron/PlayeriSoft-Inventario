@@ -144,7 +144,6 @@ public class MaterialesController implements Initializable {
     private void sendMaterialListToParentController(List<Material> listaMateriales){
         productViewController.setListaMateriales(listaMateriales);
     }
-
     /*
     *Método que cicla por toda la lista de materiales y valida si los datos ingresados son correctos, si lo son los
      * agrega a la lista que se mando como parámetro para luego ser manipulada por el método que mandó a llamar a este

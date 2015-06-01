@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Created by osocron on 25/05/15.
  */
-public class InputValidadorTest extends TestCase {
+public class InputValidadorTest {
 
 
     @Test

@@ -26,6 +26,7 @@ public class DescuentoTextField extends TextField{
         }catch (Exception e){
             curDouble = 0.0;
         }
+
         if (InputValidador.validateIncomingTextForDescuentoMateriales(text,textLength,isDecimal,curDouble)) {
             super.replaceText(start, end, text);
         }

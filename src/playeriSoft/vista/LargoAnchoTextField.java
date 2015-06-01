@@ -26,6 +26,7 @@ public class LargoAnchoTextField  extends TextField {
         } catch (Exception e) {
             curDouble = 0.0;
         }
+
         if (InputValidador.validateIncomingTextForLargoAnchoTextField(text,textLength,isDecimal,curDouble)) {
             super.replaceText(start, end, text);
         }

@@ -494,35 +494,34 @@ public class ProductViewController implements Initializable{
      * Método que valida si todos los campos necesarios para guardar un producto han sido llenados por el usuario. De
      * ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarEntradasGeneralesParaGuardarProducto(){
-        return (descripTextField.getText().length() > 0) && (existenciasTextField.getText().length() > 0)
-                && (descuentoTextField.getText().length() > 0) && (precioMayTextField.getText().length() > 0)
-                && (precioMenTextField.getText().length() > 0) && (serigrafiaCheckBox.isSelected()
-                || bordadoCheckBox.isSelected()) && (!listaMateriales.isEmpty() || (listaMateriales.size() > 0));
+        return InputValidador.validateGuardarProducto(descripTextField.getText(),existenciasTextField.getText(),
+                descuentoTextField.getText(), precioMayTextField.getText(), precioMenTextField.getText(),
+                serigrafiaCheckBox.isSelected(), bordadoCheckBox.isSelected(), listaMateriales);
     }
 
     /**
      * Método que valida si todos los campos necesarios para guardar una playera han sido llenados por el usuario. De
      * ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarGuardarPlayera(){
-        return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
-                && (colorTextField.getText().length() > 0)
-                && (tipoChoiceBox.getSelectionModel().isSelected(0) || tipoChoiceBox.getSelectionModel().isSelected(1));
+        return InputValidador.validateGuardarPlayera(validarEntradasGeneralesParaGuardarProducto(),
+                tallaTextField.getText(), colorTextField.getText(), tipoChoiceBox.getSelectionModel().isSelected(0),
+                tipoChoiceBox.getSelectionModel().isSelected(1));
     }
 
     /**
      * Método que valida si todos los campos necesarios para guardar una sudadera o una gorra han sido llenados por el
      * usuario. De ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarGuardarSudaderaGorra(){
-        return validarEntradasGeneralesParaGuardarProducto() && (tallaTextField.getText().length() > 0)
-                && (colorTextField.getText().length() > 0);
+        return InputValidador.validateGuardarSudaderaGorra(validarEntradasGeneralesParaGuardarProducto(),
+                tallaTextField.getText(), colorTextField.getText());
     }
 
     /**
      * Método que valida si todos los campos necesarios para guardar un parche han sido llenados por el usuario. De
      * ser así regresa un booleano verdadero, de lo contrario un booleano falso.* */
     private boolean validarGuardarParche(){
-        return validarEntradasGeneralesParaGuardarProducto() && (largoTextField.getText().length() > 0)
-                && (anchoTextField.getText().length() > 0);
+        return InputValidador.validateGuardarParche(validarEntradasGeneralesParaGuardarProducto(),
+                largoTextField.getText(), anchoTextField.getText());
     }
 
     /**
